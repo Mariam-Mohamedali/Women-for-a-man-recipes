@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Us - Recipe Finder</title>
 </head>
+
 <body>
-    
+
+    <main>
+        <h2>Get in Touch with the Chef!</h2>
+        <p>Have a recipe request, want to submit your own dish, or need help? Send us a message below.</p>
+        <br>
+
+        <form action="#" method="POST">
+            <div style="margin-bottom: 15px;">
+                <label for="name"><strong>Name:</strong></label><br>
+                <input type="text" id="name" name="name" required placeholder="Your Name"
+                    style="width: 300px; padding: 8px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="email"><strong>Email:</strong></label><br>
+                <input type="email" id="email" name="email" required placeholder="Your Email"
+                    style="width: 300px; padding: 8px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="message"><strong>Message:</strong></label><br>
+                <textarea id="message" name="message" rows="5" required placeholder="What's your message"
+                    style="width: 300px; padding: 8px;"></textarea>
+            </div>
+
+            <button type="submit"
+                style="padding: 10px 20px; cursor: pointer; background-color: #333; color: white; border: none; border-radius: 4px;">Send
+                Message</button>
+        </form>
+    </main>
+
+
+
 </body>
+
 </html>
