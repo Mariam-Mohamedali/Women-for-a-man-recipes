@@ -1,0 +1,182 @@
+/* root.css - Color Palette and UI Elements mapping */
+
+:root {
+    /* --- Colors --- */
+
+    /* Backgrounds */
+    --parchment: #F7F1E8;
+    --linen: #E8DDD0;
+
+    /* Typography & Foreground */
+    --walnut: #3D2B1F;
+    /* Dark dark brown */
+    --clay: #B07D55;
+    /* Warm light brown / orange */
+    --sand: #C4A882;
+    /* Beige / light tan */
+    --sage: #8FA68E;
+    /* Muted green */
+
+    /* --- Font Sizes --- */
+    --h2-size: 36px;
+    --h3-size: 22px;
+    --p-size: 16px;
+    /* 15-16px */
+    --tag-size: 12px;
+    /* 11-12px */
+    --button-size: 14px;
+    --footer-size: 13px;
+    /* 12-13px */
+}
+
+/* =========================================
+   Base & Content Sections 
+   ========================================= */
+
+body {
+    background-color: var(--parchment);
+    color: var(--walnut);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 100px;
+    /* Space for the fixed header */
+}
+
+/* Alternating sections background between Parchment and Linen for full-width <div> section */
+section:nth-of-type(even),
+.bg-linen {
+    background-color: var(--linen);
+}
+
+section:nth-of-type(odd),
+.bg-parchment {
+    background-color: var(--parchment);
+}
+
+/* =========================================
+   Typography 
+   ========================================= */
+
+/* Section Headings ("Latest Recipes", "Categories") */
+h2 {
+    color: var(--walnut);
+    font-size: var(--h2-size);
+    margin-bottom: 15px;
+}
+
+/* Recipe card titles - Sub-section names ("Lemon Herb Chicken") */
+h3 {
+    color: var(--clay);
+    font-size: var(--h3-size);
+    margin-bottom: 10px;
+}
+
+/* Body text - Recipe descriptions - Ingredients */
+p {
+    color: var(--sand);
+    font-size: var(--p-size);
+    line-height: 1.6;
+}
+
+/* Category tags ("Vegetarian", "30 min", "Easy") */
+.tag,
+label {
+    background-color: var(--sage);
+    color: white;
+    font-size: var(--tag-size);
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* =========================================
+   UI Elements 
+   ========================================= */
+
+/* CTA buttons - "View Recipe", "Browse All" */
+button {
+    background-color: var(--clay);
+    color: white;
+    /* "Soft but still clickable — no harsh contrast" */
+    font-size: var(--button-size);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    /* Pillow-shaped / round from design */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--walnut);
+}
+
+/* Footer background - small print - copyright */
+footer {
+    background-color: var(--walnut);
+    color: var(--sand);
+    font-size: var(--footer-size);
+    padding: 20px;
+}
+
+footer h3,
+footer p,
+footer a {
+    color: var(--sand);
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--clay);
+}
+
+/* =========================================
+   Navbar (Header) Styles 
+   ========================================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--walnut);
+    z-index: 1000;
+    padding: 15px 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    color: var(--sand);
+    font-size: 28px;
+}
+
+#main-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#main-nav a,
+#main-nav span {
+    color: var(--sand);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+#main-nav a:hover,
+#main-nav span:hover {
+    color: var(--clay);
+}
