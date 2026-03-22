@@ -1,0 +1,117 @@
+/* profile.css - Styling for the Profile Page */
+
+body {
+    background-color: var(--parchment);
+}
+
+/* Page heading */
+body > h1, body > hr {
+    display: none; /* Hide duplicate headers if desired, we'll keep the profile card clean */
+}
+
+main {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Profile Information Card */
+#profileInfo {
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-top: 6px solid var(--clay);
+    position: relative;
+}
+
+#profileInfo img {
+    border-radius: 50%;
+    border: 5px solid var(--parchment);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+#displayName {
+    color: var(--walnut);
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+#profileInfo p {
+    color: var(--clay);
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+#displayEmail, #displayRole {
+    color: var(--walnut);
+    font-weight: 600;
+}
+
+#profileInfo button {
+    margin-top: 25px;
+    background-color: #D9534F; /* A softer red for logout */
+    border-radius: 25px;
+    font-size: 16px;
+    padding: 12px 30px !important;
+}
+
+#profileInfo button:hover {
+    background-color: #C9302C;
+}
+
+/* Favorites Section */
+main > section:last-of-type {
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+}
+
+main > section:last-of-type h3 {
+    text-align: center;
+    font-size: var(--h3-size);
+    color: var(--walnut);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--linen);
+    padding-bottom: 15px;
+}
+
+/* Favorites List */
+#favoritesArea ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#favoritesArea li {
+    background-color: var(--parchment);
+    border-radius: 15px;
+    margin-bottom: 15px;
+    padding: 15px 25px;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+#favoritesArea li:hover {
+    transform: translateX(10px);
+    background-color: var(--linen);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+#favoritesArea li a {
+    text-decoration: none;
+    color: var(--walnut);
+    font-size: 18px;
+    width: 100%;
+    display: block;
+}
+
+#favoritesArea li a strong {
+    color: var(--clay);
+}

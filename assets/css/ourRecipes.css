@@ -1,0 +1,73 @@
+/* Banner section */
+main>section:first-of-type {
+    text-align: center;
+    padding: 0;
+    margin-top: -32px;
+    /* Pulls the image up to touch the nav */
+}
+
+main>section:first-of-type img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 0;
+    /* Removes rounded corners to fit edge-to-edge */
+}
+
+/* Search Form */
+#globalSearchForm {
+    text-align: center;
+    margin: 20px;
+}
+
+#globalSearchInput {
+    padding: 8px;
+    width: 300px;
+    border: 2px solid var(--clay);
+    border-radius: 5px;
+}
+
+/* Categories side-by-side */
+#categoriesSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#categoriesSection article {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    width: calc(50% - 20px);
+    max-width: 350px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-bottom: 5px solid var(--clay);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#categoriesSection article:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+#categoriesSection article img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+#categoriesSection article h3 {
+    margin: 10px 0;
+    color: var(--walnut);
+}
+
+#categoriesSection article button {
+    width: 100%;
+    margin-top: 10px;
+}
