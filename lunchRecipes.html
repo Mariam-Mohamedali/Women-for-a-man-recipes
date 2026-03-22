@@ -4,168 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lunch Recipes</title>
+    <link rel="stylesheet" href="assets/css/root.css">
 </head>
 <body>
-    <div class="recipe-card">
     <header>
-        <h1>&#9832; WFM </h1>
-        <nav>
-            <a href="home.html">Home</a> |
-            <a href="ourRecipes.html">Our Recipes</a> |
-            <a href="aboutUs.html">About Us</a> |
-            <a href="login.html">Login</a> |
-            <a href="register.html">Register</a> |
-            <a href="profilePage.html">My Profile</a>
-        </nav>
+        <h1>&#9832; WFM</h1>
+        <nav id="main-nav"></nav>
     </header>
-    <br>
 
-    <form>
-        <input type="search" placeholder="Search recipes..." name="search" id="search">
-        <button type="submit">Search</button>
-    </form>
+    <h2>Lunch Recipes</h2>
+    <hr>
 
-    <h2>Pasta</h2>
+   
+    <div id="allRecipes"></div>
 
-    <img src="./assets/images/pasta.jpg" style="height:200px; width:200px;" alt="Pasta">
+    <footer>
+      <table width="100%" cellpadding="5">
+        <tr>
+          <td width="33%">
+            <h3>About</h3>
+            <p>Women For A Man is a platform that connects people and helps build meaningful relationships around the world.</p>
+          </td>
+          <td width="33%">
+            <h3>Follow Us</h3>
+            <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
+            <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
+            <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
+            <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
+          </td>
+          <td width="33%">
+            <h3>Contact</h3>
+            <a href="contactUs.html"><button>Contact Us</button></a>
+            <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
+            <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <center><p>&copy; 2026 â€” Women For A Man. All Rights Reserved.</p></center>
+    </footer>
 
-    <h3>Description</h3>
-    <p>
-    <p>
-        Pasta is a versatile Italian staple made from unleavened dough.
-    </p>
-    </p>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/recipes.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script>
+        function recipeCard(r) {
+            const fav = isFavorite(r.id);
+            const avgRating = getAverageRating(r);
+            const user = getCurrentUser();
+            let myRating = 0;
+            if (user && r.ratings) {
+                const found = r.ratings.find(x => x.userId === user.id);
+                if (found) myRating = found.stars;
+            }
 
-    <h3>Ingredients:</h3>
-    <ul>
-        <li>1/2 lb spaghetti</li>
-        <li>2 tablespoons butter</li>
-        <li>2 teaspoons olive oil</li>
-        <li>4 cloves garlic, minced</li>
-        <li>3/4 cup heavy cream</li>
-        <li>1 cup grated Parmesan cheese</li>
-        <li>1 1/2 tablespoons dried parsley</li>
-        <li>Salt and black pepper to taste</li>
-        <li>Reserved pasta water (as needed)</li>
-    </ul>
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const isSelected = i <= myRating ? 'color:gold;' : 'color:lightgray;';
+                starsHtml += `<span style="font-size:30px; cursor:pointer; ${isSelected}" onclick="submitRating(${r.id}, ${i})">★</span>`;
+            }
 
-    <h3>Preparation Steps</h3>
-    <ol>
-        <li>Boil Pasta: Cook spaghetti in boiling, salted water until al dente (tender yet firm to the bite), about
-            10-12 minutes.</li>
-        <li>Reserve Water: Before draining, save about 1/2 cup of the starchy pasta water.</li>
-        <li>Make Sauce: In a large pan, heat olive oil and butter over medium heat. Add garlic and sauté for 1-2 minutes
-            until fragrant.</li>
-        <li>Combine: Add the heavy cream, parmesan cheese, and dried parsley to the pan. Stir until the cheese melts and
-            the sauce is smooth.</li>
-        <li>Toss: Add the drained pasta to the sauce, tossing to coat. If the sauce is too thick, add the reserved pasta
-            water a little at a time to reach the desired consistency.</li>
-        <li>Serve: Season with extra salt and pepper if needed, and serve immediately with more Parmesan. </li>
-    </ol>
+            return `
+            <div id="recipe-${r.id}" style="border:1px solid #ddd; padding:10px; margin-bottom:15px;">
+                <h2> - ${r.name}</h2>
+                ${r.image ? `<img src="${r.image}" style="height:200px;width:200px;" alt="${r.name}">` : ''}
+                
+                <h3>Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐</h3>
+                <div id="ratingSection-${r.id}">
+                    <p><strong>Rate this recipe:</strong></p>
+                    ${starsHtml}
+                </div>
+                <br>
+                <button onclick="toggleFavorite(${r.id}, this)">${fav ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}</button>
 
-    <p><strong>Bon Appetit!</strong></p>
+                <h3>Description</h3>
+                <p>${r.description}</p>
+                
+                <h3>Ingredients</h3>
+                <ul>${(r.ingredients||[]).map(i=>`<li> ${i.name} (${i.quantity})</li>`).join('')}</ul>
+                
+                <h3>Preparation Steps</h3>
+                <ol>${(r.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
+                <p><strong>Bon Appetit!</strong></p>
+            </div>`;
+        }
 
-</div>
-<hr>
-<h2>Pizza</h2>
+        function submitRating(id, stars) {
+            rateRecipe(id, stars);
+            const r = getRecipeById(id);
+            document.getElementById('avgRating-' + id).innerText = getAverageRating(r);
+            const ratingSection = document.getElementById('ratingSection-' + id);
+            if (ratingSection) {
+                const starSpans = ratingSection.querySelectorAll('span');
+                starSpans.forEach((s, idx) => {
+                    if (idx < stars) s.style.color = 'gold';
+                    else s.style.color = 'lightgray';
+                });
+            }
+        }
 
-<img src="./assets/images/pizza.jpg" style="height:200px; width:200px;" alt="Pizza">
+        function renderAll() {
+            const recipes = getRecipesByCategory('lunch');
+            document.getElementById('allRecipes').innerHTML = recipes.length
+                ? recipes.map(recipeCard).join('<hr>')
+                : '<p>No lunch recipes found.</p>';
+        }
 
-<h3>Description</h3>
-<p>
-    Pizza is a popular Italian dish consisting of a flattened, leavened wheat-based dough base, typically topped with
-    tomatoes, mozzarella cheese, and olive oil
-</p>
-<h3>Ingredients</h3>
-<ul>
-    1. Pizza Dough
-    <li>Flour: All-purpose flour or bread flour for a chewier crust.</li>
-    <li>Yeast: Active dry or instant yeast.</li>
-    <li>Water: Warm water.</li>
-    <li>Salt: Essential for flavor.</li>
-    <li>Olive Oil: Adds flavor and texture.</li>
-    <li>Sugar: Helps activate yeast and browns the crust.</li>
-    2. Sauce
-    <li>Tomato Sauce: Crushed tomatoes, passata, or tomato paste.</li>
-    <li>Seasonings: Garlic powder, dried oregano, basil, salt, and black pepper.</li>
-    <li>Alternative Sauces: Pesto, BBQ sauce, or white sauce. </li>
-    3. Cheese
-    <li>Mozzarella: Low-moisture (shredded) for melting, or fresh mozzarella.</li>
-    <li>Other Options: Parmesan, Provolone, Fontina, or Goat cheese. </li>
-    4. Popular Toppings
-    <li>Meats: Pepperoni, Italian sausage, bacon, ham, chicken, or ground beef.</li>
-    <li>Vegetables: Mushrooms, onions, bell peppers, olives, spinach, tomatoes, and arugula.</li>
-    <li>Other: Pineapple, jalapeños, and fresh basil.</li>
-</ul>
+        function toggleFavorite(id, btn) {
+            if (isFavorite(id)) { removeFavorite(id); btn.textContent = '🤍 Add to Favorites'; }
+            else { addFavorite(id); btn.textContent = '❤️ Remove from Favorites'; }
+        }
 
-<h3>Preparation Steps</h3>
-<ol>
-    <li>Prepare the Dough: Mix warm water, sugar, and yeast; let it sit until foamy. Combine with flour, salt, and olive
-        oil, then knead for 5-7 minutes until smooth.</li>
-    <li>Rise: Place the dough in a greased bowl, cover it, and let it rise for 60–90 minutes until doubled in size.</li>
-    <li>Preheat Oven: Preheat your oven to its highest temperature, Place a pizza stone or heavy baking sheet inside to
-        get hot. </li>
-    <li>Place a pizza stone or heavy baking sheet inside to get hot.</li>
-    <li>Shape the Dough: On a floured surface, stretch or roll the dough into a 10-12 inch circle, leaving the edges
-        slightly thicker.</li>
-    <li>Add Toppings: Place dough on parchment paper or a pizza peel dusted with semolina flour. Spread a thin layer of
-        sauce, followed by mozzarella cheese and your desired toppings.</li>
-    <li>Bake: Slide the pizza onto the hot stone/tray in the oven. Bake for 8-12 minutes until the crust is golden and
-        the cheese is bubbly.</li>
-</ol>
-<p><strong>Bon Appetit!</strong></p>
-<footer>
+        function runSearch(e) {
+            e.preventDefault();
+            const q = document.getElementById('searchInput').value.trim();
+            if (!q) { clearSearch(); return; }
+            const results = searchRecipes(q).filter(r => r.category === 'lunch');
+            const area = document.getElementById('searchResults');
+            document.getElementById('allRecipes').style.display = 'none';
+            area.innerHTML = results.length
+                ? `<p>Results for "<strong>${q}</strong>":</p>` + results.map(recipeCard).join('<hr>')
+                : `<p>No lunch recipes found for "<strong>${q}</strong>".</p>`;
+        }
 
-  <table width="100%" cellpadding="5">
-    <tr>
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('allRecipes').style.display = '';
+        }
 
-      <td width="33%">
-        <h3>About</h3>
-        <p>
-          Women For A Man is a platform that connects people and helps build
-          meaningful relationships around the world.
-        </p>
-      </td>
-
-      <td width="33%">
-        <h3>Follow Us</h3>
-
-        <a href="https://facebook.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"> 
-        </a>
-
-        <a href="https://instagram.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"> 
-        </a>
-
-        <a href="https://x.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"> 
-        </a>
-
-        <a href="https://youtube.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png">
-        </a>
-
-      </td>
-
-      <td width="33%">
-        <h3>Contact</h3>
-        <a href="contactUs.html"><button>Contact Us</button></a>
-        <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
-        <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-
-      </td>
-
-    </tr>
-  </table>
-
-  <hr>
-
-  <center>
-    <p>© 2026 — Women For A Man. All Rights Reserved.</p>
-  </center>
-
-</footer>
-
+        renderAll();
+    </script>
 </body>
 </html>
+
+
