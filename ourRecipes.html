@@ -5,30 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Recipes</title>
+    <link rel="stylesheet" href="assets/css/root.css">
+    <link rel="stylesheet" href="assets/css/ourRecipes.css">
 </head>
 
 <body>
     <header>
         <h1>&#9832; WFM </h1>
-        <nav>
-            <a href="home.html">Home</a> |
-            <a href="ourRecipes.html">Our Recipes</a> |
-            <a href="aboutUs.html">About Us</a> |
-            <a href="login.html">Login</a> |
-            <a href="register.html">Register</a> |
-            <a href="profilePage.html">My Profile</a>
-        </nav>
+        <nav id="main-nav"></nav>
     </header>
-    <h1>Welcome to Our Recipe Collection</h1>
-    <hr>
     <main>
         <section>
             <img src="./assets/images/images.jpg" alt="Our Recipes" width="1250" height="400">
             <h2>Explore Our Delicious Categories</h2>
         </section>
 
+        <!-- Global Search within ourRecipes -->
+        <section style="text-align: center; margin: 20px 0;">
+            <h3>Looking for something specific?</h3>
+            <form id="globalSearchForm" onsubmit="runGlobalSearch(event)">
+                <input id="globalSearchInput" type="search" placeholder="Search any recipe by name or ingredient..." style="width:400px; padding: 5px;">
+                <button type="submit" style="padding: 5px 15px;">Search</button>
+                <button type="button" onclick="clearGlobalSearch()" style="padding: 5px 15px;">Clear</button>
+            </form>
+        </section>
+        
+        <div id="searchResultsArea" style="display: none; padding: 20px;"></div>
+
         <hr>
-        <section>
+        <section id="categoriesSection">
 
             <article id="1">
                 <h3>Breakfast</h3>
@@ -36,23 +41,17 @@
                 <a href="breakfastRecipes.html"><button>See More</button></a>
             </article>
 
-            <br>
-
             <article id="2">
                 <h3>Lunch</h3>
                 <img src="./assets/images/lunch.jpg" alt="Lunch" width="300" height="200"><br>
                 <a href="lunchRecipes.html"><button>See More</button></a>
             </article>
 
-            <br>
-
             <article id="3">
                 <h3>Dinner</h3>
                 <img src="./assets/images/dinner.jpg" alt="Dinner" width="300" height="200"><br>
                 <a href="dinnerRecipes.html"><button>See More</button></a>
             </article>
-
-            <br>
 
             <article id="4">
                 <h3>Dessert</h3>
@@ -111,12 +110,97 @@
   <hr>
 
   <center>
-    <p>© 2026 — Women For A Man. All Rights Reserved.</p>
+    <p>Â© 2026 â€” Women For A Man. All Rights Reserved.</p>
   </center>
 
 </footer>
 
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/recipes.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script>
+    function recipeCard(r) {
+        const fav = isFavorite(r.id);
+        const avgRating = getAverageRating(r);
+        const user = getCurrentUser();
+        let myRating = 0;
+        if (user && r.ratings) {
+            const found = r.ratings.find(x => x.userId === user.id);
+            if (found) myRating = found.stars;
+        }
 
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            const isSelected = i <= myRating ? 'color:gold;' : 'color:lightgray;';
+            starsHtml += `<span style="font-size:30px; cursor:pointer; ${isSelected}" onclick="submitRating(${r.id}, ${i})">★</span>`;
+        }
+
+        return `
+        <div id="recipe-${r.id}" style="border:1px solid #ddd; padding:10px; margin-bottom:15px; text-align: left;">
+            <h2> - ${r.name}</h2>
+            ${r.image ? `<img src="${r.image}" style="height:200px;width:200px;" alt="${r.name}">` : ''}
+            
+            <h3>Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐­</h3>
+            <div id="ratingSection-${r.id}">
+                <p><strong>Rate this recipe:</strong></p>
+                ${starsHtml}
+            </div>
+            <br>
+            <button onclick="toggleFavorite(${r.id}, this)">${fav ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}</button>
+
+            <h3>Description</h3>
+            <p>${r.description}</p>
+            
+            <h3>Ingredients</h3>
+            <ul>${(r.ingredients||[]).map(i=>`<li> ${i.name} (${i.quantity})</li>`).join('')}</ul>
+            
+            <h3>Preparation Steps</h3>
+            <ol>${(r.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
+            <p><strong>Bon Appetit!</strong></p>
+        </div>`;
+    }
+
+    function submitRating(id, stars) {
+        rateRecipe(id, stars);
+        const r = getRecipeById(id);
+        document.getElementById('avgRating-' + id).innerText = getAverageRating(r);
+        const ratingSection = document.getElementById('ratingSection-' + id);
+        if (ratingSection) {
+            const starSpans = ratingSection.querySelectorAll('span');
+            starSpans.forEach((s, idx) => {
+                if (idx < stars) s.style.color = 'gold';
+                else s.style.color = 'lightgray';
+            });
+        }
+    }
+
+    function toggleFavorite(id, btn) {
+        if (isFavorite(id)) { removeFavorite(id); btn.textContent = '🤍 Add to Favorites'; }
+        else { addFavorite(id); btn.textContent = '❤️ Remove from Favorites'; }
+    }
+
+    function runGlobalSearch(e) {
+        e.preventDefault();
+        const q = document.getElementById('globalSearchInput').value.trim();
+        if (!q) { clearGlobalSearch(); return; }
+        
+        const results = searchRecipes(q);
+        const area = document.getElementById('searchResultsArea');
+        document.getElementById('categoriesSection').style.display = 'none';
+        
+        area.style.display = 'block';
+        area.innerHTML = results.length
+            ? `<h3>Search Results for "${q}"</h3><hr>` + results.map(recipeCard).join('<hr>')
+            : `<h3>No recipes found for "${q}".</h3>`;
+    }
+
+    function clearGlobalSearch() {
+        document.getElementById('globalSearchInput').value = '';
+        document.getElementById('searchResultsArea').style.display = 'none';
+        document.getElementById('categoriesSection').style.display = 'block';
+    }
+</script>
 </body>
-
 </html>
+
+
