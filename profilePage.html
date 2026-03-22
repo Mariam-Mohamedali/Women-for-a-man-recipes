@@ -4,35 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>My Profile - WFM</title>
+    <link rel="stylesheet" href="assets/css/root.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
 </head>
 
 <body>
     <header>
         <h1>&#9832; WFM </h1>
-       <nav>
-            <a href="home.html">Home</a> |
-            <a href="ourRecipes.html">Our Recipes</a> |
-            <a href="aboutUs.html">About Us</a> |
-            <a href="login.html">Login</a> |
-            <a href="register.html">Register</a> |
-            <a href="profilePage.html">My Profile</a>
-        </nav>
+        <nav id="main-nav"></nav>
     </header>
 
     <h1>My Profile</h1>
-
     <hr>
+
     <main>
-        <section>
+        <section id="profileInfo">
             <img src="assets/images/default.png" alt="Profile Picture" width="150" height="150">
-
-            <h2>User Name</h2>
-            <p><strong>Email:</strong> user@example.com</p>
-            <p><strong>Phone:</strong> 1234567890</p>
-            <p><strong>country:</strong> Egypt</p>
-
-            <button>Edit Profile</button>
+            <h2 id="displayName">Loading...</h2>
+            <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+            <p><strong>Role:</strong> <span id="displayRole"></span></p>
+            <br>
+            <button onclick="logout()" style="padding: 5px 15px; cursor: pointer; ">Logout</button>
         </section>
 
         <hr>
@@ -40,68 +33,73 @@
         <!-- Favorite Recipes Section -->
         <section>
             <h3>My Favorite Recipes</h3>
-            <ul>
-                <li><a href="breakfastRecipes.html#falafel">Falafel</a></li>
-                <li><a href="breakfastRecipes.html#pancakes">Pancakes</a></li>
-            </ul>
+            <div id="favoritesArea">
+                <p>No favorites yet. Browse recipes and click "Add to Favorites"!</p>
+            </div>
         </section>
     </main>
 
     <hr>
     <footer>
+        <table width="100%" cellpadding="5">
+            <tr>
+                <td width="33%">
+                    <h3>About</h3>
+                    <p>Women For A Man is a platform that connects people and helps build meaningful relationships
+                        around the world.</p>
+                </td>
+                <td width="33%">
+                    <h3>Follow Us</h3>
+                    <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
+                    <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
+                    <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
+                    <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
+                </td>
+                <td width="33%">
+                    <h3>Contact</h3>
+                    <a href="contactUs.html"><button>Contact Us</button></a>
+                    <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
+                    <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <center>
+            <p>&copy; 2026 — Women For A Man. All Rights Reserved.</p>
+        </center>
+    </footer>
 
-  <table width="100%" cellpadding="5">
-    <tr>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/recipes.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script>
+        requireLogin();
 
-      <td width="33%">
-        <h3>About</h3>
-        <p>
-          Women For A Man is a platform that connects people and helps build
-          meaningful relationships around the world.
-        </p>
-      </td>
+        const user = getCurrentUser();
+        document.getElementById('displayName').textContent = user.username;
+        document.getElementById('displayEmail').textContent = user.email;
+        document.getElementById('displayRole').textContent = user.is_admin ? 'Admin' : 'Regular User';
 
-      <td width="33%">
-        <h3>Follow Us</h3>
+        function renderFavorites() {
+            const favIds = getFavorites();
+            const area = document.getElementById('favoritesArea');
+            if (favIds.length === 0) {
+                area.innerHTML = '<p>No favorites yet. Browse recipes and click "Add to Favorites"!</p>';
+                return;
+            }
+            const allRecipes = getRecipes();
+            const favRecipes = allRecipes.filter(r => favIds.includes(r.id));
+            area.innerHTML = '<ul>' + favRecipes.map(r => `
+                <li style="margin-bottom: 10px;">
+                    <a href="${r.course}Recipes.html#recipe-${r.id}" style="text-decoration: none; color: #333;">
+                        <strong> ${r.name}</strong> (${r.course})
+                    </a>
+                </li>
+            `).join('') + '</ul>';
+        }
 
-        <a href="https://facebook.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"> 
-        </a>
-
-        <a href="https://instagram.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"> 
-        </a>
-
-        <a href="https://x.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"> 
-        </a>
-
-        <a href="https://youtube.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png">
-        </a>
-
-      </td>
-
-      <td width="33%">
-        <h3>Contact</h3>
-        <a href="contactUs.html"><button>Contact Us</button></a>
-        <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
-        <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-
-      </td>
-
-    </tr>
-  </table>
-
-  <hr>
-
-  <center>
-    <p>© 2026 — Women For A Man. All Rights Reserved.</p>
-  </center>
-
-</footer>
-
-
+        renderFavorites();
+    </script>
 </body>
 
 </html>
