@@ -4,80 +4,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Register page</title>
+    <link rel="stylesheet" href="assets/css/root.css">
+    <title>Register - WFM</title>
 </head>
 
 <body>
     <header>
-        <h1>&#9832; WFM </h1>
-        <nav>
-            <a href="home.html">Home</a> |
-            <a href="ourRecipes.html">Our Recipes</a> |
-            <a href="aboutUs.html">About Us</a> |
-            <a href="login.html">Login</a> |
-            <a href="register.html">Register</a> |
-            <a href="profilePage.html">My Profile</a>
-        </nav>
+        <h1>&#9832; WFM</h1>
+        <nav id="main-nav"></nav>
     </header>
 
     <center>
-        <h2 text-align="center"> User Registeration </h2>
+        <h2>User Registration</h2>
     </center>
 
-    <form action="post">
+    <form id="registerForm" onsubmit="handleRegister(event)">
         <fieldset>
-            <legend>User_Registeration</legend>
+            <legend>Create Account</legend>
+
             <div>
-                <label for="text">user name </label>
-                <input id="text" type="text" placeholder="enter user name" name="User name" required autofocus>
+                <label for="username">Username</label>
+                <input id="username" type="text" placeholder="Enter username" name="username" required autofocus>
             </div>
 
             <div>
-                <label for="E-mail"> E-mail </label>
-                <input id="E-mail" type="E-mail" placeholder="enter E-mail" name="E-mail" required>
+                <label for="email">E-mail</label>
+                <input id="email" type="email" placeholder="Enter e-mail" name="email" required>
             </div>
 
             <div>
-                <label for="Password">Password </label>
-                <input id="Password" type="password" placeholder="enter your Password" name="Password" required>
-
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="Enter your password" name="password" required>
             </div>
 
             <div>
-                <label for="confirm"> confirm Password </label>
-                <input id="confirm" type="password" placeholder="confirm your Password" name="confirm" required>
+                <label for="confirm">Confirm Password</label>
+                <input id="confirm" type="password" placeholder="Confirm your password" name="confirm" required>
             </div>
 
             <div>
-                <label for="Gender"> Gender </label>
-                <input id="Gender" type="radio" name="Gender" value="Male" required> Male
-                <input id="Gender" type="radio" name="Gender" value="Female" required> Female
+                <label>Account Type</label><br>
+                <input id="role_user" type="radio" name="is_admin" value="false" required checked>
+                <label for="role_user">Regular User</label>
+                &nbsp;&nbsp;
+                <input id="role_admin" type="radio" name="is_admin" value="true">
+                <label for="role_admin">Admin</label>
             </div>
 
-            <div>
-                <label for="telephone">Telephone Number</label>
-                <input id="telephone" type="tel" name="telephone" required>
-            </div>
-            <div>
-                <label for="Birth date">Birth date</label>
-                <input id="Birth date" type="date" name="Birth date">
-            </div>
-
-            <div>
-                <label>Country</label>
-                <input list="country" name="country">
-                <datalist id="country">
-                    <option value="Egypt"></option>
-                    <option value="USA"></option>
-                    <option value="UAE"></option>
-                    <option value="other"></option>
-                </datalist>
-            </div>
-
-            <input type="submit">
+            <br>
+            <input type="submit" value="Register">
+            <input type="reset" value="Clear">
         </fieldset>
-
     </form>
+
+    <div>
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <p id="msg" style="color:red;"></p>
+
+    <script src="auth.js"></script>
+    <script src="navbar.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
+            const is_admin = document.querySelector('input[name="is_admin"]:checked').value === 'true';
+
+            if (password !== confirm) {
+                document.getElementById('msg').textContent = 'Passwords do not match!';
+                return;
+            }
+
+            const result = registerUser(username, email, password, is_admin);
+            if (result.success) {
+                alert('Registration successful! Please log in.');
+                window.location.href = 'login.html';
+            } else {
+                document.getElementById('msg').textContent = result.message;
+            }
+        });
+    </script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/recipes.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script>
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('text').value;
+            const email = document.getElementById('E-mail').value;
+            const password = document.getElementById('Password').value;
+            const confirm = document.getElementById('confirm').value;
+            
+            if (password !== confirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+            
+            // Registering as a regular user (pass true as 4th arg in the code if you want to make an admin account later)
+            const result = registerUser(username, email, password, false);
+            if (result.success) {
+                window.location.href = 'login.html';
+            } else {
+                alert(result.message);
+            }
+        }
+    </script>
 </body>
 
 </html>
