@@ -1,158 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Breakfast Recipes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/root.css">
 </head>
+
 <body>
-    
-    <div class="recipe-card">
-    <header>
-        <h1>&#9832; WFM </h1>
-        <nav>
-            <a href="home.html">Home</a> |
-            <a href="ourRecipes.html">Our Recipes</a> |
-            <a href="aboutUs.html">About Us</a> |
-            <a href="login.html">Login</a> |
-            <a href="register.html">Register</a> |
-            <a href="profilePage.html">My Profile</a>
-        </nav>
-    </header>
-    <br>
+  <header>
+    <h1>&#9832; WFM</h1>
+    <nav id="main-nav"></nav>
+  </header>
 
-    <form>
-        <input type="search" placeholder="Search recipes..." name="search" id="search">
-        <button type="submit">Search</button>
-    </form>
-
-    <h2 id="falafel">Falafel</h2>
-
-    <img src="assets/images/tortilla-wrap-with-falafel-fresh-salad-vegan-tacos-vegetarian-healthy-food.jpg"
-        style="height:200px; width:200px;" alt="Falafel">
-
-    <h3>Description</h3>
-    <p>
-    <p>
-        Falafel is a famous Middle Eastern street food made from chickpeas and spices, believed to have originated in
-        Egypt.
-    </p>
-    </p>
-
-    <h3>Ingredients</h3>
-    <ul>
-        <li>1 cup dried chickpeas (soaked overnight)</li>
-        <li>1 small onion (chopped)</li>
-        <li>2 cloves garlic</li>
-        <li>1/2 cup fresh parsley</li>
-        <li>1 teaspoon cumin</li>
-        <li>1 teaspoon coriander</li>
-        <li>1 tablespoon flour</li>
-        <li>Salt and pepper to taste</li>
-        <li>Oil for frying</li>
-    </ul>
-
-    <h3>Preparation Steps</h3>
-    <ol>
-        <li>Soak the chickpeas in water overnight.</li>
-        <li>Drain the chickpeas and place them in a food processor.</li>
-        <li>Add onion, garlic, parsley, cumin, coriander, salt, and pepper.</li>
-        <li>Blend the mixture until it becomes a coarse paste.</li>
-        <li>Add flour and mix well.</li>
-        <li>Shape the mixture into small balls.</li>
-        <li>Heat oil in a deep pan.</li>
-        <li>Fry the falafel balls until golden brown and crispy.</li>
-        <li>Serve hot with pita bread, salad, and tahini sauce.</li>
-    </ol>
-
-    <p><strong>Bon Appetit!</strong></p>
-
-</div>
-<hr>
-<h2 id="pancakes">Pancakes</h2>
-
-<img src="assets/images/pancakes-topped-with-nuts-chocolate.jpg" style="height:200px; width:200px;" alt="Pancakes">
-
-<h3>Description</h3>
-<p>
-    Pancakes are a popular breakfast dish made from a simple batter of flour, eggs, and milk.
-    They are cooked on a pan until golden and often served with chocolate sauce, syrup, or fruits.
-</p>
-<h3>Ingredients</h3>
-<ul>
-    <li>1 cup flour</li>
-    <li>1 cup milk</li>
-    <li>1 egg</li>
-    <li>2 tablespoons sugar</li>
-    <li>1 teaspoon baking powder</li>
-    <li>1 tablespoon butter</li>
-    <li>Chocolate sauce for topping</li>
-</ul>
-
-<h3>Preparation Steps</h3>
-<ol>
-    <li>In a bowl, mix flour, sugar, and baking powder.</li>
-    <li>Add milk and egg, then mix until the batter becomes smooth.</li>
-    <li>Heat a little butter in a pan over medium heat.</li>
-    <li>Pour a small amount of batter into the pan.</li>
-    <li>Cook until bubbles appear, then flip the pancake.</li>
-    <li>Cook the other side until golden brown.</li>
-    <li>Serve the pancakes with chocolate sauce on top.</li>
-</ol>
-
-<p><strong>Bon Appetit!</strong></p>
-<footer>
-
-  <table width="100%" cellpadding="5">
-    <tr>
-
-      <td width="33%">
-        <h3>About</h3>
-        <p>
-          Women For A Man is a platform that connects people and helps build
-          meaningful relationships around the world.
-        </p>
-      </td>
-
-      <td width="33%">
-        <h3>Follow Us</h3>
-
-        <a href="https://facebook.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"> 
-        </a>
-
-        <a href="https://instagram.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"> 
-        </a>
-
-        <a href="https://x.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"> 
-        </a>
-
-        <a href="https://youtube.com">
-          <img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png">
-        </a>
-
-      </td>
-
-      <td width="33%">
-        <h3>Contact</h3>
-        <a href="contactUs.html"><button>Contact Us</button></a>
-        <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
-        <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-
-      </td>
-
-    </tr>
-  </table>
-
+  <h2>Breakfast Recipes</h2>
   <hr>
 
-  <center>
-    <p>© 2026 — Women For A Man. All Rights Reserved.</p>
-  </center>
+  <!-- All Recipes Container -->
+  <div id="allRecipes"></div>
 
-</footer>
+  <footer>
+    <table width="100%" cellpadding="5">
+      <tr>
+        <td width="33%">
+          <h3>About</h3>
+          <p>Women For A Man is a platform that connects people and helps build meaningful relationships around the
+            world.</p>
+        </td>
+        <td width="33%">
+          <h3>Follow Us</h3>
+          <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
+          <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
+          <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
+          <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
+        </td>
+        <td width="33%">
+          <h3>Contact</h3>
+          <a href="contactUs.html"><button>Contact Us</button></a>
+          <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
+          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <center>
+      <p>&copy; 2026 — Women For A Man. All Rights Reserved.</p>
+    </center>
+  </footer>
 
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/recipes.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script>
+    function recipeCard(r) {
+      const fav = isFavorite(r.id);
+      const avgRating = getAverageRating(r);
+      const user = getCurrentUser();
+      let myRating = 0;
+      if (user && r.ratings) {
+        const found = r.ratings.find(x => x.userId === user.id);
+        if (found) myRating = found.stars;
+      }
+
+      let starsHtml = '';
+      for (let i = 1; i <= 5; i++) {
+        const isSelected = i <= myRating ? 'color:gold;' : 'color:lightgray;';
+        starsHtml += `<span style="font-size:30px; cursor:pointer; ${isSelected}" onclick="submitRating(${r.id}, ${i})">★</span>`;
+      }
+
+      return `
+            <div id="recipe-${r.id}" style="border:1px solid #ddd; padding:10px; margin-bottom:15px;">
+                <h2> - ${r.name}</h2>
+                ${r.image ? `<img src="${r.image}" style="height:200px;width:200px;" alt="${r.name}">` : ''}
+                
+                <h3>Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐</h3>
+                <div id="ratingSection-${r.id}">
+                    <p><strong>Rate this recipe:</strong></p>
+                    ${starsHtml}
+                </div>
+                <br>
+                <button onclick="toggleFavorite(${r.id}, this)">${fav ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}</button>
+
+                <h3>Description</h3>
+                <p>${r.description}</p>
+                
+                <h3>Ingredients</h3>
+                <ul>${(r.ingredients || []).map(i => `<li> ${i.name} (${i.quantity})</li>`).join('')}</ul>
+                
+                <h3>Preparation Steps</h3>
+                <ol>${(r.steps || []).map(s => `<li>${s}</li>`).join('')}</ol>
+                <p><strong>Bon Appetit!</strong></p>
+            </div>`;
+    }
+
+    function submitRating(id, stars) {
+      rateRecipe(id, stars);
+      const r = getRecipeById(id);
+      document.getElementById('avgRating-' + id).innerText = getAverageRating(r);
+      const ratingSection = document.getElementById('ratingSection-' + id);
+      if (ratingSection) {
+        const starSpans = ratingSection.querySelectorAll('span');
+        starSpans.forEach((s, idx) => {
+          if (idx < stars) s.style.color = 'gold';
+          else s.style.color = 'lightgray';
+        });
+      }
+    }
+
+    function renderAll() {
+      const recipes = getRecipesByCategory('breakfast');
+      document.getElementById('allRecipes').innerHTML = recipes.length
+        ? recipes.map(recipeCard).join('<hr>')
+        : '<p>No breakfast recipes found.</p>';
+    }
+
+    function toggleFavorite(id, btn) {
+      if (isFavorite(id)) { removeFavorite(id); btn.textContent = '🤍 Add to Favorites'; }
+      else { addFavorite(id); btn.textContent = '❤️ Remove from Favorites'; }
+    }
+
+    function runSearch(e) {
+      e.preventDefault();
+      const q = document.getElementById('searchInput').value.trim();
+      if (!q) { clearSearch(); return; }
+      const results = searchRecipes(q).filter(r => r.category === 'breakfast');
+      const area = document.getElementById('searchResults');
+      document.getElementById('allRecipes').style.display = 'none';
+      area.innerHTML = results.length
+        ? `<p>Results for "<strong>${q}</strong>":</p>` + results.map(recipeCard).join('<hr>')
+        : `<p>No breakfast recipes found for "<strong>${q}</strong>".</p>`;
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchResults').innerHTML = '';
+      document.getElementById('allRecipes').style.display = '';
+    }
+
+    renderAll();
+  </script>
 </body>
+
 </html>
