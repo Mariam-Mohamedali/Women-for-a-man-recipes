@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe - Admin Dashboard</title>
+    <link rel="stylesheet" href="assets/css/root.css">
+</head>
+
+<body>
+    <header>
+        <h1>&#9832; WFM</h1>
+        <nav id="main-nav"></nav>
+    </header>
+
+    <h2>Edit Recipe</h2>
+    <hr>
+
+    <main>
+        <form id="editRecipeForm" onsubmit="handleFormSubmission(event)" style="max-width: 600px; display: none;">
+            <input type="hidden" id="recipeId">
+            <p>
+                <label for="recipeName">Recipe Name:</label><br>
+                <input type="text" id="recipeName" required style="width: 100%;">
+            </p>
+            <p>
+                <label for="recipeCourse">Course:</label><br>
+                <select id="recipeCourse" required style="width: 100%;">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="dessert">Dessert</option>
+                </select>
+            </p>
+            <p>
+                <label for="recipeDescription">Description:</label><br>
+                <textarea id="recipeDescription" rows="4" required style="width: 100%;"></textarea>
+            </p>
+            <hr>
+            <h3>Ingredients</h3>
+            <div id="ingredientsContainer"></div>
+            <button type="button" onclick="addIngredientRow()">+ Add Another Ingredient</button>
+            <hr>
+            <h3>Preparation Steps</h3>
+            <div id="stepsContainer"></div>
+            <button type="button" onclick="addStepRow()">+ Add Another Step</button>
+            <hr>
+            <button type="submit" style="padding: 10px 20px; font-weight: bold;">Update Recipe</button>
+        </form>
+        <p id="errorMsg" style="color:red; display: none;">Recipe not found.</p>
+    </main>
+    <hr>
+    <footer>
+        <table width="100%" cellpadding="5">
+            <tr>
+                <td width="33%">
+                    <h3>About</h3>
+                    <p>Women For A Man is a platform that connects people and helps build meaningful relationships
+                        around the world.</p>
+                </td>
+                <td width="33%">
+                    <h3>Follow Us</h3>
+                    <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
+                    <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
+                    <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
+                    <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
+                </td>
+                <td width="33%">
+                    <h3>Contact</h3>
+                    <a href="contactUs.html"><button>Contact Us</button></a>
+                    <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
+                    <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <center>
+            <p>&copy; 2026 — Women For A Man. All Rights Reserved.</p>
+        </center>
+    </footer>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/recipes.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script>
+        requireAdmin();
+
+        function addIngredientRow(name = '', qty = '') {
+            const container = document.getElementById('ingredientsContainer');
+            const row = document.createElement('div');
+            row.className = 'ingredient-row';
+            row.style.marginBottom = '10px';
+            row.innerHTML = `
+                <input type="text" placeholder="Ingredient Name" class="ing-name" value="${name}" required>
+                <input type="text" placeholder="Quantity" class="ing-qty" value="${qty}" required>
+                <button type="button" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function addStepRow(desc = '') {
+            const container = document.getElementById('stepsContainer');
+            const row = document.createElement('div');
+            row.className = 'step-row';
+            row.style.marginBottom = '10px';
+            row.innerHTML = `
+                <textarea rows="2" placeholder="Step description" class="step-desc" required style="width: 80%;">${desc}</textarea>
+                <button type="button" onclick="this.parentElement.remove()" style="vertical-align: top;">Remove</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function handleFormSubmission(e) {
+            e.preventDefault();
+
+            const id = parseInt(document.getElementById('recipeId').value, 10);
+            const r = getRecipeById(id);
+            if (!r) return;
+
+            r.name = document.getElementById('recipeName').value;
+            r.course = document.getElementById('recipeCourse').value;
+            r.description = document.getElementById('recipeDescription').value;
+
+            const ingredientRows = document.querySelectorAll('.ingredient-row');
+            let ingredients = [];
+            ingredientRows.forEach((row, index) => {
+                const iName = row.querySelector('.ing-name').value;
+                const iQty = row.querySelector('.ing-qty').value;
+                ingredients.push({ id: index + 1, name: iName, quantity: iQty });
+            });
+            r.ingredients = ingredients;
+
+            const stepRows = document.querySelectorAll('.step-row');
+            let steps = [];
+            stepRows.forEach((row) => {
+                steps.push(row.querySelector('.step-desc').value);
+            });
+            r.steps = steps;
+
+            updateRecipe(r.id, r);
+            alert("Recipe updated successfully!");
+            window.location.href = "adminDashboard.html";
+        }
+
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            const idParam = params.get('id');
+            const recipe = getRecipeById(parseInt(idParam, 10));
+
+            if (recipe) {
+                document.getElementById('editRecipeForm').style.display = 'block';
+                document.getElementById('recipeId').value = recipe.id;
+                document.getElementById('recipeName').value = recipe.name;
+                document.getElementById('recipeCourse').value = recipe.course;
+                document.getElementById('recipeDescription').value = recipe.description;
+
+                (recipe.ingredients || []).forEach(i => addIngredientRow(i.name, i.quantity));
+                if (!recipe.ingredients || recipe.ingredients.length === 0) addIngredientRow();
+
+                (recipe.steps || []).forEach(s => addStepRow(s));
+                if (!recipe.steps || recipe.steps.length === 0) addStepRow();
+
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        };
+    </script>
+</body>
+
+</html>
