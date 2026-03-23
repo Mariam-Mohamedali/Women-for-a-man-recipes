@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Recipe - Admin Dashboard</title>
     <link rel="stylesheet" href="assets/css/root.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 
 <body>
@@ -14,11 +15,10 @@
         <nav id="main-nav"></nav>
     </header>
 
-    <h2>Edit Recipe</h2>
-    <hr>
-
     <main>
-        <form id="editRecipeForm" onsubmit="handleFormSubmission(event)" style="max-width: 600px; display: none;">
+        <h2>Edit Recipe</h2>
+        <hr>
+        <form id="editRecipeForm" onsubmit="handleFormSubmission(event)" style="display: none;">
             <input type="hidden" id="recipeId">
             <p>
                 <label for="recipeName">Recipe Name:</label><br>
