@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Recipe - Admin Dashboard</title>
     <link rel="stylesheet" href="assets/css/root.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
     <header>
@@ -12,11 +13,10 @@
         <nav id="main-nav"></nav>
     </header>
 
-    <h2>Add New Recipe</h2>
-    <hr>
-
     <main>
-        <form id="addRecipeForm" onsubmit="handleFormSubmission(event)" style="max-width: 600px;">
+        <h2>Add New Recipe</h2>
+        <hr>
+        <form id="addRecipeForm" onsubmit="handleFormSubmission(event)">
             <p>
                 <label for="recipeName">Recipe Name:</label><br>
                 <input type="text" id="recipeName" required style="width: 100%;">
