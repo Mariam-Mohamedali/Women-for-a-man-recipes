@@ -1,9 +1,14 @@
 // recipes.js — Shared recipe data management (localStorage)
-// Recipes are organized by course: breakfast (appetizers), lunch/dinner (main course), dessert
 
-// Seed default recipes if none exist
+
+const RECIPES_SEED_VERSION = 2; // bump this whenever new default recipes are added
+
+// Seed default recipes, and merge any new ones when version is bumped
 function seedRecipes() {
-    if (localStorage.getItem('wfm_recipes')) return;
+    const savedVersion = parseInt(localStorage.getItem('wfm_recipes_version') || '0');
+    const hasData = !!localStorage.getItem('wfm_recipes');
+
+    if (hasData && savedVersion >= RECIPES_SEED_VERSION) return; // already up to date
     const defaults = [
         {
             id: 1, name: 'Falafel', course: 'breakfast',
@@ -193,41 +198,41 @@ function seedRecipes() {
             image: 'assets/images/wrap.jpg'
         }
     ];
-    localStorage.setItem('wfm_recipes', JSON.stringify(defaults));
+    if (!hasData) {
+        // Fresh install: store all defaults
+        localStorage.setItem('wfm_recipes', JSON.stringify(defaults));
+    } else {
+        // Merge: add only defaults whose id doesn't already exist
+        const existing = JSON.parse(localStorage.getItem('wfm_recipes') || '[]');
+        const existingIds = new Set(existing.map(r => r.id));
+        const toAdd = defaults.filter(r => !existingIds.has(r.id));
+        if (toAdd.length > 0) {
+            localStorage.setItem('wfm_recipes', JSON.stringify([...existing, ...toAdd]));
+        }
+    }
+    localStorage.setItem('wfm_recipes_version', String(RECIPES_SEED_VERSION));
 }
 
 function _migrateRecipesData() {
     let recipes = JSON.parse(localStorage.getItem('wfm_recipes') || '[]');
     let changed = false;
-    
-    // Normal max ID for sequential assignments
     let maxNormalId = recipes.reduce((max, r) => (r.id < 100000 ? Math.max(max, r.id) : max), 0);
 
     for (let r of recipes) {
-        // Fix course names
+        // Rename old 'category' field to 'course'
         if (r.category) {
             r.course = r.category;
             delete r.category;
             changed = true;
-        } else if (r.course === 'appetizers') {
-            r.course = 'breakfast';
-            changed = true;
-        } else if (r.course === 'main course') {
-            r.course = 'lunch'; // default if no category
-            changed = true;
         }
-
         // Fix huge IDs
         if (r.id > 100000) {
-            maxNormalId++;
-            r.id = maxNormalId;
+            r.id = ++maxNormalId;
             changed = true;
         }
     }
 
-    if (changed) {
-        localStorage.setItem('wfm_recipes', JSON.stringify(recipes));
-    }
+    if (changed) localStorage.setItem('wfm_recipes', JSON.stringify(recipes));
 }
 
 function getRecipes() {
@@ -280,22 +285,26 @@ function searchRecipes(query) {
     });
 }
 
+// Helper
+function getUser() {
+    return JSON.parse(localStorage.getItem('wfm_user') || 'null');
+}
+
 // Favorites
 function getFavorites() {
-    const user = JSON.parse(localStorage.getItem('wfm_user') || 'null');
-    if (!user) return [];
-    return JSON.parse(localStorage.getItem('wfm_fav_' + user.id) || '[]');
+    const user = getUser();
+    return user ? JSON.parse(localStorage.getItem('wfm_fav_' + user.id) || '[]') : [];
 }
 
 function addFavorite(recipeId) {
-    const user = JSON.parse(localStorage.getItem('wfm_user') || 'null');
+    const user = getUser();
     if (!user) { alert('Please log in to save favorites.'); return; }
     const favs = getFavorites();
     if (!favs.includes(recipeId)) { favs.push(recipeId); localStorage.setItem('wfm_fav_' + user.id, JSON.stringify(favs)); }
 }
 
 function removeFavorite(recipeId) {
-    const user = JSON.parse(localStorage.getItem('wfm_user') || 'null');
+    const user = getUser();
     if (!user) return;
     const favs = getFavorites().filter(id => id !== recipeId);
     localStorage.setItem('wfm_fav_' + user.id, JSON.stringify(favs));
@@ -307,17 +316,16 @@ function isFavorite(recipeId) {
 
 // Ratings
 function rateRecipe(recipeId, stars) {
-    const user = JSON.parse(localStorage.getItem('wfm_user') || 'null');
+    const user = getUser();
     if (!user) { alert('Please log in to rate recipes.'); return; }
-    
-    if (stars < 1 || stars > 5) return; // Invalid rating
+    if (stars < 1 || stars > 5) return;
 
     const recipes = getRecipes();
     const recipe = recipes.find(r => r.id == recipeId);
     if (!recipe) return;
 
     if (!recipe.ratings) recipe.ratings = [];
-    
+
     // Check if user already rated
     const existingIndex = recipe.ratings.findIndex(r => r.userId === user.id);
     if (existingIndex >= 0) {
@@ -325,7 +333,7 @@ function rateRecipe(recipeId, stars) {
     } else {
         recipe.ratings.push({ userId: user.id, stars: stars }); // New rating
     }
-    
+
     saveRecipes(recipes);
 }
 
