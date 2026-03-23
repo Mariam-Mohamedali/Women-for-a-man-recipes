@@ -11,42 +11,79 @@
 
 <body>
     <header>
-        <h1>&#9832; WFM </h1>
+        <h1>&#9832; WFM</h1>
         <nav id="main-nav"></nav>
     </header>
 
-    <h1>My Profile</h1>
-    <hr>
-
     <main>
+        <!-- ── Profile Card ── -->
         <section id="profileInfo">
-            <img src="assets/images/default.png" alt="Profile Picture" width="150" height="150">
-            <h2 id="displayName">Loading...</h2>
-            <p><strong>Email:</strong> <span id="displayEmail"></span></p>
-            <p><strong>Role:</strong> <span id="displayRole"></span></p>
-            <br>
-            <button onclick="logout()" style="padding: 5px 15px; cursor: pointer; ">Logout</button>
+            <div class="profile-banner"></div>
+            <div class="profile-avatar-wrap">
+                <img src="assets/images/default.png" alt="Profile Picture">
+            </div>
+            <div class="profile-body">
+                <h2 id="displayName">Loading...</h2>
+
+                <div class="profile-meta">
+                    <div class="profile-meta-chip">
+                        <span class="chip-icon">✉️</span>
+                        <span class="chip-label">Email</span>
+                        <span id="displayEmail">—</span>
+                    </div>
+                    <div class="profile-meta-chip">
+                        <span class="chip-icon">🎖️</span>
+                        <span class="chip-label">Role</span>
+                        <span id="displayRole">—</span>
+                        <span id="adminBadge" class="badge-admin" style="display:none;">Admin</span>
+                    </div>
+                </div>
+
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
         </section>
 
-        <hr>
+        <!-- ── Stats Row ── -->
+        <div class="profile-stats-row" id="statsRow">
+            <div class="stat-card">
+                <div class="stat-number" id="statFavCount">0</div>
+                <div class="stat-label">❤️ Favorites</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statYear">—</div>
+                <div class="stat-label">📅 Member Since</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statStatus">✓</div>
+                <div class="stat-label">🌟 Status</div>
+            </div>
+        </div>
 
-        <!-- Favorite Recipes Section -->
-        <section>
-            <h3>My Favorite Recipes</h3>
+        <!-- ── Favorite Recipes ── -->
+        <section class="favorites-section">
+            <div class="section-header">
+                <span class="section-icon">❤️</span>
+                <h3>My Favorite Recipes</h3>
+                <span class="section-count" id="favCount">0</span>
+            </div>
             <div id="favoritesArea">
-                <p>No favorites yet. Browse recipes and click "Add to Favorites"!</p>
+                <div class="fav-empty">
+                    <div class="fav-empty-icon">🍽️</div>
+                    <p>No favorites yet. Browse recipes and add some!</p>
+                    <a href="ourRecipes.html"><button>Explore Recipes</button></a>
+                </div>
             </div>
         </section>
     </main>
 
-    <hr>
     <footer>
         <table width="100%" cellpadding="5">
             <tr>
                 <td width="33%">
                     <h3>About</h3>
-                    <p>Women For A Man is a platform that connects people and helps build meaningful relationships
-                        around the world.</p>
+                    <p>Women For A Man is a platform that connects people and helps build meaningful relationships around the world.</p>
                 </td>
                 <td width="33%">
                     <h3>Follow Us</h3>
@@ -64,9 +101,7 @@
             </tr>
         </table>
         <hr>
-        <center>
-            <p>&copy; 2026 — Women For A Man. All Rights Reserved.</p>
-        </center>
+        <center><p>&copy; 2026 — Women For A Man. All Rights Reserved.</p></center>
     </footer>
 
     <script src="assets/js/auth.js"></script>
@@ -78,24 +113,53 @@
         const user = getCurrentUser();
         document.getElementById('displayName').textContent = user.username;
         document.getElementById('displayEmail').textContent = user.email;
-        document.getElementById('displayRole').textContent = user.is_admin ? 'Admin' : 'Regular User';
+        document.getElementById('displayRole').textContent = user.is_admin ? 'Administrator' : 'Member';
+        if (user.is_admin) document.getElementById('adminBadge').style.display = 'inline-block';
+
+        // Course → emoji map
+        const courseEmoji = { breakfast: '🍳', lunch: '🥗', dinner: '🍽️', dessert: '🍰' };
 
         function renderFavorites() {
             const favIds = getFavorites();
             const area = document.getElementById('favoritesArea');
+            const countEl = document.getElementById('favCount');
+
             if (favIds.length === 0) {
-                area.innerHTML = '<p>No favorites yet. Browse recipes and click "Add to Favorites"!</p>';
+                countEl.textContent = '0';
+                if (document.getElementById('statFavCount')) document.getElementById('statFavCount').textContent = '0';
+                area.innerHTML = `
+                    <div class="fav-empty">
+                        <div class="fav-empty-icon">🍽️</div>
+                        <p>No favorites yet. Browse recipes and add some!</p>
+                        <a href="ourRecipes.html"><button>Explore Recipes</button></a>
+                    </div>`;
                 return;
             }
-            const allRecipes = getRecipes();
-            const favRecipes = allRecipes.filter(r => favIds.includes(r.id));
+
+            const favRecipes = getRecipes().filter(r => favIds.includes(r.id));
+            countEl.textContent = favRecipes.length;
+            if (document.getElementById('statFavCount')) document.getElementById('statFavCount').textContent = favRecipes.length;
+
             area.innerHTML = '<ul>' + favRecipes.map(r => `
-                <li style="margin-bottom: 10px;">
-                    <a href="${r.course}Recipes.html#recipe-${r.id}" style="text-decoration: none; color: #333;">
-                        <strong> ${r.name}</strong> (${r.course})
+                <li>
+                    <a href="${r.course}Recipes.html#recipe-${r.id}">
+                        <span class="fav-emoji">${courseEmoji[r.course] || '🍴'}</span>
+                        <span class="fav-info">
+                            <span class="fav-name">${r.name}</span>
+                            <span class="fav-course-tag">${r.course}</span>
+                        </span>
+                        <span class="fav-arrow">›</span>
                     </a>
                 </li>
             `).join('') + '</ul>';
+        }
+
+        // Populate stats row
+        if (document.getElementById('statYear')) {
+            document.getElementById('statYear').textContent = new Date().getFullYear();
+        }
+        if (document.getElementById('statStatus')) {
+            document.getElementById('statStatus').textContent = user.is_admin ? '👑' : '🌸';
         }
 
         renderFavorites();
