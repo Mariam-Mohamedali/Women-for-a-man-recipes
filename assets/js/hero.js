@@ -1,9 +1,3 @@
-/* ============================================================
-   hero.js  —  Professional landing hero for home.html
-   Drop into:  assets/js/hero.js
-   Add to home.html before </body>:
-     <script src="assets/js/hero.js"></script>
-   ============================================================ */
 
 (function () {
   'use strict';
@@ -24,8 +18,8 @@
     }
   ];
 
-  const SLIDE_DURATION = 5500;   // ms each slide is visible
-  const TRANSITION_MS  = 1200;   // must match CSS transition duration
+  const SLIDE_DURATION = 5500;  
+  const TRANSITION_MS  = 1200;   
 
   /* ── STATE ────────────────────────────────────────────────── */
   let current    = 0;
