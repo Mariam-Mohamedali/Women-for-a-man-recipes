@@ -1,12 +1,4 @@
-/* ============================================================
-   home.css  —  Professional design for home.html
-   Uses variables from root.css. Zero HTML changes.
-   Link AFTER root.css:
-     <link rel="stylesheet" href="assets/css/root.css">
-     <link rel="stylesheet" href="assets/css/home.css">
-   ============================================================ */
 
-/* ── GLOBAL SMOOTHING ────────────────────────────────────── */
 *, *::before, *::after {
     box-sizing: border-box;
 }
