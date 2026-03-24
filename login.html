@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/root.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <header>
+        <h1>&#9832; WFM </h1>
+        <nav id="main-nav"></nav>
+    </header>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+        <fieldset>
+            <legend>User_login</legend>
+            <div>
+                <label for="E-mail"> E-mail </label>
+                <input id="E-mail" type="E-mail" placeholder="enter E-mail" name="E-mail" required>
+            </div>
+
+            <div>
+                <label for="Password">Password </label>
+                <input id="Password" type="password" placeholder="enter your Password" name="Password" required>
+
+            </div>
+            <div>
+                <label for="remember"> Remember me</label>
+                <input id="remember" type="checkbox" name="remember">
+            </div>
+            <input type="submit" value="Login">
+            <input type="reset" value="clear">
+
+        </fieldset>
+
+    </form>
+    <div>
+        <p>Don't have an account??</p>
+        <a href="register.html"> Register Here</a>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/recipes.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('E-mail').value;
+            const password = document.getElementById('Password').value;
+            const result = loginUser(email, password);
+            if (result.success) {
+                window.location.href = 'home.html';
+            } else {
+                alert(result.message);
+            }
+        }
+    </script>
+</body>
+
+</html>
