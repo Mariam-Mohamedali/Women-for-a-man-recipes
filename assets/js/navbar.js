@@ -7,256 +7,384 @@
     const style = document.createElement('style');
     style.id = 'wfm-nav-styles';
     style.textContent = `
+    /* ── Nav container (grid: brand | centered links | profile) ── */
+    #main-nav {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+        align-items: center !important;
+        width: 100% !important;
+        max-width: 1280px !important;
+        margin: 0 auto !important;
+        padding: 0 24px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        min-height: 68px !important;
+        height: auto !important;
+        background: transparent !important;
+        gap: 16px !important;
+    }
 
-        /* ── Common nav link hover underline ── */
-        #main-nav a {
-            position: relative;
+    /* ── LEFT: Logo & brand ── */
+    .nav-left {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        flex-shrink: 0 !important;
+        min-width: 0 !important;
+        justify-self: start !important;
+    }
+
+    .nav-brand-lockup {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 12px !important;
+        text-decoration: none !important;
+        color: var(--sand, #C4A882) !important;
+        transition: opacity 0.2s ease, filter 0.2s ease !important;
+    }
+
+    .nav-brand-lockup:hover {
+        opacity: 0.92 !important;
+        filter: brightness(1.06) !important;
+    }
+
+    .nav-brand-icon-img {
+        width: 38px !important;
+        height: 38px !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+        object-fit: contain !important;
+        object-position: center !important;
+    }
+
+    .nav-brand-wfm {
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+        font-size: 1.65rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.08em !important;
+        line-height: 1 !important;
+        color: currentColor !important;
+    }
+
+    /* ── CENTER: Links ── */
+    .nav-center {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        position: static !important;
+        left: auto !important;
+        transform: none !important;
+        justify-self: center !important;
+    }
+
+    .nav-center a {
+        position: relative !important;
+        color: var(--sand, #C4A882) !important;
+        text-decoration: none !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        transition: color 0.2s, background 0.2s !important;
+        white-space: nowrap !important;
+    }
+    .nav-center a::after { display: none !important; }
+    .nav-center a:hover {
+        color: var(--linen, #fff) !important;
+        background: rgba(255,255,255,0.07) !important;
+    }
+
+     /* ── RIGHT ── */
+    .nav-right {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        justify-content: flex-end !important;
+        justify-self: end !important;
+    }
+
+    /* ── Profile button (SVG icon) ── */
+    .nav-profile {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .nav-profile-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 42px !important;
+        height: 42px !important;
+        padding: 0 !important;
+        background: linear-gradient(145deg, rgba(176,125,85,0.18), rgba(196,168,130,0.08)) !important;
+        border: 1.5px solid rgba(176,125,85,0.45) !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s !important;
+        color: var(--clay, #B07D55) !important;
+        user-select: none !important;
+        text-decoration: none !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+    }
+
+    .nav-profile-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .nav-profile-btn:hover {
+        background: linear-gradient(145deg, rgba(176,125,85,0.28), rgba(196,168,130,0.14)) !important;
+        border-color: var(--clay, #B07D55) !important;
+        color: var(--sand, #C4A882) !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.18) !important;
+        transform: translateY(-1px) !important;
+    }
+    .nav-profile-btn:focus-visible {
+        outline: 2px solid var(--clay, #B07D55) !important;
+        outline-offset: 2px !important;
+    }
+    .nav-profile-btn::after { display: none !important; }
+
+    @media (max-width: 720px) {
+        #main-nav {
+            padding: 10px 14px !important;
+            gap: 10px !important;
+            grid-template-columns: 1fr auto !important;
+            grid-template-rows: auto auto !important;
         }
-        #main-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px; left: 0;
-            width: 0; height: 2px;
-            background: var(--clay);
-            border-radius: 2px;
-            transition: width 0.22s ease;
+        .nav-left {
+            grid-column: 1 !important;
+            grid-row: 1 !important;
         }
-        #main-nav a:hover { color: var(--clay); }
-        #main-nav a:hover::after { width: 100%; }
-
-        /* ── Profile emoji button ── */
-        .nav-profile {
-            position: relative;
-            display: flex;
-            align-items: center;
+        .nav-right {
+            grid-column: 2 !important;
+            grid-row: 1 !important;
         }
-
-        .nav-profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(196,168,130,0.12);
-            border: 1.5px solid rgba(196,168,130,0.30);
-            border-radius: 24px;
-            padding: 5px 14px 5px 6px;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-            color: var(--sand);
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            user-select: none;
-            text-decoration: none;
+        .nav-center {
+            grid-column: 1 / -1 !important;
+            grid-row: 2 !important;
+            justify-content: center !important;
         }
-
-        .nav-profile-btn:hover {
-            background: rgba(196,168,130,0.22);
-            border-color: var(--clay);
-            transform: translateY(-1px);
-            color: var(--sand);
+        .nav-brand-wfm {
+            font-size: 1.4rem !important;
         }
-
-        /* Override the underline from common nav link rule */
-        .nav-profile-btn::after { display: none !important; }
-
-        .nav-profile-emoji {
-            font-size: 18px;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background: var(--clay);
-            border-radius: 50%;
+        .nav-brand-icon-img {
+            width: 34px !important;
+            height: 34px !important;
         }
-
-        .nav-profile-chevron {
-            font-size: 10px;
-            opacity: 0.65;
-            transition: transform 0.22s ease;
-            display: inline-block;
+        .nav-center a {
+            font-size: 15px !important;
+            padding: 6px 10px !important;
         }
+    }
 
-        .nav-profile-btn.open .nav-profile-chevron {
-            transform: rotate(180deg);
-        }
+    /* ── Dropdown ── */
+    .nav-dropdown {
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        right: 0 !important;
+        min-width: 228px !important;
+        background: var(--walnut, #3D2B1F) !important;
+        border: 1px solid rgba(196, 168, 130, 0.28) !important;
+        border-radius: 12px !important;
+        padding: 6px 0 !important;
+        box-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.12),
+            0 20px 48px rgba(0, 0, 0, 0.35) !important;
+        opacity: 0 !important;
+        transform: translateY(-6px) scale(0.98) !important;
+        pointer-events: none !important;
+        transition: opacity 0.22s ease, transform 0.22s ease !important;
+        z-index: 2000 !important;
+        overflow: hidden !important;
+    }
 
-        /* ── Dropdown ── */
-        .nav-dropdown {
-            position: absolute;
-            top: calc(100% + 12px);
-            right: 0;
-            min-width: 210px;
-            background: var(--walnut);
-            border: 1px solid rgba(196,168,130,0.22);
-            border-radius: 14px;
-            padding: 8px 0;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.32);
-            opacity: 0;
-            transform: translateY(-8px) scale(0.97);
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            z-index: 2000;
-        }
+    .nav-dropdown.open {
+        opacity: 1 !important;
+        transform: translateY(0) scale(1) !important;
+        pointer-events: auto !important;
+    }
 
-        .nav-dropdown.open {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
-        }
+    .nav-dropdown-header {
+        padding: 14px 18px 12px !important;
+        margin: 0 !important;
+        border-bottom: 1px solid rgba(196, 168, 130, 0.18) !important;
+        background: rgba(0, 0, 0, 0.12) !important;
+    }
 
-        /* Dropdown header — shows user name & role */
-        .nav-dropdown-header {
-            padding: 12px 18px 10px;
-            border-bottom: 1px solid rgba(196,168,130,0.15);
-            margin-bottom: 4px;
-        }
+    .nav-dropdown-username {
+        display: block !important;
+        color: var(--linen, #E8DDD0) !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.01em !important;
+        line-height: 1.3 !important;
+    }
 
-        .nav-dropdown-username {
-            display: block;
-            color: var(--linen);
-            font-size: 14px;
-            font-weight: 700;
-        }
+    .nav-dropdown-role {
+        display: block !important;
+        color: var(--sand, #C4A882) !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        margin-top: 4px !important;
+        letter-spacing: 0.04em !important;
+        text-transform: uppercase !important;
+        opacity: 0.88 !important;
+    }
 
-        .nav-dropdown-role {
-            display: block;
-            color: var(--clay);
-            font-size: 12px;
-            margin-top: 2px;
-        }
+    .nav-dropdown-body {
+        padding: 6px !important;
+    }
 
-        /* Dropdown items */
-        .nav-dropdown a,
-        .nav-dropdown-logout {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 10px 18px;
-            color: var(--sand);
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            transition: background 0.15s, color 0.15s;
-            box-sizing: border-box;
-        }
+    .nav-dropdown a,
+    .nav-dropdown-logout {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 11px 14px !important;
+        border-radius: 8px !important;
+        color: var(--sand, #C4A882) !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer !important;
+        text-align: left !important;
+        transition: background 0.15s ease, color 0.15s ease !important;
+        box-sizing: border-box !important;
+    }
 
-        /* Remove underline animation from dropdown links */
-        .nav-dropdown a::after { display: none !important; }
+    .nav-dropdown a::after { display: none !important; }
 
-        .nav-dropdown a:hover {
-            background: rgba(196,168,130,0.10);
-            color: var(--linen);
-        }
+    .nav-dropdown a:hover {
+        background: rgba(196, 168, 130, 0.14) !important;
+        color: var(--linen, #E8DDD0) !important;
+    }
 
-        .nav-dropdown-divider {
-            height: 1px;
-            background: rgba(196,168,130,0.15);
-            margin: 4px 0;
-        }
+    .nav-dropdown-divider {
+        height: 1px !important;
+        background: rgba(196, 168, 130, 0.16) !important;
+        margin: 6px 8px !important;
+    }
 
-        .nav-dropdown-logout {
-            color: #e07878 !important;
-            font-family: inherit;
-            font-size: 14px;
-        }
+    .nav-dropdown-logout {
+        color: #c97a7a !important;
+        font-family: inherit !important;
+        font-size: 14px !important;
+    }
 
-        .nav-dropdown-logout:hover {
-            background: rgba(220,80,80,0.10) !important;
-            color: #ff9595 !important;
-        }
+    .nav-dropdown-logout:hover {
+        background: rgba(200, 100, 100, 0.12) !important;
+        color: #e8a0a0 !important;
+    }
 
-    `;
+`;
     document.head.appendChild(style);
 })();
+
+function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
 
 /* ── Build the navbar ───────────────────────────────────────── */
 function buildNavbar() {
     const user = JSON.parse(localStorage.getItem('wfm_user') || 'null');
     const nav = document.getElementById('main-nav');
     if (!nav) return;
-
     nav.innerHTML = '';
 
-    // Common links for everyone
-    nav.insertAdjacentHTML('beforeend', `
+    const leftDiv = document.createElement('div');
+    leftDiv.className = 'nav-left';
+    leftDiv.innerHTML = `
+        <a href="home.html" class="nav-brand-lockup" aria-label="WFM Home">
+            
+            <span class="nav-brand-wfm">WFM</span>
+        </a>
+    `;
+    nav.appendChild(leftDiv);
+
+    const centerDiv = document.createElement('div');
+    centerDiv.className = 'nav-center';
+    centerDiv.innerHTML = `
         <a href="home.html">Home</a>
         <a href="ourRecipes.html">Our Recipes</a>
         <a href="aboutUs.html">About Us</a>
-    `);
-
-    if (!user) {
-        // ── Guest: Login + Register ──
-        nav.insertAdjacentHTML('beforeend', `
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-        `);
-
-    } else if (user.is_admin) {
-        // ── Admin: extra links + profile emoji dropdown ──
-        nav.insertAdjacentHTML('beforeend', `
+    `;
+    if (user && user.is_admin) {
+        centerDiv.insertAdjacentHTML('beforeend', `
             <a href="adminDashboard.html">Manage Recipes</a>
             <a href="addRecipe.html">Add Recipe</a>
         `);
-        nav.appendChild(buildProfileEmoji(user, 'Admin'));
-
-    } else {
-        // ── Regular user: profile emoji dropdown only ──
-        nav.appendChild(buildProfileEmoji(user, 'Member'));
     }
+    nav.appendChild(centerDiv);
+
+    const rightDiv = document.createElement('div');
+    rightDiv.className = 'nav-right';
+    rightDiv.appendChild(buildProfileDropdown(user));
+    nav.appendChild(rightDiv);
 }
 
-/* ── Build profile emoji button + dropdown ─────────────────── */
-function buildProfileEmoji(user, roleLabel) {
-    // Support whatever field name your backend stores the name under
-    const displayName = user.username
-        || user.name
-        || user.full_name
-        || user.firstName
-        || user.email
-        || 'Profile';
-
-    // Derive role label from the user object itself so it's always accurate
-    const role = user.is_admin ? 'Admin' : (user.role || roleLabel || 'Member');
-
-    // Wrapper
+/* ── Build profile icon + dropdown ─────────────────────────── */
+function buildProfileDropdown(user) {
     const wrapper = document.createElement('div');
     wrapper.className = 'nav-profile';
-
-    // Trigger button
     const btn = document.createElement('a');
     btn.className = 'nav-profile-btn';
     btn.href = '#';
     btn.setAttribute('aria-haspopup', 'true');
     btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = `
-        <span class="nav-profile-emoji">👤</span>
-        <span class="nav-profile-name">${displayName}</span>
-        <span class="nav-profile-chevron">▾</span>
-    `;
+    btn.setAttribute('aria-label', 'Account menu');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 
-    // Dropdown menu
     const dropdown = document.createElement('div');
     dropdown.className = 'nav-dropdown';
-    dropdown.innerHTML = `
-        <div class="nav-dropdown-header">
-            <span class="nav-dropdown-username">${displayName}</span>
-        </div>
-        <a href="profilePage.html">👤 &nbsp;My Profile</a>
-        <div class="nav-dropdown-divider"></div>
-        <button class="nav-dropdown-logout" onclick="logout()">🚪 &nbsp;Logout</button>
-    `;
+
+    if (!user) {
+        dropdown.innerHTML = `
+            <div class="nav-dropdown-header">
+                <span class="nav-dropdown-username">Welcome!</span>
+                <span class="nav-dropdown-role">Not signed in</span>
+            </div>
+            <div class="nav-dropdown-body">
+                <a href="login.html">🔑 &nbsp;Login</a>
+                <a href="register.html">📝 &nbsp;Register</a>
+            </div>
+        `;
+    } else {
+        const displayName = user.username || user.name || user.full_name || user.firstName || user.email || 'Profile';
+        const roleLabel = user.is_admin ? 'Admin' : 'Member';
+        const safeName = escapeHtml(displayName);
+        dropdown.innerHTML = `
+            <div class="nav-dropdown-header">
+                <span class="nav-dropdown-username">${safeName}</span>
+                <span class="nav-dropdown-role">${roleLabel}</span>
+            </div>
+            <div class="nav-dropdown-body">
+                <a href="profilePage.html">👤 &nbsp;My Profile</a>
+                <div class="nav-dropdown-divider"></div>
+                <button type="button" class="nav-dropdown-logout" onclick="logout()">🚪 &nbsp;Logout</button>
+            </div>
+        `;
+    }
 
     wrapper.appendChild(btn);
     wrapper.appendChild(dropdown);
 
-    // ── Toggle open / close ──
     btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -264,45 +392,27 @@ function buildProfileEmoji(user, roleLabel) {
         closeAllDropdowns();
         if (!isOpen) {
             dropdown.classList.add('open');
-            btn.classList.add('open');
             btn.setAttribute('aria-expanded', 'true');
         }
     });
 
-    // Close when clicking anywhere outside
-    document.addEventListener('click', function () {
-        closeAllDropdowns();
-    });
-
-    // Stop clicks inside the dropdown from bubbling and closing it
-    dropdown.addEventListener('click', function (e) {
-        e.stopPropagation();
-    });
-
-    // Close on Escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeAllDropdowns();
-    });
+    document.addEventListener('click', function () { closeAllDropdowns(); });
+    dropdown.addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAllDropdowns(); });
 
     return wrapper;
 }
 
 /* ── Close all open dropdowns ───────────────────────────────── */
 function closeAllDropdowns() {
-    document.querySelectorAll('.nav-dropdown.open').forEach(function (d) {
-        d.classList.remove('open');
-    });
-    document.querySelectorAll('.nav-profile-btn.open').forEach(function (b) {
-        b.classList.remove('open');
-        b.setAttribute('aria-expanded', 'false');
-    });
+    document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+    document.querySelectorAll('.nav-profile-btn[aria-expanded="true"]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
 }
 
-/* ── Logout ─────────────────────────────────────────────────── */
+/* ── Logout ────────────────────────────────────────────────── */
 function logout() {
     localStorage.removeItem('wfm_user');
     window.location.href = 'login.html';
 }
 
-// Run on page load
 document.addEventListener('DOMContentLoaded', buildNavbar);
