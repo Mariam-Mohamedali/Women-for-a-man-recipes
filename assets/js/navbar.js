@@ -18,7 +18,7 @@
         padding: 0 24px !important;
         box-sizing: border-box !important;
         position: relative !important;
-        min-height: 68px !important;
+        min-height: 52px !important;
         height: auto !important;
         background: transparent !important;
         gap: 16px !important;
@@ -61,10 +61,10 @@
     }
 
     .nav-brand-wfm {
-        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif !important;
-        font-size: 1.65rem !important;
-        font-weight: 800 !important;
-        letter-spacing: 0.08em !important;
+        font-family: 'Playfair Display', Georgia, serif !important;
+        font-size: 1.35rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.06em !important;
         line-height: 1 !important;
         color: currentColor !important;
     }
@@ -86,17 +86,24 @@
         position: relative !important;
         color: var(--sand, #C4A882) !important;
         text-decoration: none !important;
-        font-size: 16px !important;
-        font-weight: 600 !important;
-        padding: 8px 14px !important;
-        border-radius: 8px !important;
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.02em !important;
+        padding: 6px 11px !important;
+        border-radius: 7px !important;
         transition: color 0.2s, background 0.2s !important;
         white-space: nowrap !important;
     }
     .nav-center a::after { display: none !important; }
     .nav-center a:hover {
-        color: var(--linen, #fff) !important;
+        color: var(--linen, #E8DDD0) !important;
         background: rgba(255,255,255,0.07) !important;
+    }
+    .nav-center a.nav-active {
+        color: var(--linen, #E8DDD0) !important;
+        background: rgba(196,168,130,0.13) !important;
+        font-weight: 600 !important;
     }
 
      /* ── RIGHT ── */
@@ -119,8 +126,8 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        width: 42px !important;
-        height: 42px !important;
+        width: 36px !important;
+        height: 36px !important;
         padding: 0 !important;
         background: linear-gradient(145deg, rgba(176,125,85,0.18), rgba(196,168,130,0.08)) !important;
         border: 1.5px solid rgba(176,125,85,0.45) !important;
@@ -332,6 +339,13 @@ function buildNavbar() {
         `);
     }
     nav.appendChild(centerDiv);
+
+    // Highlight active page
+    const currentPage = window.location.pathname.split('/').pop() || 'home.html';
+    centerDiv.querySelectorAll('a').forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) link.classList.add('nav-active');
+    });
 
     const rightDiv = document.createElement('div');
     rightDiv.className = 'nav-right';
