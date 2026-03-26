@@ -51,6 +51,7 @@ form label {
 }
 
 input[type="text"],
+input[type="url"],
 select,
 textarea {
     width: 100%;
@@ -61,6 +62,32 @@ textarea {
     font-size: 14px;
     margin-bottom: 15px;
     box-sizing: border-box;
+    background-color: #fdfaf6;
+    color: var(--walnut);
+}
+
+input[type="file"] {
+    display: block;
+    padding: 10px;
+    border: 2px dashed var(--linen);
+    border-radius: 8px;
+    background-color: #fdfaf6;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--walnut);
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    transition: border-color 0.2s ease;
+}
+
+input[type="file"]:hover {
+    border-color: var(--clay);
+}
+
+form p {
+    margin-bottom: 5px;
 }
 
 input:focus,
@@ -85,3 +112,90 @@ textarea:focus {
 .step-row textarea {
     flex: 1;
 }
+
+/* ── Responsive ── */
+
+/* Tablet */
+@media (max-width: 768px) {
+    main {
+        margin: 20px 16px;
+        padding: 24px 20px;
+        border-radius: 12px;
+    }
+
+    /* Table: hide ID column, stack actions */
+    table {
+        font-size: 13px;
+    }
+
+    th:first-child,
+    td:first-child {
+        display: none; /* hide ID column */
+    }
+
+    th, td {
+        padding: 10px 10px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    main {
+        margin: 12px 10px;
+        padding: 18px 14px;
+        border-radius: 10px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    /* Stack table rows as cards */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        border: 1px solid var(--linen);
+        border-radius: 10px;
+        margin-bottom: 12px;
+        padding: 10px 12px;
+        background: #fdfaf6;
+    }
+
+    td {
+        border: none;
+        padding: 4px 0;
+        font-size: 13px;
+    }
+
+    td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--walnut);
+        margin-right: 6px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    /* ingredient & step rows stack vertically */
+    .ingredient-row,
+    .step-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .ingredient-row input,
+    .step-row textarea {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 4px;
+    }
+}
