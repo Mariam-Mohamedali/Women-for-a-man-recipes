@@ -298,7 +298,7 @@ function getFavorites() {
 
 function addFavorite(recipeId) {
     const user = getUser();
-    if (!user) { alert('Please log in to save favorites.'); return; }
+    if (!user) { showToast('Please log in to save favorites.', 'warning'); return; }
     const favs = getFavorites();
     if (!favs.includes(recipeId)) { favs.push(recipeId); localStorage.setItem('wfm_fav_' + user.id, JSON.stringify(favs)); }
 }
@@ -317,7 +317,7 @@ function isFavorite(recipeId) {
 // Ratings
 function rateRecipe(recipeId, stars) {
     const user = getUser();
-    if (!user) { alert('Please log in to rate recipes.'); return; }
+    if (!user) { showToast('Please log in to rate recipes.', 'warning'); return; }
     if (stars < 1 || stars > 5) return;
 
     const recipes = getRecipes();

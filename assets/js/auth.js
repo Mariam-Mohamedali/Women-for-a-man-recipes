@@ -26,15 +26,15 @@ function getCurrentUser() {
 function requireAdmin() {
     const user = getCurrentUser();
     if (!user || !user.is_admin) {
-        alert('Access denied. Admins only.');
-        window.location.href = 'home.html';
+        showToast('Access denied. Admins only.', 'error');
+        setTimeout(() => window.location.href = 'home.html', 1500);
     }
 }
 
 function requireLogin() {
     const user = getCurrentUser();
     if (!user) {
-        alert('Please log in first.');
-        window.location.href = 'login.html';
+        showToast('Please log in first.', 'warning');
+        setTimeout(() => window.location.href = 'login.html', 1500);
     }
 }
