@@ -128,38 +128,6 @@ main {
     animation: pulse 2.5s ease infinite;
 }
 
-/* ── Button row ── */
-.btn-logout {
-    background: transparent !important;
-    color: #c0392b !important;
-    border: 2px solid #c0392b !important;
-    border-radius: 50px !important;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px !important;
-    font-weight: 600;
-    padding: 11px 32px !important;
-    cursor: pointer;
-    transition: all var(--transition) !important;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    animation: fadeIn 0.7s ease 0.5s both;
-    letter-spacing: 0.3px;
-}
-
-.btn-logout:hover {
-    background: linear-gradient(135deg, #c0392b, #e74c3c) !important;
-    color: white !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(192, 57, 43, 0.32) !important;
-    border-color: transparent !important;
-}
-
-.btn-logout:active {
-    transform: translateY(0px);
-}
-
-
 .profile-stats-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
