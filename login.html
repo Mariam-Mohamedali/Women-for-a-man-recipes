@@ -9,9 +9,7 @@
 </head>
 
 <body>
-    <header>
-        <h1>&#9832; WFM </h1>
-        <nav id="main-nav"></nav>
+    <header>        <nav id="main-nav"></nav>
     </header>
 
     <form id="loginForm" onsubmit="handleLogin(event)">
@@ -42,6 +40,7 @@
         <a href="register.html"> Register Here</a>
     </div>
 
+    <script src="assets/js/toast.js"></script>
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/recipes.js"></script>
     <script src="assets/js/navbar.js"></script>
@@ -54,7 +53,7 @@
             if (result.success) {
                 window.location.href = 'home.html';
             } else {
-                alert(result.message);
+                showToast(result.message, 'error');
             }
         }
     </script>
