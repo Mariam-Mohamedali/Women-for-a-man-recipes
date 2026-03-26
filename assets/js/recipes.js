@@ -1,6 +1,5 @@
 // recipes.js — Shared recipe data management (localStorage)
 
-
 const RECIPES_SEED_VERSION = 2; // bump this whenever new default recipes are added
 
 // Seed default recipes, and merge any new ones when version is bumped

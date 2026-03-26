@@ -17,6 +17,7 @@ body > footer {
 }
 
 body > section:nth-of-type(2) { animation-delay: 0.12s; }
+body > section:nth-of-type(3) { animation-delay: 0.18s; }
 body > footer                  { animation-delay: 0.22s; }
 
 section:first-of-type {
@@ -188,13 +189,13 @@ section:first-of-type > p {
     padding: 0 60px;
 }
 
-section:nth-of-type(2) {
+section:nth-of-type(3) {
     background-color: var(--linen);
     padding: 80px 72px 88px;
     position: relative;
 }
 
-section:nth-of-type(2)::before {
+section:nth-of-type(3)::before {
     content: '';
     position: absolute;
     top: 0; left: 72px; right: 72px;
@@ -203,13 +204,13 @@ section:nth-of-type(2)::before {
     opacity: 0.4;
 }
 
-section:nth-of-type(2) h2 {
+section:nth-of-type(3) h2 {
     font-size: var(--h2-size);
     margin-bottom: 8px;
     position: relative;
 }
 
-section:nth-of-type(2) h2::after {
+section:nth-of-type(3) h2::after {
     content: '';
     display: block;
     width: 60px;
@@ -220,7 +221,7 @@ section:nth-of-type(2) h2::after {
     margin-bottom: 32px;
 }
 
-section:nth-of-type(2) ul {
+section:nth-of-type(3) ul {
     list-style: none;
     padding: 0;
     margin: 0 0 44px;
@@ -230,7 +231,7 @@ section:nth-of-type(2) ul {
     max-width: 100%;
 }
 
-section:nth-of-type(2) ul li {
+section:nth-of-type(3) ul li {
     background: var(--parchment);
     border-radius: 18px;
     padding: 28px 24px;
@@ -244,7 +245,7 @@ section:nth-of-type(2) ul li {
     counter-increment: features;
 }
 
-section:nth-of-type(2) ul li::before {
+section:nth-of-type(3) ul li::before {
     content: counter(features, decimal-leading-zero);
     display: block;
     font-size: 28px;
@@ -255,37 +256,37 @@ section:nth-of-type(2) ul li::before {
     line-height: 1;
 }
 
-section:nth-of-type(2) ul {
+section:nth-of-type(3) ul {
     counter-reset: features;
 }
 
-section:nth-of-type(2) ul li:hover {
+section:nth-of-type(3) ul li:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 40px rgba(61,43,31,0.10);
 }
 
-section:nth-of-type(2) ul li strong {
+section:nth-of-type(3) ul li strong {
     display: block;
     color: var(--clay);
     font-size: 17px;
     margin-bottom: 8px;
 }
 
-section:nth-of-type(2) > a {
+section:nth-of-type(3) > a {
     display: inline-block;
     margin-right: 14px;
 }
 
-section:nth-of-type(2) > a:last-of-type { margin-right: 0; }
+section:nth-of-type(3) > a:last-of-type { margin-right: 0; }
 
-section:nth-of-type(2) > a:last-of-type button {
+section:nth-of-type(3) > a:last-of-type button {
     background-color: transparent;
     color: var(--clay);
     border: 2px solid var(--clay);
     box-shadow: none;
 }
 
-section:nth-of-type(2) > a:last-of-type button:hover {
+section:nth-of-type(3) > a:last-of-type button:hover {
     background-color: var(--clay);
     color: #fff;
     transform: translateY(-2px);
@@ -297,20 +298,20 @@ section:nth-of-type(2) > a:last-of-type button:hover {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-section:nth-of-type(2) ul li {
+section:nth-of-type(3) ul li {
     opacity: 0;
 }
 
-section:nth-of-type(2) ul li.visible {
+section:nth-of-type(3) ul li.visible {
     animation: slideUp 0.55s ease both;
 }
 
-section:nth-of-type(2) ul li.visible:nth-child(1) { animation-delay: 0s;    }
-section:nth-of-type(2) ul li.visible:nth-child(2) { animation-delay: 0.12s; }
-section:nth-of-type(2) ul li.visible:nth-child(3) { animation-delay: 0.24s; }
+section:nth-of-type(3) ul li.visible:nth-child(1) { animation-delay: 0s;    }
+section:nth-of-type(3) ul li.visible:nth-child(2) { animation-delay: 0.12s; }
+section:nth-of-type(3) ul li.visible:nth-child(3) { animation-delay: 0.24s; }
 
 section:first-of-type + hr,
-section:nth-of-type(2) + hr {
+section:nth-of-type(3) + hr {
     border: none;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--linen), transparent);
@@ -437,9 +438,9 @@ footer center p {
     .hero-text h2 { font-size: 40px !important; }
     .hero-dots  { right: 36px; }
 
-    section:nth-of-type(2) { padding: 60px 36px 68px; }
-    section:nth-of-type(2)::before { left: 36px; right: 36px; }
-    section:nth-of-type(2) ul { grid-template-columns: 1fr 1fr; }
+    section:nth-of-type(3) { padding: 60px 36px 68px; }
+    section:nth-of-type(3)::before { left: 36px; right: 36px; }
+    section:nth-of-type(3) ul { grid-template-columns: 1fr 1fr; }
 
     footer { padding: 52px 36px 28px; }
 }
@@ -450,17 +451,17 @@ footer center p {
     .hero-text { padding: 0 24px 56px; }
     .hero-dots  { right: 24px; }
 
-    section:nth-of-type(2) { padding: 52px 20px 56px; }
-    section:nth-of-type(2)::before { left: 20px; right: 20px; }
-    section:nth-of-type(2) ul { grid-template-columns: 1fr; }
+    section:nth-of-type(3) { padding: 52px 20px 56px; }
+    section:nth-of-type(3)::before { left: 20px; right: 20px; }
+    section:nth-of-type(3) ul { grid-template-columns: 1fr; }
 
-    section:nth-of-type(2) > a {
+    section:nth-of-type(3) > a {
         display: block;
         margin-right: 0;
         margin-bottom: 12px;
     }
 
-    section:nth-of-type(2) > a button { width: 100%; }
+    section:nth-of-type(3) > a button { width: 100%; }
 
     footer { padding: 44px 20px 24px; }
     footer table,
@@ -470,5 +471,142 @@ footer center p {
         display: block;
         width: 100% !important;
         padding: 0 0 36px;
+    }
+}
+
+/* =========================================
+   NEW SECTIONS: Categories, Trending, Testimonials
+   ========================================= */
+
+/* Categories Showcase - Premium Design */
+.home-categories {
+    padding: 80px 72px;
+    text-align: left;
+}
+
+.home-categories h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.category-card {
+    height: 240px;
+    border-radius: var(--card-radius);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.category-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 0;
+}
+
+.category-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30, 20, 15, 0.85) 0%, rgba(30, 20, 15, 0.25) 50%, rgba(30, 20, 15, 0) 100%);
+    z-index: 1;
+    transition: background 0.4s ease;
+}
+
+.category-content {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    color: white;
+    text-align: left;
+    transform: translateY(12px);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.category-content h3 {
+    color: white;
+    font-size: 24px;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.02em;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.explore-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--sand);
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease, color 0.3s ease;
+}
+
+.explore-btn .arrow {
+    margin-left: 6px;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: inline-block;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(61, 43, 31, 0.15);
+}
+
+.category-card:hover .category-img {
+    transform: scale(1.08);
+}
+
+.category-card:hover .category-overlay {
+    background: linear-gradient(to top, rgba(30, 20, 15, 0.95) 0%, rgba(30, 20, 15, 0.3) 60%, rgba(30, 20, 15, 0) 100%);
+}
+
+.category-card:hover .category-content {
+    transform: translateY(0);
+}
+
+.category-card:hover .explore-btn {
+    opacity: 1;
+    color: white;
+}
+
+.category-card:hover .explore-btn .arrow {
+    transform: translateX(6px);
+}
+
+/* Responsive updates for categories */
+@media (max-width: 960px) {
+    .home-categories {
+        padding: 60px 36px;
+    }
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 680px) {
+    .home-categories {
+        padding: 52px 20px;
+    }
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+    .category-card {
+        height: 180px;
     }
 }
