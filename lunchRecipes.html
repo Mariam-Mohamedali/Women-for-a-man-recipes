@@ -1,139 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lunch Recipes</title>
-    <link rel="stylesheet" href="assets/css/root.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lunch Recipes</title>
+  <link rel="stylesheet" href="assets/css/root.css">
 </head>
+
 <body>
-    <header>        <nav id="main-nav"></nav>
-    </header>
+  <header>
+    <nav id="main-nav"></nav>
+  </header>
 
-    <h2>Lunch Recipes</h2>
-    <hr>
+  <h2>Lunch Recipes</h2>
+  <hr>
 
-   
-    <div id="allRecipes"></div>
+  <div id="allRecipes"></div>
 
-    <footer>
-      <table width="100%" cellpadding="5">
-        <tr>
-          <td width="33%">
-            <h3>About</h3>
-            <p>Women For A Man is a platform that connects people and helps build meaningful relationships around the world.</p>
-          </td>
-          <td width="33%">
-            <h3>Follow Us</h3>
-            <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
-            <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
-            <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
-            <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
-          </td>
-          <td width="33%">
-            <h3>Contact</h3>
-            <a href="contactUs.html"><button>Contact Us</button></a>
-            <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
-            <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-          </td>
-        </tr>
-      </table>
-      <hr>
-      <center><p>&copy; 2026 â€” Women For A Man. All Rights Reserved.</p></center>
-    </footer>
+  <footer>
+    <table width="100%" cellpadding="5">
+      <tr>
+        <td width="33%">
+          <h3>About</h3>
+          <p>Women For A Man is a platform that connects people and helps build meaningful relationships around the
+            world.</p>
+        </td>
+        <td width="33%">
+          <h3>Follow Us</h3>
+          <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
+          <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
+          <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
+          <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
+        </td>
+        <td width="33%">
+          <h3>Contact</h3>
+          <a href="contactUs.html"><button>Contact Us</button></a>
+          <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
+          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+        </td>
+      </tr>
+    </table>
+  </footer>
 
-    <script src="assets/js/auth.js"></script>
-    <script src="assets/js/recipes.js"></script>
-    <script src="assets/js/navbar.js"></script>
-    <script>
-        function recipeCard(r) {
-            const fav = isFavorite(r.id);
-            const avgRating = getAverageRating(r);
-            const user = getCurrentUser();
-            let myRating = 0;
-            if (user && r.ratings) {
-                const found = r.ratings.find(x => x.userId === user.id);
-                if (found) myRating = found.stars;
-            }
-
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                const isSelected = i <= myRating ? 'color:gold;' : 'color:lightgray;';
-                starsHtml += `<span style="font-size:30px; cursor:pointer; ${isSelected}" onclick="submitRating(${r.id}, ${i})">★</span>`;
-            }
-
-            return `
-            <div id="recipe-${r.id}" style="border:1px solid #ddd; padding:10px; margin-bottom:15px;">
-                <h2> - ${r.name}</h2>
-                ${r.image ? `<img src="${r.image}" style="height:200px;width:200px;" alt="${r.name}">` : ''}
-                
-                <h3>Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐</h3>
-                <div id="ratingSection-${r.id}">
-                    <p><strong>Rate this recipe:</strong></p>
-                    ${starsHtml}
-                </div>
-                <br>
-                <button onclick="toggleFavorite(${r.id}, this)">${fav ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}</button>
-
-                <h3>Description</h3>
-                <p>${r.description}</p>
-                
-                <h3>Ingredients</h3>
-                <ul>${(r.ingredients||[]).map(i=>`<li> ${i.name} (${i.quantity})</li>`).join('')}</ul>
-                
-                <h3>Preparation Steps</h3>
-                <ol>${(r.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
-                <p><strong>Bon Appetit!</strong></p>
-            </div>`;
-        }
-
-        function submitRating(id, stars) {
-            rateRecipe(id, stars);
-            const r = getRecipeById(id);
-            document.getElementById('avgRating-' + id).innerText = getAverageRating(r);
-            const ratingSection = document.getElementById('ratingSection-' + id);
-            if (ratingSection) {
-                const starSpans = ratingSection.querySelectorAll('span');
-                starSpans.forEach((s, idx) => {
-                    if (idx < stars) s.style.color = 'gold';
-                    else s.style.color = 'lightgray';
-                });
-            }
-        }
-
-        function renderAll() {
-            const recipes = getRecipesByCategory('lunch');
-            document.getElementById('allRecipes').innerHTML = recipes.length
-                ? recipes.map(recipeCard).join('<hr>')
-                : '<p>No lunch recipes found.</p>';
-        }
-
-        function toggleFavorite(id, btn) {
-            if (isFavorite(id)) { removeFavorite(id); btn.textContent = '🤍 Add to Favorites'; }
-            else { addFavorite(id); btn.textContent = '❤️ Remove from Favorites'; }
-        }
-
-        function runSearch(e) {
-            e.preventDefault();
-            const q = document.getElementById('searchInput').value.trim();
-            if (!q) { clearSearch(); return; }
-            const results = searchRecipes(q).filter(r => r.category === 'lunch');
-            const area = document.getElementById('searchResults');
-            document.getElementById('allRecipes').style.display = 'none';
-            area.innerHTML = results.length
-                ? `<p>Results for "<strong>${q}</strong>":</p>` + results.map(recipeCard).join('<hr>')
-                : `<p>No lunch recipes found for "<strong>${q}</strong>".</p>`;
-        }
-
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchResults').innerHTML = '';
-            document.getElementById('allRecipes').style.display = '';
-        }
-
-        renderAll();
-    </script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/recipes.js"></script>
+  <script src="assets/js/recipeUI.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script>
+    renderCategoryRecipes('lunch');
+    function runSearch(e) { runCategorySearch(e, 'lunch'); }
+    function clearSearch() { clearCategorySearch(); }
+  </script>
 </body>
+
 </html>
-
-
