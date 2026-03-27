@@ -611,12 +611,18 @@ function buildNavbar() {
         <a href="ourRecipes.html">Our Recipes</a>
         <a href="aboutUs.html">About Us</a>
     `;
-    if (user && user.is_admin) {
+    if (user) {
         centerDiv.insertAdjacentHTML('beforeend', `
-            <a href="adminDashboard.html">Manage Recipes</a>
             <a href="addRecipe.html">Add Recipe</a>
         `);
     }
+    if (user && user.is_admin) {
+        centerDiv.insertAdjacentHTML('beforeend', `
+            <a href="adminDashboard.html">Manage Recipes</a>
+        `);
+    }
+
+
     nav.appendChild(centerDiv);
 
     const rightDiv = document.createElement('div');
@@ -674,7 +680,7 @@ function buildProfileDropdown(user) {
     wrapper.appendChild(btn);
     wrapper.appendChild(dropdown);
 
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         const isOpen = dropdown.classList.contains('open');
@@ -685,8 +691,8 @@ function buildProfileDropdown(user) {
         }
     });
 
-    document.addEventListener('click', function() { closeAllDropdowns(); });
-    dropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+    document.addEventListener('click', function () { closeAllDropdowns(); });
+    dropdown.addEventListener('click', function (e) { e.stopPropagation(); });
 
     return wrapper;
 }
@@ -702,7 +708,7 @@ function buildHamburger() {
         <span class="nav-hamburger-line"></span>
         <span class="nav-hamburger-line"></span>
     `;
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
         e.stopPropagation();
         toggleMobileMenu();
     });
@@ -724,6 +730,8 @@ function buildMobileMenu(user) {
 
     const adminLinks = isAdmin ? `
         <a href="adminDashboard.html">⚙️ &nbsp;Manage Recipes</a>
+    ` : '';
+    const userLinks = user ? `
         <a href="addRecipe.html">➕ &nbsp;Add Recipe</a>
     ` : '';
 
@@ -768,13 +776,14 @@ function buildMobileMenu(user) {
                 <a href="ourRecipes.html">📖 &nbsp;Our Recipes</a>
                 <a href="aboutUs.html">ℹ️ &nbsp;About Us</a>
                 ${adminLinks}
+                ${userLinks}
             </div>
             ${userSection}
         </div>
     `;
 
     overlay.querySelector('#nav-mobile-backdrop').addEventListener('click', closeMobileMenu);
-    overlay.querySelectorAll('.nav-mobile-links a, .nav-mobile-user a').forEach(function(link) {
+    overlay.querySelectorAll('.nav-mobile-links a, .nav-mobile-user a').forEach(function (link) {
         link.addEventListener('click', closeMobileMenu);
     });
 
@@ -798,7 +807,7 @@ function toggleMobileMenu() {
         document.body.classList.add('nav-menu-open');
         const panel = menu.querySelector('.nav-mobile-panel');
         if (panel) {
-            setTimeout(function() {
+            setTimeout(function () {
                 const first = panel.querySelector('button, a, [tabindex]');
                 if (first) first.focus();
             }, 50);
@@ -820,11 +829,11 @@ function closeMobileMenu() {
 }
 
 function closeAllDropdowns() {
-    document.querySelectorAll('.nav-dropdown.open').forEach(function(d) { d.classList.remove('open'); });
-    document.querySelectorAll('.nav-profile-btn[aria-expanded="true"]').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+    document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+    document.querySelectorAll('.nav-profile-btn[aria-expanded="true"]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
 }
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         closeMobileMenu();
         closeAllDropdowns();
