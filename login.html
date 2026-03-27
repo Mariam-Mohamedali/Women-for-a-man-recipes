@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <header>        <nav id="main-nav"></nav>
+    <header>
+        <nav id="main-nav"></nav>
     </header>
 
     <form id="loginForm" onsubmit="handleLogin(event)">
@@ -44,19 +45,7 @@
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/recipes.js"></script>
     <script src="assets/js/navbar.js"></script>
-    <script>
-        function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('E-mail').value;
-            const password = document.getElementById('Password').value;
-            const result = loginUser(email, password);
-            if (result.success) {
-                window.location.href = 'home.html';
-            } else {
-                showToast(result.message, 'error');
-            }
-        }
-    </script>
+    <script src="assets/js/login.js"></script>
 </body>
 
 </html>
