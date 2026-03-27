@@ -92,85 +92,9 @@
 
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/recipes.js"></script>
+    <script src="assets/js/recipeUI.js"></script>
     <script src="assets/js/navbar.js"></script>
-    <script>
-        function recipeCard(r) {
-            const fav = isFavorite(r.id);
-            const avgRating = getAverageRating(r);
-            const user = getCurrentUser();
-            let myRating = 0;
-            if (user && r.ratings) {
-                const found = r.ratings.find(x => x.userId === user.id);
-                if (found) myRating = found.stars;
-            }
-
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                const isSelected = i <= myRating ? 'color:gold;' : 'color:lightgray;';
-                starsHtml += `<span style="font-size:30px; cursor:pointer; ${isSelected}" onclick="submitRating(${r.id}, ${i})">★</span>`;
-            }
-
-            return `
-            <div id="recipe-${r.id}">
-                <h2> - ${r.name}</h2>
-                ${r.image ? `<img src="${r.image}" style="height:200px;width:200px;border-radius:12px;object-fit:cover;" alt="${r.name}">` : ''}
-                <h3>Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐</h3>
-                <div id="ratingSection-${r.id}">
-                    <p><strong>Rate this recipe:</strong></p>
-                    ${starsHtml}
-                </div>
-                <br>
-                <button onclick="toggleFavorite(${r.id}, this)">${fav ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}</button>
-                <h3>Description</h3>
-                <p>${r.description}</p>
-                <h3>Ingredients</h3>
-                <ul>${(r.ingredients||[]).map(i=>`<li> ${i.name} (${i.quantity})</li>`).join('')}</ul>
-                <h3>Preparation Steps</h3>
-                <ol>${(r.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
-                <p><strong>Bon Appetit!</strong></p>
-            </div>`;
-        }
-
-        function submitRating(id, stars) {
-            rateRecipe(id, stars);
-            const r = getRecipeById(id);
-            document.getElementById('avgRating-' + id).innerText = getAverageRating(r);
-            const ratingSection = document.getElementById('ratingSection-' + id);
-            if (ratingSection) {
-                const starSpans = ratingSection.querySelectorAll('span');
-                starSpans.forEach((s, idx) => {
-                    if (idx < stars) s.style.color = 'gold';
-                    else s.style.color = 'lightgray';
-                });
-            }
-        }
-
-        function toggleFavorite(id, btn) {
-            if (isFavorite(id)) { removeFavorite(id); btn.textContent = '🤍 Add to Favorites'; }
-            else { addFavorite(id); btn.textContent = '❤️ Remove from Favorites'; }
-        }
-
-        function runGlobalSearch(e) {
-            e.preventDefault();
-            const q = document.getElementById('globalSearchInput').value.trim();
-            if (!q) { clearGlobalSearch(); return; }
-
-            const results = searchRecipes(q);
-            const area = document.getElementById('searchResultsArea');
-            document.getElementById('categoriesSection').style.display = 'none';
-
-            area.style.display = 'block';
-            area.innerHTML = results.length
-                ? `<h3>Search Results for "${q}"</h3><hr>` + results.map(recipeCard).join('<hr>')
-                : `<h3>No recipes found for "${q}".</h3>`;
-        }
-
-        function clearGlobalSearch() {
-            document.getElementById('globalSearchInput').value = '';
-            document.getElementById('searchResultsArea').style.display = 'none';
-            document.getElementById('categoriesSection').style.display = 'grid';
-        }
-    </script>
+    <script src="assets/js/ourRecipes.js"></script>
 </body>
 
 </html>
