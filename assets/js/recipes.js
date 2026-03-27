@@ -1,11 +1,19 @@
 // recipes.js — Shared recipe data management (localStorage)
 
-const RECIPES_SEED_VERSION = 2; // bump this whenever new default recipes are added
+var RECIPES_SEED_VERSION = 2; // bump this whenever new default recipes are added
 
 // Seed default recipes, and merge any new ones when version is bumped
 function seedRecipes() {
-    const savedVersion = parseInt(localStorage.getItem('wfm_recipes_version') || '0');
-    const hasData = !!localStorage.getItem('wfm_recipes');
+    var savedVersionString = localStorage.getItem('wfm_recipes_version');
+    var savedVersion = 0;
+    if (savedVersionString !== null) {
+        savedVersion = parseInt(savedVersionString);
+    }
+
+    var hasData = false;
+    if (localStorage.getItem('wfm_recipes') !== null) {
+        hasData = true;
+    }
 
     if (hasData && savedVersion >= RECIPES_SEED_VERSION) return; // already up to date
     const defaults = [
