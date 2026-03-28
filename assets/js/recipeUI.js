@@ -3,7 +3,7 @@
 function recipeCard(r) {
     const fav = isFavorite(r.id);
     const avgRating = getAverageRating(r);
-    const user = getCurrentUser();
+    const user = getUser();
     let myRating = 0;
     if (user && r.ratings) {
         const found = r.ratings.find(x => x.userId === user.id);
