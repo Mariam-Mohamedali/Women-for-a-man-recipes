@@ -15,27 +15,27 @@ h2 {
 }
 
 /* ── Tables ── */
-table {
+main table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-th,
-td {
+main th,
+main td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid var(--linen);
 }
 
-th {
+main th {
     background: var(--linen);
     color: var(--walnut);
     font-family: 'Inter', sans-serif;
     font-weight: 600;
 }
 
-tr:hover td {
+main tr:hover td {
     background-color: rgba(232, 221, 208, 0.3);
 }
 
@@ -179,18 +179,18 @@ textarea:focus {
     }
 
     /* Table: hide ID column, stack actions */
-    table {
+    main table {
         font-size: 13px;
     }
 
-    th:first-child,
-    td:first-child {
+    main th:first-child,
+    main td:first-child {
         display: none;
         /* hide ID column */
     }
 
-    th,
-    td {
+    main th,
+    main td {
         padding: 10px 10px;
     }
 }
@@ -208,20 +208,20 @@ textarea:focus {
     }
 
     /* Stack table rows as cards */
-    table,
-    thead,
-    tbody,
-    th,
-    td,
-    tr {
+    main table,
+    main thead,
+    main tbody,
+    main th,
+    main td,
+    main tr {
         display: block;
     }
 
-    thead {
+    main thead {
         display: none;
     }
 
-    tr {
+    main tr {
         border: 1px solid var(--linen);
         border-radius: 10px;
         margin-bottom: 12px;
@@ -229,13 +229,13 @@ textarea:focus {
         background: #fdfaf6;
     }
 
-    td {
+    main td {
         border: none;
         padding: 4px 0;
         font-size: 13px;
     }
 
-    td:before {
+    main td:before {
         content: attr(data-label);
         font-weight: 600;
         color: var(--walnut);

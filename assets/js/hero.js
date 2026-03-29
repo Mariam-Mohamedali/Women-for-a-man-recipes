@@ -229,7 +229,7 @@
 
   /* ── SCROLL REVEAL for feature cards ─────────────────────── */
   function initScrollReveal () {
-    const items = document.querySelectorAll('section:nth-of-type(3) ul li');
+    const items = document.querySelectorAll('.why-join-section ul li');
     if (!items.length) return;
 
     const observer = new IntersectionObserver(function (entries) {
