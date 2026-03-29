@@ -1,0 +1,107 @@
+/* =========================================================
+   Recipe Details CSS (assets/css/recipeDetails.css)
+   =========================================================
+   This file is intended to style the recipe details page. 
+   Currently, the JavaScript generates elements with inline styles.
+   To see these styles fully apply, consider removing or 
+   reducing the "style='...'" attributes in recipeDetails.js!
+   ========================================================= */
+
+/* Main Container */
+#recipe-detail-container {
+    background-color: #fcfcfc;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+    /* Overriding inline padding temporarily using !important */
+    padding: 50px !important; 
+    margin-top: 30px !important;
+    margin-bottom: 50px !important;
+}
+
+/* Hero Section (Image + Title) */
+#recipe-detail-container > div:first-of-type {
+    /* Targeting the first flex wrapper */
+    align-items: flex-start;
+}
+
+/* Recipe Image */
+#recipe-detail-container > div:first-of-type > div:first-child img {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#recipe-detail-container > div:first-of-type > div:first-child img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Recipe Info / Title */
+#recipe-detail-container h1 {
+    font-family: inherit;
+    letter-spacing: -0.5px;
+    margin-bottom: 15px !important;
+}
+
+/* Action Buttons (Fav) */
+#recipe-detail-container button {
+    background-color: #fff;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+#recipe-detail-container button:hover {
+    background-color: #f7f7f7;
+    border-color: #ccc;
+    transform: translateY(-2px);
+}
+
+/* Rating Section Box */
+div[id^="ratingSection-"] {
+    border: 1px solid #eaeaea;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Divider */
+#recipe-detail-container hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+    margin: 50px 0 !important;
+}
+
+/* Headings in content section */
+#recipe-detail-container h2 {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Ingredients List */
+#recipe-detail-container ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#recipe-detail-container ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: padding-left 0.2s ease;
+}
+
+#recipe-detail-container ul li:hover {
+    padding-left: 10px;
+    color: #000;
+    background-color: #fbfbfb;
+}
+
+/* Steps List */
+#recipe-detail-container ol li {
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 15px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    border: 1px solid #f9f9f9;
+}
