@@ -1,0 +1,362 @@
+.main_about_section {
+    padding: 80px 10%;
+    background-color: transparent;
+    margin-top: 80px;
+}
+
+.about_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+
+.aboutimg {
+    position: relative;
+}
+
+.aboutimg_border {
+    position: relative;
+}
+
+.about_img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+    box-shadow: 15px 15px 0px var(--linen);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about_img:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 20px 20px 0px var(--clay);
+}
+
+
+.about-sub-tag {
+    color: var(--clay);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.about_text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--walnut);
+    line-height: 1.2;
+    margin-bottom: 25px;
+}
+
+.about_text p {
+    color: var(--walnut);
+    line-height: 1.8;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.vision-highlight {
+    background: var(--linen);
+    padding: 30px;
+    border-radius: 15px;
+    margin: 30px 0;
+    border-left: 4px solid var(--clay);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vision-highlight:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.vision-highlight h4 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+    color: var(--walnut);
+}
+
+.vision-highlight p {
+    margin-bottom: 0;
+    color: var(--walnut);
+    opacity: 0.85;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .about_container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about_text h2 {
+        font-size: 2.2rem;
+    }
+
+    .about_img {
+        height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main_about_section {
+        padding: 60px 5%;
+        margin-top: 70px;
+    }
+
+    .about_text h2 {
+        font-size: 1.8rem;
+    }
+
+    .vision-highlight {
+        padding: 20px;
+    }
+}
+
+footer {
+    background: linear-gradient(135deg, var(--walnut) 0%, #2a1e15 100%);
+    color: var(--sand);
+    padding: 70px 10% 40px;
+    position: relative;
+    margin-top: 80px;
+}
+
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--clay), var(--sand), var(--clay), transparent);
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(196, 168, 130, 0.15);
+    margin-bottom: 40px;
+}
+
+.footer-col h4 {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--clay);
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 35px;
+    height: 1.5px;
+    background: var(--clay);
+    opacity: 0.6;
+    transition: width 0.4s ease-out;
+}
+
+.footer-col:hover h4::after {
+    width: 50px;
+    opacity: 1;
+}
+
+/* About Description */
+.about-description {
+    color: var(--sand);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin-bottom: 0;
+}
+
+.footer-col p {
+    color: var(--sand);
+    font-size: 0.9rem;
+    margin: 10px 0;
+    line-height: 1.6;
+    opacity: 0.8;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.footer-col p:hover {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.footer-col p i {
+    width: 28px;
+    display: inline-block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
+}
+
+.footer-col p:hover i {
+    opacity: 1;
+}
+
+
+.social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(196, 168, 130, 0.08);
+    color: var(--sand);
+    font-size: 1.1rem;
+    border-radius: 50%;
+    transition: all 0.25s ease-out;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    background: var(--clay);
+    color: var(--walnut);
+    transform: translateY(-3px);
+}
+
+
+.contact-pill-modern {
+    display: inline-block;
+    padding: 10px 28px;
+    background: transparent;
+    border: 1.5px solid var(--clay);
+    color: var(--clay);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.25s ease-out;
+    margin-bottom: 20px;
+}
+
+.contact-pill-modern:hover {
+    background: var(--clay);
+    color: var(--walnut);
+    transform: translateY(-2px);
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.75rem;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+}
+
+.copyright p {
+    margin: 0;
+    transition: opacity 0.25s ease;
+}
+
+.copyright p:hover {
+    opacity: 0.8;
+}
+
+
+@media (max-width: 768px) {
+    footer {
+        padding: 50px 5% 30px;
+        margin-top: 60px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+    .footer-col h4 {
+        display: inline-block;
+    }
+
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-col:hover h4::after {
+        width: 50px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .contact-pill-modern {
+        display: inline-block;
+    }
+
+    .footer-col p:hover {
+        transform: translateX(0);
+    }
+
+    .about-description {
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-col {
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.footer-col:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.footer-col:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.footer-col:nth-child(3) {
+    animation-delay: 0.15s;
+}
