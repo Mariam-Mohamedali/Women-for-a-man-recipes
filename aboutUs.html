@@ -12,10 +12,27 @@
     <link rel="stylesheet" href="assets/css/aboutUs.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>About Us | Women For A Man</title>
+    <script>
+        window.addEventListener('load', function () {
+            const elements = document.querySelectorAll('header, section, .why-join-section, .callout-section, footer, h2, p, ul, button, img');
 
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 1s ease';
+
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                }, index * 30);
+            });
+        });
+    </script>
 </head>
 
+
+
 <body>
+
+
     <header>
         <nav id="main-nav"></nav>
     </header>
@@ -87,6 +104,11 @@
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/recipes.js"></script>
     <script src="assets/js/navbar.js"></script>
+
+
+
+
+
 </body>
 
 </html>
