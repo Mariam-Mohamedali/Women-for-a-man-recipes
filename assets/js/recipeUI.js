@@ -1,5 +1,4 @@
 // Shared UI functions for displaying and interacting with recipes
-
 function recipeCard(r) {
     const fav = isFavorite(r.id);
     const avgRating = getAverageRating(r);
@@ -17,27 +16,19 @@ function recipeCard(r) {
     }
 
     return `
-    <div id="recipe-${r.id}" style="border:1px solid #ddd; padding:10px; margin-bottom:15px; border-radius: 8px;">
-        <h2> - ${r.name}</h2>
-        ${r.image ? `<img src="${r.image}" style="height:200px;width:200px;border-radius:12px;object-fit:cover;" alt="${r.name}">` : ''}
+    <div id="recipe-${r.id}" style="border:1px solid #ddd; padding:15px; margin-bottom:15px; border-radius: 8px; display: flex; flex-direction: column; gap: 10px; max-width: 400px; display: inline-block; margin-right: 15px; vertical-align: top;">
+        <h2 style="margin: 0;"><a href="recipeDetails.html?id=${r.id}" style="text-decoration: none; color: inherit;">${r.name}</a></h2>
         
-        <h3>Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐</h3>
-        <div id="ratingSection-${r.id}">
-            <p><strong>Rate this recipe:</strong></p>
-            ${starsHtml}
+        ${r.image ? `<a href="recipeDetails.html?id=${r.id}"><img src="${r.image}" style="height:200px;width:100%;border-radius:12px;object-fit:cover;" alt="${r.name}"></a>` : ''}
+        
+        <h4 style="margin: 5px 0;">Average Rating: <span id="avgRating-${r.id}">${avgRating}</span> / 5.0 ⭐</h4>
+        
+        <p style="margin: 0; color: #555;">${r.description.length > 80 ? r.description.substring(0, 80) + '...' : r.description}</p>
+        
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <a href="recipeDetails.html?id=${r.id}"><button style="padding: 8px 15px; cursor: pointer;">Full Recipe</button></a>
+            <button onclick="toggleFavorite(${r.id}, this)" style="padding: 8px 15px; cursor: pointer;">${fav ? '❤️ Remove' : '🤍 Add to Favorites'}</button>
         </div>
-        <br>
-        <button onclick="toggleFavorite(${r.id}, this)">${fav ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}</button>
-
-        <h3>Description</h3>
-        <p>${r.description}</p>
-        
-        <h3>Ingredients</h3>
-        <ul>${(r.ingredients || []).map(i => `<li>${i.name} (${i.quantity})</li>`).join('')}</ul>
-        
-        <h3>Preparation Steps</h3>
-        <ol>${(r.steps || []).map(s => `<li>${s}</li>`).join('')}</ol>
-        <p><strong>Bon Appetit!</strong></p>
     </div>`;
 }
 
@@ -65,7 +56,7 @@ function renderCategoryRecipes(course) {
     const container = document.getElementById('allRecipes');
     if (container) {
         container.innerHTML = recipes.length
-            ? recipes.map(recipeCard).join('<hr>')
+            ? recipes.map(recipeCard).join('')
             : `<p>No ${course} recipes found.</p>`;
     }
 }
@@ -83,7 +74,7 @@ function runCategorySearch(e, course) {
     if (allArea) allArea.style.display = 'none';
     if (area) {
         area.innerHTML = results.length
-            ? `<p>Results for "<strong>${q}</strong>":</p>` + results.map(recipeCard).join('<hr>')
+            ? `<p>Results for "<strong>${q}</strong>":</p><br>` + results.map(recipeCard).join('')
             : `<p>No ${course} recipes found for "<strong>${q}</strong>".</p>`;
     }
 }
