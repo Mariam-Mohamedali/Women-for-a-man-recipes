@@ -27,12 +27,55 @@
 
     <hr>
 
+<<<<<<< HEAD
     <div class="register-hero">
         
         <div class="register-hero-text">
             <h2>Join Our Community</h2>
             <p>Create an account and start saving your favourite recipes.</p>
         </div>
+=======
+    <form id="registerForm">
+        <fieldset>
+            <legend>Create Account</legend>
+
+            <div>
+                <label for="username">Username</label>
+                <input id="username" type="text" placeholder="Enter username" name="username" required autofocus>
+            </div>
+
+            <div>
+                <label for="email">E-mail</label>
+                <input id="email" type="email" placeholder="Enter e-mail" name="email" required>
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="Enter your password" name="password" required>
+            </div>
+
+            <div>
+                <label for="confirm">Confirm Password</label>
+                <input id="confirm" type="password" placeholder="Confirm your password" name="confirm" required>
+            </div>
+
+            <div>
+                <label>Account Type</label><br>
+                <input id="role_user" type="radio" name="is_admin" value="false" required checked>
+                <label for="role_user">Regular User</label>
+                &nbsp;&nbsp;
+                <input id="role_admin" type="radio" name="is_admin" value="true">
+                <label for="role_admin">Admin</label>
+            </div>
+            <br>
+            <input type="submit" value="Register">
+            <input type="reset" value="Clear">
+        </fieldset>
+    </form>
+
+    <div>
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+>>>>>>> e7367a4eea80dbd12ddc776510189a7bed418279
     </div>
 
     <hr>
