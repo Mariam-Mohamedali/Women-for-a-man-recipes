@@ -27,6 +27,7 @@ div[id^="recipe-"] h2 {
     font-weight: 700;
     color: #2c3e50;
     transition: color 0.2s ease;
+    text-align: center;
 }
 
 div[id^="recipe-"] h2 a:hover {
@@ -37,6 +38,7 @@ div[id^="recipe-"] h2 a:hover {
 div[id^="recipe-"] img {
     border-radius: 8px !important;
     transition: opacity 0.3s ease;
+    margin-top: 8px;
 }
 
 div[id^="recipe-"]:hover img {
