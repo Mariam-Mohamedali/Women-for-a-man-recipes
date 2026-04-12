@@ -34,7 +34,7 @@ function renderFavorites() {
 
     area.innerHTML = '<ul>' + favRecipes.map(r => `
         <li>
-            <a href="${r.course}Recipes.html#recipe-${r.id}">
+            <a href="recipeDetails.html?id=${r.id}">
                 <span class="fav-emoji">${courseEmoji[r.course] || '🍴'}</span>
                 <span class="fav-info">
                     <span class="fav-name">${r.name}</span>
@@ -50,8 +50,6 @@ function renderFavorites() {
 if (document.getElementById('statYear')) {
     document.getElementById('statYear').textContent = new Date().getFullYear();
 }
-if (document.getElementById('statStatus') && user) {
-    document.getElementById('statStatus').textContent = user.is_admin ? '👑' : '🌸';
-}
+
 
 renderFavorites();
