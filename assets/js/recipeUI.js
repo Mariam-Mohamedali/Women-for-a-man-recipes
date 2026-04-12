@@ -5,8 +5,8 @@ function recipeCard(r) {
     const user = getUser();
     let myRating = 0;
     if (user && r.ratings) {
-        const found = r.ratings.find(x => x.userId === user.id);
-        if (found) myRating = found.stars;
+        const found = r.ratings.find(x => x.userId == user.id);
+        if (found) myRating = Number(found.stars);
     }
 
     let starsHtml = '';

@@ -14,7 +14,7 @@
   <header>
     <nav id="main-nav"></nav>
   </header>
-  <hr>
+  
   <section>
     <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=400&fit=crop"
       alt="Delicious food spread" width="1200" height="400">
@@ -22,18 +22,6 @@
     <h2>Welcome to Women For A Man</h2>
     <p>Your home for authentic, delicious recipes from the Middle East and beyond.</p>
     <p>Browse Breakfast, Lunch, Dinner &amp; Dessert  all made with love.</p>
-  </section>
-
-  <hr>
-
-  <section class="why-join-section">
-    <h2>Why Join Our Community?</h2>
-    <ul>
-      <li><strong>Discover:</strong> Browse through appetizers, main courses, and desserts.</li>
-      <li><strong>Search:</strong> Find exactly what you are craving by dish name or ingredient.</li>
-      <li><strong>Save:</strong> Create an account to save recipes to your personal favorites list!</li>
-    </ul>
-    <a href="register.html"><button>Create an Account</button></a>
   </section>
 
   <!-- Callout Banner Section (Professional Transition) -->
@@ -48,36 +36,49 @@
     </div>
   </section>
 
-  <hr>
-
+  <section class="why-join-section">
+    <h2>Why Join Our Community?</h2>
+    <ul>
+      <li><strong>Discover:</strong> Browse through appetizers, main courses, and desserts.</li>
+      <li><strong>Search:</strong> Find exactly what you are craving by dish name or ingredient.</li>
+      <li><strong>Save:</strong> Create an account to save recipes to your personal favorites list!</li>
+    </ul>
+    <div class="why-join-btn-wrapper">
+      <a href="register.html" class="banner-btn">Create an Account <span class="arrow">→</span></a>
+    </div>
+  </section>
 
   <footer>
-    <table width="100%" cellpadding="5">
-      <tr>
-        <td width="33%">
-          <h3>About</h3>
-          <p>Women For A Man is a platform that connects people and helps build meaningful relationships around the
-            world.</p>
-        </td>
-        <td width="33%">
-          <h3>Follow Us</h3>
-          <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"></a>
-          <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"></a>
-          <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"></a>
-          <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"></a>
-        </td>
-        <td width="33%">
-          <h3>Contact</h3>
-          <a href="contactUs.html"><button>Contact Us</button></a>
-          <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
-          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-        </td>
-      </tr>
-    </table>
-    <hr>
-    <center>
-      <p>&copy; 2026 � Women For A Man. All Rights Reserved.</p>
-    </center>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>FOLLOW US</h4>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>ABOUT</h4>
+          <p class="about-description">A curated space for those who value quality, authenticity, and
+            meaningful connection.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>GET IN TOUCH</h4>
+          <a href="contactUs.html" class="contact-pill-modern">Contact Us</a>
+          <p><i class="fas fa-envelope"></i> contact@wfm.com</p>
+          <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>© 2026 — Women For A Man. All Rights Reserved.</p>
+      </div>
+    </div>
   </footer>
 
   <script src="assets/js/auth.js"></script>
