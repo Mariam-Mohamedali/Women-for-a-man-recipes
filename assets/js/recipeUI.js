@@ -61,29 +61,4 @@ function renderCategoryRecipes(course) {
     }
 }
 
-function runCategorySearch(e, course) {
-    e.preventDefault();
-    const q = document.getElementById('searchInput').value.trim();
-    if (!q) { clearCategorySearch(); return; }
 
-    // Fixed bug where r.category was used instead of r.course
-    const results = searchRecipes(q).filter(r => r.course === course);
-
-    const area = document.getElementById('searchResults');
-    const allArea = document.getElementById('allRecipes');
-    if (allArea) allArea.style.display = 'none';
-    if (area) {
-        area.innerHTML = results.length
-            ? `<p>Results for "<strong>${q}</strong>":</p><br>` + results.map(recipeCard).join('')
-            : `<p>No ${course} recipes found for "<strong>${q}</strong>".</p>`;
-    }
-}
-
-function clearCategorySearch() {
-    const input = document.getElementById('searchInput');
-    if (input) input.value = '';
-    const area = document.getElementById('searchResults');
-    if (area) area.innerHTML = '';
-    const allArea = document.getElementById('allRecipes');
-    if (allArea) allArea.style.display = '';
-}
