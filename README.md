@@ -203,10 +203,15 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 👩‍💻 Author
+## 👩‍💻 Authors & Collaborators
 
-**Mariam Mohamedali**
-- GitHub: [@Mariam-Mohamedali](https://github.com/Mariam-Mohamedali)
+- **Mariam Mohamedali** — GitHub: [@Mariam-Mohamedali](https://github.com/Mariam-Mohamedali)
+- **Saged Amr**
+- **Shaza Mosad**
+- **Angham Maher**
+- **Dima Adel**
+- **Esraa Hosni**
+
 
 ---
 
