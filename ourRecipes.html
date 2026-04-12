@@ -22,11 +22,10 @@
             <form id="globalSearchForm" onsubmit="runGlobalSearch(event)">
                 <input id="globalSearchInput" type="search" placeholder="Search any recipe by name or ingredient...">
                 <button type="submit" class="btn-search">🔍 Search</button>
-                <button type="button" class="btn-clear" onclick="clearGlobalSearch()">✕ Clear</button>
             </form>
         </section>
 
-        <div id="searchResultsArea" style="display:none;"></div>
+        <p id="searchNoResult" style="display:none; color:var(--clay); margin-top:12px; font-size:0.9rem; text-align:center;"></p>
 
         <!-- ── Category Cards ── -->
         <section id="categoriesSection">

@@ -1,20 +1,16 @@
 function runGlobalSearch(e) {
     e.preventDefault();
     const q = document.getElementById('globalSearchInput').value.trim();
-    if (!q) { clearGlobalSearch(); return; }
+    if (!q) return;
 
     const results = searchRecipes(q);
-    const area = document.getElementById('searchResultsArea');
-    document.getElementById('categoriesSection').style.display = 'none';
 
-    area.style.display = 'block';
-    area.innerHTML = results.length
-        ? `<h3>Search Results for "${q}"</h3><hr>` + results.map(recipeCard).join('<hr>')
-        : `<h3>No recipes found for "${q}".</h3>`;
+    if (results.length > 0) {
+        window.location.href = `recipeDetails.html?id=${results[0].id}`;
+    } else {
+        const msg = document.getElementById('searchNoResult');
+        msg.textContent = `No recipes found for "${q}".`;
+        msg.style.display = 'block';
+    }
 }
 
-function clearGlobalSearch() {
-    document.getElementById('globalSearchInput').value = '';
-    document.getElementById('searchResultsArea').style.display = 'none';
-    document.getElementById('categoriesSection').style.display = 'grid';
-}
