@@ -57,8 +57,8 @@ function buildNavbar() {
     rightDiv.appendChild(buildProfileDropdown(user));
     rightDiv.appendChild(buildHamburger());
     nav.appendChild(rightDiv);
-
     document.body.appendChild(buildMobileMenu(user));
+    nav.style.visibility = 'visible';
 }
 
 function buildProfileDropdown(user) {
@@ -111,14 +111,14 @@ function buildProfileDropdown(user) {
         e.preventDefault();
         e.stopPropagation();
         const isOpen = dropdown.classList.contains('open');
-        closeAllDropdowns();
         if (!isOpen) {
             dropdown.classList.add('open');
             btn.setAttribute('aria-expanded', 'true');
         }
+        closeAllDropdowns();
     });
 
-    document.addEventListener('click', function () { closeAllDropdowns(); });
+    document.addEventListener('click', function (e) { e.closeAllDropdowns(); });
     dropdown.addEventListener('click', function (e) { e.stopPropagation(); });
 
     return wrapper;

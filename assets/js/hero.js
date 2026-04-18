@@ -2,7 +2,6 @@
 (function () {
   'use strict';
 
-  /* ── CONFIG ───────────────────────────────────────────────── */
   const SLIDES = [
     {
       url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&h=900&fit=crop',
@@ -18,22 +17,19 @@
     }
   ];
 
-  const SLIDE_DURATION = 5500;  
-  const TRANSITION_MS  = 1200;   
+  const SLIDE_DURATION = 5500;
+  const TRANSITION_MS = 1200;
 
-  /* ── STATE ────────────────────────────────────────────────── */
-  let current    = 0;
-  let timer      = null;
-  let progTimer  = null;
-  let isPaused   = false;
+  let current = 0;
+  let timer = null;
+  let progTimer = null;
+  let isPaused = false;
 
-  /* ── DOM REFERENCES ───────────────────────────────────────── */
   let section, originalImg, heroWrap, slideEls, dotsEl, dotEls,
-      progressEl, heroText;
+    progressEl, heroText;
 
-  /* ── INIT ─────────────────────────────────────────────────── */
-  function init () {
-    section     = document.querySelector('section:first-of-type');
+  function init() {
+    section = document.querySelector('section:first-of-type');
     originalImg = section.querySelector('img');
     if (!section || !originalImg) return;
 
@@ -46,13 +42,10 @@
     initParallax();
   }
 
-  /* ── BUILD DOM ────────────────────────────────────────────── */
-  function buildDOM () {
-    /* 1 — hero wrapper */
+  function buildDOM() {
     heroWrap = document.createElement('div');
     heroWrap.className = 'hero-wrap';
 
-    /* 2 — slide layers */
     slideEls = SLIDES.map(function (s, i) {
       const el = document.createElement('div');
       el.className = 'hero-slide';
@@ -62,7 +55,6 @@
       return el;
     });
 
-    /* 3 — hero text overlay (reads existing HTML text) */
     const existingH2 = section.querySelector('h2');
     const existingPs = section.querySelectorAll('p');
 
@@ -120,8 +112,7 @@
     existingPs.forEach(function (p) { p.style.display = 'none'; });
   }
 
-  /* ── GO TO SLIDE ──────────────────────────────────────────── */
-  function goTo (index, instant) {
+  function goTo(index, instant) {
     const prev = current;
     current = (index + SLIDES.length) % SLIDES.length;
 
@@ -151,31 +142,28 @@
     startProgress();
   }
 
-  /* ── PROGRESS BAR ─────────────────────────────────────────── */
-  function startProgress () {
+  function startProgress() {
     clearInterval(progTimer);
     progressEl.style.transition = 'none';
-    progressEl.style.width      = '0%';
+    progressEl.style.width = '0%';
     void progressEl.offsetWidth;
     progressEl.style.transition = 'width ' + SLIDE_DURATION + 'ms linear';
-    progressEl.style.width      = '100%';
+    progressEl.style.width = '100%';
   }
 
-  /* ── AUTO SLIDE ───────────────────────────────────────────── */
-  function startAuto () {
+  function startAuto() {
     stopAuto();
     timer = setInterval(function () {
       if (!isPaused) goTo(current + 1);
     }, SLIDE_DURATION);
   }
 
-  function stopAuto () {
+  function stopAuto() {
     clearInterval(timer);
     timer = null;
   }
 
-  /* ── EVENTS ───────────────────────────────────────────────── */
-  function bindEvents () {
+  function bindEvents() {
     /* Pause on hover */
     heroWrap.addEventListener('mouseenter', function () { isPaused = true; });
     heroWrap.addEventListener('mouseleave', function () { isPaused = false; });
@@ -197,20 +185,18 @@
     /* Keyboard */
     document.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto(); }
-      if (e.key === 'ArrowLeft')  { stopAuto(); goTo(current - 1); startAuto(); }
+      if (e.key === 'ArrowLeft') { stopAuto(); goTo(current - 1); startAuto(); }
     });
   }
 
-  /* ── PRELOAD IMAGES ───────────────────────────────────────── */
-  function preloadImages () {
+  function preloadImages() {
     SLIDES.forEach(function (s) {
       const img = new Image();
       img.src = s.url;
     });
   }
 
-  /* ── PARALLAX ON SCROLL ───────────────────────────────────── */
-  function initParallax () {
+  function initParallax() {
     window.addEventListener('scroll', function () {
       const scrollY = window.scrollY;
       if (scrollY > window.innerHeight) return;
@@ -222,13 +208,12 @@
       });
       /* Fade hero text on scroll */
       const fade = Math.max(0, 1 - scrollY / 320);
-      heroText.style.opacity  = fade;
+      heroText.style.opacity = fade;
       heroText.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
     }, { passive: true });
   }
 
-  /* ── SCROLL REVEAL for feature cards ─────────────────────── */
-  function initScrollReveal () {
+  function initScrollReveal() {
     const items = document.querySelectorAll('.why-join-section ul li');
     if (!items.length) return;
 
@@ -244,7 +229,6 @@
     items.forEach(function (el) { observer.observe(el); });
   }
 
-  /* ── KICK OFF ─────────────────────────────────────────────── */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

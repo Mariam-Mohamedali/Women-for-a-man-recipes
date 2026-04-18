@@ -1,4 +1,3 @@
-// recipes.js — Shared recipe data management (localStorage)
 
 var RECIPES_SEED_VERSION = 2; // bump this whenever new default recipes are added
 
@@ -220,7 +219,7 @@ function seedRecipes() {
     localStorage.setItem('wfm_recipes_version', String(RECIPES_SEED_VERSION));
 }
 
-function _migrateRecipesData() {
+function migrateRecipesData() {
     let recipes = JSON.parse(localStorage.getItem('wfm_recipes') || '[]');
     let changed = false;
     let maxNormalId = recipes.reduce((max, r) => (r.id < 100000 ? Math.max(max, r.id) : max), 0);
@@ -258,7 +257,7 @@ function _migrateRecipesData() {
 
 function getRecipes() {
     seedRecipes();
-    _migrateRecipesData();
+    migrateRecipesData();
     return JSON.parse(localStorage.getItem('wfm_recipes') || '[]');
 }
 

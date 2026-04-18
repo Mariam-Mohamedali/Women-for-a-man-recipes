@@ -12,6 +12,7 @@
         height: auto !important;
         background: transparent !important;
         gap: 16px !important;
+        visibility: hidden;
     }
 
     .nav-left {

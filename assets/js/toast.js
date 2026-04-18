@@ -1,6 +1,6 @@
 // toast.js — Simple toast notification system
 
-function showToast(message, type = 'info', duration = 3000) {
+function showToast(message, type = 'info', duration = 2000) {
     // Create container if it doesn't exist
     let container = document.getElementById('toast-container');
     if (!container) {
