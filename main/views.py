@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
+from .models import Recipe
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Recipe, Favourite
-from .forms import RegisterForm, LoginForm, RecipeForm
+from .forms import RegisterForm, LoginForm
+
 
 
 # ─────────────────────────────
@@ -22,43 +23,53 @@ def home(request):
 # ─────────────────────────────
 def register_view(request):
     if request.user.is_authenticated:
-        return redirect('home')
-
+        return redirect('home') # If he's logged in, tell him to go to the homepage
+    
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+<<<<<<< HEAD
             messages.success(request, f'Account created successfully! Please log in.')
             return redirect('login')
+=======
+            login(request, user)  
+            messages.success(request, f'Welcome {user.username}! 🎉')
+            return redirect('home')
+        else:
+            messages.error(request, 'Please fix the errors below.')
+>>>>>>> 5871678 (solve model.py)
     else:
         form = RegisterForm()
-
+    
     return render(request, 'accounts/register.html', {'form': form})
 
 
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('home')
-
+    
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             messages.success(request, f'Welcome back, {user.username}! ')
+            
             next_url = request.GET.get('next', 'home')
             return redirect(next_url)
         else:
             messages.error(request, 'Invalid username or password.')
     else:
         form = LoginForm(request)
-
+    
     return render(request, 'accounts/login.html', {'form': form})
 
 
 def logout_view(request):
     logout(request)
     messages.info(request, 'You have been logged out.')
+<<<<<<< HEAD
     return redirect('login')
 
 
@@ -121,3 +132,6 @@ def edit_recipe_view(request, recipe_id):
         form = RecipeForm(instance=recipe)
 
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
+=======
+    return redirect('login')    
+>>>>>>> 5871678 (solve model.py)

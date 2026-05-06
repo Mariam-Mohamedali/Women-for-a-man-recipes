@@ -26,7 +26,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-
 # 2. Category Model
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -67,12 +66,22 @@ class Recipe(models.Model):
 
 # 4. Favourite Model
 class Favourite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favourites')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='favourited_by')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ('user', 'recipe')
+        
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='favourites'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='favourited_by'
+    )
+    added_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} ❤️ {self.recipe.title}"
+        return f"{self.user.username}  {self.recipe.title}"
+
+    class Meta:
+        #stop user from put the same recipe to fav twice
+        unique_together = ('user', 'recipe')
