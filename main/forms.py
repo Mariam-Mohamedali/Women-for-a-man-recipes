@@ -1,18 +1,20 @@
 from django import forms
-<<<<<<< HEAD
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User
+from .models import User, Recipe
 
+
+# ─────────────────────────────
+#  Auth Forms (Shaza)
+# ─────────────────────────────
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # تجميل الـ fields
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label
@@ -23,10 +25,11 @@ class LoginForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-=======
-from .models import Recipe
 
 
+# ─────────────────────────────
+#  Recipe Form (Mariam)
+# ─────────────────────────────
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
@@ -67,4 +70,3 @@ class RecipeForm(forms.ModelForm):
             'category': 'Category',
             'image': 'Recipe Image',
         }
->>>>>>> 513172eda331e850bdad8a970380851a598e0cea
