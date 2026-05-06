@@ -60,7 +60,7 @@
             {% endif %}
 
             <div class="profile-card-body">
-              <span class="profile-card-category">{{ fav.recipe.get_category_display }}</span>
+              <span class="profile-card-category">{{ fav.recipe.category.name|default:"Uncategorized" }}</span>
               <h3 class="profile-card-title">{{ fav.recipe.title }}</h3>
               <p class="profile-card-desc">{{ fav.recipe.description|truncatewords:12 }}</p>
               <div class="profile-card-footer">
@@ -105,7 +105,7 @@
             {% endif %}
 
             <div class="profile-card-body">
-              <span class="profile-card-category">{{ recipe.get_category_display }}</span>
+              <span class="profile-card-category">{{ recipe.category.name|default:"Uncategorized" }}</span>
               <h3 class="profile-card-title">{{ recipe.title }}</h3>
               <p class="profile-card-desc">{{ recipe.description|truncatewords:12 }}</p>
               <div class="profile-card-footer">
