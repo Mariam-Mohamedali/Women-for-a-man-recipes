@@ -1,13 +1,37 @@
-/* ── Import root variables & fonts ───────────── */
+/* ── Import root variables & fonts ─*/
 @import url('assets/css/root.css');
 
-/* ── Reset & Base ─────────────────────────────── */
+/* ── Reset & Base ── */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+.back-arrow {
+    position:relative;
+    top: 85px;
+    left: 30px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2.5px solid var(--clay);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--clay);
+    font-size: 1.2rem;
+    transition: background-color .2s, transform .15s;
+    z-index: 99;
+}
+back-arrow:hover {
+    background-color: var(--clay);
+    color: #fff;
+    transform: scale(1.08);
 }
 
 body {
@@ -26,30 +50,7 @@ body {
     padding-top: 0;
 }
 
-/* ── Header ───────────────────────────────────── */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 40px;
-    
-    /*background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;*/
-    background-image: none;
-    background: var(--walnut);
-    border-bottom: 1px solid var(--linen);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
 
-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.7rem;
-    color: var(--sand);
-    letter-spacing: 1px;
-}
 
 nav#main-nav {
     display: flex;
@@ -84,17 +85,11 @@ nav#main-nav a.btn-nav:hover {
     transform: translateY(-1px);
 }
 
-hr {
-    border: none;
-    border-top: 1px solid var(--linen);
-    margin: 0;
-}
-
-/* ── Hero Banner ──────────────────────────────── */
+/* ── Hero Banner ───*/
 .register-hero {
     position: relative;
     width: 100%;
-    height: 240px;
+    height: 200px;
     overflow: hidden;
 }
 
@@ -134,17 +129,17 @@ hr {
     color: #fff;
 }
 
-/* ── Main Content ─────────────────────────────── */
+/* ── Main Content ────── */
 main {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 60px 20px 80px;
+    padding: 5px 20px 80px;
     background-color: transparent;
 }
 
-/* ── Register Card ────────────────────────────── */
+/* ── Register Card ── */
 .register-card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -191,7 +186,7 @@ main {
     text-decoration: underline;
 }
 
-/* ── Form Fields ──────────────────────────────── */
+/* ── Form Fields ─────── */
 .field {
     display: flex;
     flex-direction: column;
@@ -232,7 +227,7 @@ main {
     background: #fff;
 }
 
-/* ── Radio Group ──────────────────────────────── */
+/* ── Radio Group ────*/
 .radio-group {
     display: flex;
     gap: 24px;
@@ -261,7 +256,7 @@ main {
     cursor: pointer;
 }
 
-/* ── Error Message ────────────────────────────── */
+/* ── Error Message ──────── */
 .error-msg {
     color: var(--clay);
     font-size: .88rem;
@@ -269,7 +264,7 @@ main {
     min-height: 20px;
 }
 
-/* ── Buttons ──────────────────────────────────── */
+/* ── Buttons ───────*/
 .btn-primary {
     width: 100%;
     padding: 14px;
@@ -311,7 +306,7 @@ main {
     background-color: var(--linen);
 }
 
-/* ── Login Hint ───────────────────────────────── */
+/* ── Login Hint ─── */
 .login-hint {
     text-align: center;
     margin-top: 16px;
@@ -329,106 +324,3 @@ main {
     text-decoration: underline;
 }
 
-/* ── Footer ───────────────────────────────────── */
-footer {
-    background-color: var(--walnut);
-    color: var(--sand);
-    border-top: 1px solid var(--linen);
-    padding: 32px 40px 16px;
-    font-size: .88rem;
-}
-
-footer table {
-    border-collapse: collapse;
-}
-
-footer h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: var(--sand);
-}
-
-footer p {
-    color: var(--sand);
-    line-height: 1.6;
-}
-
-footer a {
-    color: var(--sand);
-    text-decoration: none;
-    transition: color .2s;
-}
-
-footer a:hover {
-    color: var(--clay);
-}
-
-footer .social-icons {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-top: 4px;
-}
-
-footer .social-icons img {
-    filter: grayscale(1) brightness(2);
-    transition: filter .2s;
-}
-
-footer .social-icons a:hover img {
-    filter: none;
-}
-
-footer button {
-    padding: 9px 20px;
-    background: var(--clay);
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: .85rem;
-    transition: background-color .2s;
-    margin-bottom: 8px;
-}
-
-footer button:hover {
-    background-color: var(--walnut);
-}
-
-footer .copyright {
-    text-align: center;
-    color: var(--sand);
-    padding-top: 14px;
-    font-size: .82rem;
-}
-
-/* ── Responsive ───────────────────────────────── */
-@media (max-width: 600px) {
-    header {
-        padding: 14px 20px;
-    }
-
-    header h1 {
-        font-size: 1.3rem;
-    }
-
-    .register-card {
-        padding: 32px 24px;
-    }
-
-    footer {
-        padding: 24px 20px 12px;
-    }
-
-    footer table,
-    footer tbody,
-    footer tr,
-    footer td {
-        display: block;
-        width: 100% !important;
-        margin-bottom: 20px;
-    }
-}
