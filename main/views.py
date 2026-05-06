@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
-from .models import Recipe
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Recipe, Favourite
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, RecipeForm
 
 
 
@@ -29,16 +29,11 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-<<<<<<< HEAD
-            messages.success(request, f'Account created successfully! Please log in.')
-            return redirect('login')
-=======
             login(request, user)  
             messages.success(request, f'Welcome {user.username}! 🎉')
             return redirect('home')
         else:
             messages.error(request, 'Please fix the errors below.')
->>>>>>> 5871678 (solve model.py)
     else:
         form = RegisterForm()
     
@@ -69,7 +64,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, 'You have been logged out.')
-<<<<<<< HEAD
     return redirect('login')
 
 
@@ -80,7 +74,7 @@ def logout_view(request):
 def profile_view(request):
     favourite_recipes = Favourite.objects.filter(
         user=request.user
-    ).select_related('recipe').order_by('-created_at')
+    ).select_related('recipe').order_by('-added_at')
 
     context = {
         'favourite_recipes': favourite_recipes,
@@ -132,6 +126,3 @@ def edit_recipe_view(request, recipe_id):
         form = RecipeForm(instance=recipe)
 
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
-=======
-    return redirect('login')    
->>>>>>> 5871678 (solve model.py)

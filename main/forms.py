@@ -1,23 +1,39 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User
+from .models import User, Recipe
 
 # ─────────────────────────────
 #  Auth Forms 
 # ─────────────────────────────
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    is_admin = forms.ChoiceField(
+        choices=[('false', 'Regular User'), ('true', 'Admin')],
+        widget=forms.RadioSelect,
+        initial='false',
+        required=True
+    )
     
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = UserCreationForm.Meta.fields + ('email',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['placeholder'] = field.label
+            if not isinstance(field.widget, forms.RadioSelect):
+                field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs['placeholder'] = field.label
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        # Set staff status if Admin is selected
+        if self.cleaned_data['is_admin'] == 'true':
+            user.is_staff = True
+        if commit:
+            user.save()
+        return user
 
 
 class LoginForm(AuthenticationForm):

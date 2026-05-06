@@ -62,7 +62,6 @@
               </div>
               <div class="nav-dropdown-body">
                 <a href="{% url 'profile' %}">👤 &nbsp;My Profile</a>
-                <a href="{% url 'favourites' %}">❤️ &nbsp;Favourites</a>
                 <div class="nav-dropdown-divider"></div>
                 <form method="post" action="{% url 'logout' %}" style="margin:0">
                   {% csrf_token %}
@@ -132,7 +131,6 @@
           </div>
           <div class="nav-mobile-divider"></div>
           <a href="{% url 'profile' %}" onclick="closeMobileMenu()">👤 &nbsp;My Profile</a>
-          <a href="{% url 'favourites' %}" onclick="closeMobileMenu()">❤️ &nbsp;Favourites</a>
           <div class="nav-mobile-divider"></div>
           <form method="post" action="{% url 'logout' %}" style="margin:0">
             {% csrf_token %}
@@ -244,7 +242,7 @@
   </script>
 
   {% load static %}
-  <script src="{% static 'main/js/navbar.js' %}"></script>
+  <!-- <script src="{% static 'main/js/navbar.js' %}"></script> -->
   {% block extra_js %}{% endblock %}
 
 </body>
