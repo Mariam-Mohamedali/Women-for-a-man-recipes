@@ -1,0 +1,335 @@
+/* profile.css */
+
+.profile-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+}
+
+/* --- Hero Banner --- */
+.profile-hero {
+    background: var(--profile-gradient);
+    border-radius: 0 0 40px 40px;
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none"/></svg>') repeat;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.profile-hero-inner {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 4px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.profile-avatar-letter {
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    font-family: 'Playfair Display', serif;
+}
+
+.profile-hero-info {
+    color: white;
+}
+
+.profile-username {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin: 0 0 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.profile-member-since {
+    font-size: 16px;
+    opacity: 0.9;
+    margin: 0 0 15px;
+}
+
+.profile-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+}
+
+/* --- Stats Bar --- */
+.profile-stats-bar {
+    display: flex;
+    background: white;
+    border-radius: 20px;
+    padding: 20px 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin: -70px auto 50px;
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+    justify-content: space-around;
+}
+
+.profile-stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--walnut);
+    font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--clay);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.profile-stat-divider {
+    width: 2px;
+    background: var(--linen);
+}
+
+/* --- Sections --- */
+.profile-section {
+    padding: 40px;
+    background: white;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    margin-bottom: 40px;
+}
+
+.profile-section.bg-linen {
+    background: var(--linen);
+}
+
+.profile-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+}
+
+.profile-section-title {
+    font-size: 28px;
+    margin: 0;
+}
+
+.profile-browse-btn {
+    background: var(--clay);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.profile-browse-btn:hover {
+    background: var(--walnut);
+}
+
+/* --- Recipe Grid --- */
+.profile-recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.profile-recipe-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--linen);
+}
+
+.profile-recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.profile-card-img-wrap {
+    height: 180px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.profile-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.profile-recipe-card:hover .profile-card-img {
+    transform: scale(1.05);
+}
+
+.profile-card-no-img {
+    background: var(--parchment);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-card-emoji {
+    font-size: 48px;
+    opacity: 0.5;
+}
+
+.profile-card-body {
+    padding: 20px;
+}
+
+.profile-card-category {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--clay);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.profile-card-title {
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: var(--walnut);
+}
+
+.profile-card-desc {
+    font-size: 14px;
+    color: var(--sand);
+    margin: 0 0 15px;
+    line-height: 1.5;
+}
+
+.profile-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--linen);
+    padding-top: 15px;
+}
+
+.profile-card-author {
+    font-size: 13px;
+    color: var(--sand);
+    font-weight: 500;
+}
+
+.profile-card-link {
+    color: var(--clay);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.profile-edit-btn {
+    color: var(--walnut);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    background: var(--linen);
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+}
+
+.profile-edit-btn:hover {
+    background: var(--sand);
+    color: white;
+}
+
+/* --- Empty States --- */
+.profile-empty {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(0,0,0,0.02);
+    border-radius: 20px;
+    border: 2px dashed var(--linen);
+}
+
+.profile-empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.profile-empty-title {
+    font-size: 22px;
+    color: var(--walnut);
+    margin: 0 0 10px;
+}
+
+.profile-empty-text {
+    color: var(--sand);
+    margin: 0 0 20px;
+}
+
+.profile-empty-btn {
+    display: inline-block;
+    background: var(--clay);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.profile-empty-btn:hover {
+    background: var(--walnut);
+}
+
+@media (max-width: 768px) {
+    .profile-hero-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-stats-bar {
+        margin: 20px auto 40px;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .profile-stat-divider {
+        width: 100%;
+        height: 2px;
+    }
+    .profile-section-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}

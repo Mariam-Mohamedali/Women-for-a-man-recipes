@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Add Recipe — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/recipe_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-page-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2>🍳 Share Your Recipe</h2>
+      <p>Add a new recipe to our community and inspire others!</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="recipe-form">
+      {% csrf_token %}
+      
+      <!-- Loop through form fields to render them with our custom styles -->
+      {% for field in form %}
+        <div class="form-group">
+          <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <small class="form-help-text">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <div class="form-error">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <div class="form-actions">
+        <a href="{% url 'profile' %}" class="btn-secondary">Cancel</a>
+        <button type="submit" class="btn-primary">Add Recipe</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
