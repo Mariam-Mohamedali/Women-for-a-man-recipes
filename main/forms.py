@@ -9,9 +9,9 @@ from .models import User, Recipe
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = UserCreationForm.Meta.fields + ('email',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

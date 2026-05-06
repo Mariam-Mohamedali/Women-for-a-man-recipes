@@ -11,17 +11,7 @@ class User(AbstractUser):
     )
     bio = models.TextField(blank=True, null=True)
 
-    # These two lines fix the clash
-    groups = models.ManyToManyField(
-        'auth.Group',
-        related_name='main_user_set',
-        blank=True
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name='main_user_set',
-        blank=True
-    )
+
 
     def __str__(self):
         return self.username
