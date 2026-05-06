@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Edit {{ recipe.title }} — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/recipe_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-page-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2>✏️ Edit Recipe</h2>
+      <p>Update your recipe details.</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="recipe-form">
+      {% csrf_token %}
+      
+      <!-- Loop through form fields to render them with our custom styles -->
+      {% for field in form %}
+        <div class="form-group">
+          <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          
+          {% if field.name == 'image' and recipe.image %}
+            <div class="current-image-preview">
+              <p>Current image:</p>
+              <img src="{{ recipe.image.url }}" alt="Current image" width="150" style="border-radius: 8px; margin-bottom: 10px;">
+            </div>
+          {% endif %}
+
+          {{ field }}
+          
+          {% if field.help_text %}
+            <small class="form-help-text">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <div class="form-error">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <div class="form-actions">
+        <a href="{% url 'profile' %}" class="btn-secondary">Cancel</a>
+        <button type="submit" class="btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
