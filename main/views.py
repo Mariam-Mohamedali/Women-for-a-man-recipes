@@ -28,9 +28,8 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            messages.success(request, f'Welcome {user.username}! 🎉')
-            return redirect('home')
+            messages.success(request, f'Account created successfully! Please log in.')
+            return redirect('login')
     else:
         form = RegisterForm()
 
@@ -64,7 +63,7 @@ def logout_view(request):
 
 
 # ─────────────────────────────
-#  Profile (Mariam)
+#  Profile 
 # ─────────────────────────────
 @login_required
 def profile_view(request):
@@ -79,7 +78,7 @@ def profile_view(request):
 
 
 # ─────────────────────────────
-#  Add Recipe (Mariam)
+#  Add Recipe 
 # ─────────────────────────────
 @login_required
 def add_recipe_view(request):
@@ -100,7 +99,7 @@ def add_recipe_view(request):
 
 
 # ─────────────────────────────
-#  Edit Recipe (Mariam)
+#  Edit Recipe 
 # ─────────────────────────────
 @login_required
 def edit_recipe_view(request, recipe_id):

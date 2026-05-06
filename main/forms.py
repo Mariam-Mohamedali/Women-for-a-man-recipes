@@ -4,14 +4,14 @@ from .models import User, Recipe
 
 
 # ─────────────────────────────
-#  Auth Forms (Shaza)
+#  Auth Forms 
 # ─────────────────────────────
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = User
-        fields = UserCreationForm.Meta.fields + ('email',)
+        fields = ['username', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,7 +28,7 @@ class LoginForm(AuthenticationForm):
 
 
 # ─────────────────────────────
-#  Recipe Form (Mariam)
+#  Recipe Form 
 # ─────────────────────────────
 class RecipeForm(forms.ModelForm):
     class Meta:
