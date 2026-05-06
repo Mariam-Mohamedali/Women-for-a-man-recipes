@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Login — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="login-hero">
+        <div class="login-hero-text">
+            <h2>Welcome Back</h2>
+            <p>Sign in to access your saved recipes and favourites.</p>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="login-card">
+            <h2 class="card-title">Sign In</h2>
+
+
+            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+
+                <div class="field">
+                    <label for="E-mail">E-mail Address</label>
+                    <input id="E-mail" type="email" placeholder="you@example.com" name="E-mail" autocomplete="email"
+                        required>
+                </div>
+
+                <div class="field">
+                    <label for="Password">Password</label>
+                    <input id="Password" type="password" placeholder="Enter your password" name="Password"
+                        autocomplete="current-password" required>
+                </div>
+
+                <div class="row-check">
+                    <label class="check-label">
+                        <input id="remember" type="checkbox" name="remember">
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">Sign In</button>
+                <button type="reset" class="btn-secondary">Clear</button>
+
+            </form>
+
+            <p class="register-hint">New here? <a href="register.html">Create a free account &rarr;</a></p>
+        </div>
+    </main>
+</body>
+{% endblock %}
