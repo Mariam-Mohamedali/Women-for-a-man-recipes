@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'main/css/root.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  {% block extra_css %}{% endblock %}
+  <title>{% block title %}Women For A Man{% endblock %}</title>
+</head>
+
+<body>
+
+  <!-- ✅ NAVBAR - بتتغير تلقائياً حسب لو logged in ولا لأ -->
+  <header>
+    <nav id="main-nav">
+
+      <!-- Logo / Brand -->
+      <div class="nav-left">
+        <a href="{% url 'home' %}" class="nav-brand-lockup" aria-label="WFM Home">
+          <span class="nav-brand-wfm">WFM</span>
+        </a>
+      </div>
+
+      <!-- Links الوسط -->
+      <div class="nav-center">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'recipes' %}">Our Recipes</a>
+        <a href="{% url 'about' %}">About Us</a>
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'add_recipe' %}">Add Recipe</a>
+        {% endif %}
+
+        {% if user.is_staff %}
+          <a href="{% url 'admin_recipes' %}">Manage Recipes</a>
+        {% endif %}
+      </div>
+
+      <!-- Profile Dropdown اليمين -->
+      <div class="nav-right">
+        <div class="nav-profile">
+          <a class="nav-profile-btn" href="#" aria-haspopup="true" aria-expanded="false" aria-label="Account menu"
+            onclick="toggleDropdown(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </a>
+
+          <div class="nav-dropdown" id="nav-dropdown">
+            {% if user.is_authenticated %}
+              <!-- لو logged in -->
+              <div class="nav-dropdown-header">
+                <span class="nav-dropdown-username">{{ user.username }}</span>
+                <span class="nav-dropdown-role">{% if user.is_staff %}Admin{% else %}Member{% endif %}</span>
+              </div>
+              <div class="nav-dropdown-body">
+                <a href="{% url 'profile' %}">👤 &nbsp;My Profile</a>
+                <a href="{% url 'favourites' %}">❤️ &nbsp;Favourites</a>
+                <div class="nav-dropdown-divider"></div>
+                <form method="post" action="{% url 'logout' %}" style="margin:0">
+                  {% csrf_token %}
+                  <button type="submit" class="nav-dropdown-logout">🚪 &nbsp;Logout</button>
+                </form>
+              </div>
+            {% else %}
+              <!-- لو مش logged in -->
+              <div class="nav-dropdown-header">
+                <span class="nav-dropdown-username">Welcome!</span>
+                <span class="nav-dropdown-role">Not signed in</span>
+              </div>
+              <div class="nav-dropdown-body">
+                <a href="{% url 'login' %}">🔑 &nbsp;Login</a>
+                <a href="{% url 'register' %}">📝 &nbsp;Register</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Hamburger للموبايل -->
+        <button class="nav-hamburger" type="button" aria-label="Toggle menu" aria-expanded="false"
+          onclick="toggleMobileMenu()">
+          <span class="nav-hamburger-line"></span>
+          <span class="nav-hamburger-line"></span>
+          <span class="nav-hamburger-line"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+    <div class="nav-mobile-backdrop" id="nav-mobile-backdrop" onclick="closeMobileMenu()"></div>
+    <div class="nav-mobile-panel" role="navigation">
+      <div class="nav-mobile-panel-header">
+        <a href="{% url 'home' %}" class="nav-mobile-brand" onclick="closeMobileMenu()">
+          <span>WFM</span>
+        </a>
+        <button type="button" class="nav-mobile-close" onclick="closeMobileMenu()" aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="nav-mobile-links">
+        <a href="{% url 'home' %}" onclick="closeMobileMenu()">🏠 &nbsp;Home</a>
+        <a href="{% url 'recipes' %}" onclick="closeMobileMenu()">📖 &nbsp;Our Recipes</a>
+        <a href="{% url 'about' %}" onclick="closeMobileMenu()">ℹ️ &nbsp;About Us</a>
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'add_recipe' %}" onclick="closeMobileMenu()">➕ &nbsp;Add Recipe</a>
+        {% endif %}
+
+        {% if user.is_staff %}
+          <a href="{% url 'admin_recipes' %}" onclick="closeMobileMenu()">⚙️ &nbsp;Manage Recipes</a>
+        {% endif %}
+      </div>
+
+      <div class="nav-mobile-user">
+        {% if user.is_authenticated %}
+          <div class="nav-mobile-user-info">
+            <span class="nav-mobile-username">{{ user.username }}</span>
+            <span class="nav-mobile-role">{% if user.is_staff %}Admin{% else %}Member{% endif %}</span>
+          </div>
+          <div class="nav-mobile-divider"></div>
+          <a href="{% url 'profile' %}" onclick="closeMobileMenu()">👤 &nbsp;My Profile</a>
+          <a href="{% url 'favourites' %}" onclick="closeMobileMenu()">❤️ &nbsp;Favourites</a>
+          <div class="nav-mobile-divider"></div>
+          <form method="post" action="{% url 'logout' %}" style="margin:0">
+            {% csrf_token %}
+            <button type="submit" class="nav-mobile-logout">🚪 &nbsp;Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" onclick="closeMobileMenu()">🔑 &nbsp;Login</a>
+          <a href="{% url 'register' %}" onclick="closeMobileMenu()">📝 &nbsp;Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ كل صفحة تحط محتواها هنا -->
+  {% block content %}{% endblock %}
+
+  <!-- ✅ FOOTER - نفس الـ design بتاعك -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>FOLLOW US</h4>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>ABOUT</h4>
+          <p class="about-description">A curated space for those who value quality, authenticity, and meaningful
+            connection.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>GET IN TOUCH</h4>
+          <a href="{% url 'contact' %}" class="contact-pill-modern">Contact Us</a>
+          <p><i class="fas fa-envelope"></i> contact@wfm.com</p>
+          <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>© 2026 — Women For A Man. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ✅ Navbar JS - مش محتاج navbar.js القديم، الـ Django بيتحكم في الـ state -->
+  <script>
+    // Dropdown Toggle
+    function toggleDropdown(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropdown = document.getElementById('nav-dropdown');
+      const isOpen = dropdown.classList.contains('open');
+      closeAllDropdowns();
+      if (!isOpen) {
+        dropdown.classList.add('open');
+      }
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (d) {
+        d.classList.remove('open');
+      });
+    }
+
+    document.addEventListener('click', closeAllDropdowns);
+    document.querySelector('#nav-dropdown')?.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+
+    // Mobile Menu
+    function toggleMobileMenu() {
+      const menu = document.getElementById('nav-mobile-menu');
+      const hamburger = document.querySelector('.nav-hamburger');
+      if (!menu) return;
+      if (menu.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        menu.classList.add('open');
+        menu.setAttribute('aria-hidden', 'false');
+        hamburger?.classList.add('open');
+        hamburger?.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('nav-menu-open');
+      }
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('nav-mobile-menu');
+      const hamburger = document.querySelector('.nav-hamburger');
+      if (!menu) return;
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+      hamburger?.classList.remove('open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-menu-open');
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeMobileMenu();
+        closeAllDropdowns();
+      }
+    });
+  </script>
+
+  {% load static %}
+  <script src="{% static 'main/js/navbar.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>
