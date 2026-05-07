@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/root.css">
+    <link rel="stylesheet" href="assets/css/register.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <title>Register — WFM</title>
+</head>
+<a href="javascript:history.back()" class="back-arrow">&#8592;</a>
+
+<body>
+
+
+    <div class="register-hero">
+
+        <div class="register-hero-text">
+            <h2>Join Our Community</h2>
+            <p>Create an account and start saving your favourite recipes.</p>
+        </div>
+    </div>
+
+    <main>
+
+        <div class="register-card">
+            <h2 class="card-title">Create Account</h2>
+            <p class="card-subtitle">Already have an account? <a href="login.html">Sign in here</a></p>
+
+            <form id="registerForm" novalidate>
+
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" placeholder="Enter your username" name="username" required
+                        autofocus>
+                </div>
+
+                <div class="field">
+                    <label for="email">E-mail Address</label>
+                    <input id="email" type="email" placeholder="you@example.com" name="email" required>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Enter your password" name="password" required>
+                </div>
+
+                <div class="field">
+                    <label for="confirm">Confirm Password</label>
+                    <input id="confirm" type="password" placeholder="Confirm your password" name="confirm" required>
+                </div>
+
+                <div class="field">
+                    <label>Account Type</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="is_admin" value="false" id="role_user" checked required>
+                            Regular User
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="is_admin" value="true" id="role_admin">
+                            Admin
+                        </label>
+                    </div>
+                </div>
+
+                <p id="msg" class="error-msg"></p>
+
+                <button type="submit" class="btn-primary">Create Account</button>
+                <button type="reset" class="btn-secondary">Clear</button>
+
+            </form>
+        </div>
+    </main>
+
+    
+    <script src="assets/js/toast.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/register.js"></script>
+
+</body>
+
+
+</html>
