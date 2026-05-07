@@ -237,6 +237,20 @@ function _migrateRecipesData() {
             r.id = ++maxNormalId;
             changed = true;
         }
+
+        // --- FORCE PURGE FOR BUGGED ACCOUNTS ---
+        // Wipe ALL ratings completely once to clear old phantom states
+        if (!localStorage.getItem('wfm_purged_ratings_v1')) {
+            if (r.ratings && r.ratings.length > 0) {
+                r.ratings = [];
+                changed = true;
+            }
+        }
+    }
+
+    if (!localStorage.getItem('wfm_purged_ratings_v1')) {
+        localStorage.setItem('wfm_purged_ratings_v1', 'done');
+        changed = true;
     }
 
     if (changed) localStorage.setItem('wfm_recipes', JSON.stringify(recipes));
@@ -333,20 +347,17 @@ function rateRecipe(recipeId, stars) {
 
     if (!recipe.ratings) recipe.ratings = [];
 
-    // Check if user already rated
-    const existingIndex = recipe.ratings.findIndex(r => r.userId === user.id);
-    if (existingIndex >= 0) {
-        recipe.ratings[existingIndex].stars = stars; // Update rating
-    } else {
-        recipe.ratings.push({ userId: user.id, stars: stars }); // New rating
-    }
+    // Remove any existing ratings by this user to clean up duplicates / mismatches
+    recipe.ratings = recipe.ratings.filter(r => r.userId != user.id);
+    // Insert new numeric rating
+    recipe.ratings.push({ userId: user.id, stars: Number(stars) });
 
     saveRecipes(recipes);
 }
 
 function getAverageRating(recipe) {
     if (!recipe.ratings || recipe.ratings.length === 0) return 0;
-    const sum = recipe.ratings.reduce((acc, r) => acc + r.stars, 0);
+    const sum = recipe.ratings.reduce((acc, r) => acc + Number(r.stars), 0);
     return (sum / recipe.ratings.length).toFixed(1);
 }
 

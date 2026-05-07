@@ -6,14 +6,27 @@
    The cards are generated in assets/js/recipeUI.js.
    Remove or reduce inline styles in JS to let these shine!
    ========================================================= */
-
 /* The Recipe Card Container */
 div[id^="recipe-"] {
     background-color: #ffffff;
-    border: none !important; /* overriding inline border */
+    border: none !important;
+    /* overriding inline border */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#allRecipes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+h2 {
+    text-align: center;
 }
 
 div[id^="recipe-"]:hover {
@@ -27,16 +40,19 @@ div[id^="recipe-"] h2 {
     font-weight: 700;
     color: #2c3e50;
     transition: color 0.2s ease;
+    text-align: center;
 }
 
 div[id^="recipe-"] h2 a:hover {
-    color: #e67e22; /* Add your theme's primary color here! */
+    color: #e67e22;
+    /* Add your theme's primary color here! */
 }
 
 /* Card Image */
 div[id^="recipe-"] img {
     border-radius: 8px !important;
     transition: opacity 0.3s ease;
+    margin-top: 8px;
 }
 
 div[id^="recipe-"]:hover img {
@@ -45,7 +61,8 @@ div[id^="recipe-"]:hover img {
 
 /* Card Rating */
 div[id^="recipe-"] h4 {
-    color: #f39c12; /* Golden star color */
+    color: #f39c12;
+    /* Golden star color */
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -59,8 +76,9 @@ div[id^="recipe-"] p {
 }
 
 /* Action Buttons Container */
-div[id^="recipe-"] > div:last-of-type {
-    margin-top: auto !important; /* Push buttons to the bottom of the card */
+div[id^="recipe-"]>div:last-of-type {
+    margin-top: auto !important;
+    /* Push buttons to the bottom of the card */
     padding-top: 15px;
     border-top: 1px solid #f0f0f0;
 }
@@ -78,9 +96,9 @@ div[id^="recipe-"] button {
 
 /* "Full Recipe" Button */
 div[id^="recipe-"] a button:hover {
-    background-color: #2c3e50;
+    background-color: var(--clay);
     color: #fff;
-    border-color: #2c3e50;
+    border-color: transparent;
 }
 
 /* "Favorite" Button */

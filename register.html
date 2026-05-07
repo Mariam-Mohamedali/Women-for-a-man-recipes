@@ -16,107 +16,64 @@
 
 <body>
 
+    <center>
+        <h2 text-align="center"> User Registeration </h2>
+    </center>
 
-    <div class="register-hero">
-        
-        <div class="register-hero-text">
-            <h2>Join Our Community</h2>
-            <p>Create an account and start saving your favourite recipes.</p>
-        </div>
-    </div>
+    <form action="post">
+        <fieldset>
+            <legend>User_Registeration</legend>
+            <div>
+                <label for="text">user name </label>
+                <input id="text" type="text" placeholder="enter user name" name="User name" required autofocus>
+            </div>
 
-    <main>
-        
-        <div class="register-card">
-            <h2 class="card-title">Create Account</h2>
-            <p class="card-subtitle">Already have an account? <a href="login.html">Sign in here</a></p>
+            <div>
+                <label for="E-mail"> E-mail </label>
+                <input id="E-mail" type="E-mail" placeholder="enter E-mail" name="E-mail" required>
+            </div>
 
-            <form id="registerForm" novalidate>
+            <div>
+                <label for="Password">Password </label>
+                <input id="Password" type="password" placeholder="enter your Password" name="Password" required>
 
-                <div class="field">
-                    <label for="username">Username</label>
-                    <input id="username" type="text" placeholder="Enter your username" name="username" required
-                        autofocus>
-                </div>
+            </div>
 
-                <div class="field">
-                    <label for="email">E-mail Address</label>
-                    <input id="email" type="email" placeholder="you@example.com" name="email" required>
-                </div>
+            <div>
+                <label for="confirm"> confirm Password </label>
+                <input id="confirm" type="password" placeholder="confirm your Password" name="confirm" required>
+            </div>
 
-                <div class="field">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Enter your password" name="password" required>
-                </div>
+            <div>
+                <label for="Gender"> Gender </label>
+                <input id="Gender" type="radio" name="Gender" value="Male" required> Male
+                <input id="Gender" type="radio" name="Gender" value="Female" required> Female
+            </div>
 
-                <div class="field">
-                    <label for="confirm">Confirm Password</label>
-                    <input id="confirm" type="password" placeholder="Confirm your password" name="confirm" required>
-                </div>
+            <div>
+                <lable for="telephone">Telephone Number</lable>
+                <input id="telephone" type="tel" name="telephone" required>
+            </div>
+            <div>
+                <lable for="Birth date">Birth date</lable>
+                <input id="Birth date" type="date" name="Birth date">
+            </div>
 
-                <div class="field">
-                    <label>Account Type</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="is_admin" value="false" id="role_user" checked required>
-                            Regular User
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="is_admin" value="true" id="role_admin">
-                            Admin
-                        </label>
-                    </div>
-                </div>
+            <div>
+                <label>Country</label>
+                <input list="country" name="country">
+                <datalist id="country">
+                    <option value="Egypt"></option>
+                    <option value="USA"></option>
+                    <option value="UAE"></option>
+                    <option value="other"></option>
+                </datalist>
+            </div>
 
-                <p id="msg" class="error-msg"></p>
+            <input type="submit">
+        </fieldset>
 
-                <button type="submit" class="btn-primary">Create Account</button>
-                <button type="reset" class="btn-secondary">Clear</button>
-
-            </form>
-        </div>
-    </main>
-
-    <hr>
-
-    <footer>
-        <table width="100%" cellpadding="5">
-            <tr>
-                <td width="33%">
-                    <h3>About</h3>
-                    <p>Women For A Man is a platform that connects people and helps build meaningful relationships
-                        around the world.</p>
-                </td>
-                <td width="33%">
-                    <h3>Follow Us</h3>
-                    <div class="social-icons">
-                        <a href="https://facebook.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png"
-                                alt="Facebook"></a>
-                        <a href="https://instagram.com"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png"
-                                alt="Instagram"></a>
-                        <a href="https://x.com"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png"
-                                alt="X"></a>
-                        <a href="https://youtube.com"><img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png"
-                                alt="YouTube"></a>
-                    </div>
-                </td>
-                <td width="33%">
-                    <h3>Contact</h3>
-                    <a href="contactUs.html"><button>Contact Us</button></a>
-                    <p>Email: <a href="mailto:contact@wfm.com">contact@wfm.com</a></p>
-                    <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-                </td>
-            </tr>
-        </table>
-        <hr>
-        <p class="copyright">&copy; 2026 &mdash; Women For A Man. All Rights Reserved.</p>
-    </footer>
-
-    <script src="assets/js/toast.js"></script>
-    <script src="assets/js/auth.js"></script>
-    <script src="assets/js/navbar.js"></script>
-    <script src="assets/js/register.js"></script>
-
+    </form>
 </body>
 
 

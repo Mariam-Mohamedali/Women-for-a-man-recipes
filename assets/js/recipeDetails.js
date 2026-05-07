@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let myRating = 0;
     if (user && recipe.ratings) {
-        const found = recipe.ratings.find(x => x.userId === user.id);
-        if (found) myRating = found.stars;
+        const found = recipe.ratings.find(x => x.userId == user.id);
+        if (found) myRating = Number(found.stars);
     }
 
     let starsHtml = '';
