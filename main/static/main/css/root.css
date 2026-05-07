@@ -101,7 +101,7 @@ hr {
 /* Category tags ("Vegetarian", "30 min", "Easy") */
 .tag,
 label {
-    background-color: var(--sage);
+    background-color: rgba(196, 168, 130, 0.1);
     color: white;
     font-size: var(--tag-size);
     padding: 4px 10px;
