@@ -11,11 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='favourite',
-            old_name='created_at',
-            new_name='added_at',
-        ),
         migrations.AlterField(
             model_name='user',
             name='groups',
