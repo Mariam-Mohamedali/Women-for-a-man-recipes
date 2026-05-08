@@ -1,0 +1,130 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}My Profile — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+  <!-- ══════════════ HERO BANNER ══════════════ -->
+  <div class="profile-hero">
+    <div class="profile-hero-inner">
+      <div class="profile-avatar">
+        <span class="profile-avatar-letter">{{ user.username|first|upper }}</span>
+      </div>
+      <div class="profile-hero-info">
+        <h1 class="profile-username">{{ user.username }}</h1>
+        <p class="profile-member-since">Member since {{ user.date_joined|date:"F Y" }}</p>
+        <span class="profile-badge">{% if user.is_staff %}⚙️ Admin{% else %}🍳 Home Chef{% endif %}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ STATS BAR ══════════════ -->
+  <div class="profile-stats-bar">
+    <div class="profile-stat">
+      <span class="stat-number">{{ user.recipes.count }}</span>
+      <span class="stat-label">Recipes Shared</span>
+    </div>
+    <div class="profile-stat-divider"></div>
+    <div class="profile-stat">
+      <span class="stat-number">{{ favourite_recipes.count }}</span>
+      <span class="stat-label">Favourites Saved</span>
+    </div>
+  </div>
+
+  <!-- ══════════════ FAVOURITE RECIPES ══════════════ -->
+  <section class="profile-section">
+    <div class="profile-section-header">
+      <h2 class="profile-section-title">❤️ My Favourite Recipes</h2>
+      <a href="{% url 'recipes' %}" class="profile-browse-btn">Browse More →</a>
+    </div>
+
+    {% if favourite_recipes %}
+      <div class="profile-recipes-grid">
+        {% for fav in favourite_recipes %}
+          <div class="profile-recipe-card">
+            {% if fav.recipe.image %}
+              <div class="profile-card-img-wrap">
+                <img src="{{ fav.recipe.image.url }}" alt="{{ fav.recipe.title }}" class="profile-card-img">
+              </div>
+            {% else %}
+              <div class="profile-card-img-wrap profile-card-no-img">
+                <span class="profile-card-emoji">🍽️</span>
+              </div>
+            {% endif %}
+
+            <div class="profile-card-body">
+              <span class="profile-card-category">{{ fav.recipe.category.name|default:"Uncategorized" }}</span>
+              <h3 class="profile-card-title">{{ fav.recipe.title }}</h3>
+              <p class="profile-card-desc">{{ fav.recipe.description|truncatewords:12 }}</p>
+              <div class="profile-card-footer">
+                <span class="profile-card-author">By {{ fav.recipe.author.username }}</span>
+                <a href="#" class="profile-card-link">View →</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <!-- Empty State -->
+      <div class="profile-empty">
+        <div class="profile-empty-icon">🤍</div>
+        <h3 class="profile-empty-title">No favourites yet</h3>
+        <p class="profile-empty-text">Start exploring recipes and save the ones you love!</p>
+        <a href="{% url 'recipes' %}" class="profile-empty-btn">Explore Recipes</a>
+      </div>
+    {% endif %}
+  </section>
+
+  <!-- ══════════════ MY RECIPES ══════════════ -->
+  <section class="profile-section bg-linen">
+    <div class="profile-section-header">
+      <h2 class="profile-section-title">🍳 My Recipes</h2>
+      <a href="{% url 'add_recipe' %}" class="profile-browse-btn">+ Add New</a>
+    </div>
+
+    {% if user.recipes.all %}
+      <div class="profile-recipes-grid">
+        {% for recipe in user.recipes.all %}
+          <div class="profile-recipe-card">
+            {% if recipe.image %}
+              <div class="profile-card-img-wrap">
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="profile-card-img">
+              </div>
+            {% else %}
+              <div class="profile-card-img-wrap profile-card-no-img">
+                <span class="profile-card-emoji">🍽️</span>
+              </div>
+            {% endif %}
+
+            <div class="profile-card-body">
+              <span class="profile-card-category">{{ recipe.category.name|default:"Uncategorized" }}</span>
+              <h3 class="profile-card-title">{{ recipe.title }}</h3>
+              <p class="profile-card-desc">{{ recipe.description|truncatewords:12 }}</p>
+              <div class="profile-card-footer">
+                <a href="{% url 'edit_recipe' recipe.id %}" class="profile-edit-btn">✏️ Edit</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="profile-empty">
+        <div class="profile-empty-icon">📝</div>
+        <h3 class="profile-empty-title">You haven't shared any recipes yet</h3>
+        <p class="profile-empty-text">Share your first recipe with the community!</p>
+        <a href="{% url 'add_recipe' %}" class="profile-empty-btn">+ Add Recipe</a>
+      </div>
+    {% endif %}
+  </section>
+
+</div>
+
+{% endblock %}
