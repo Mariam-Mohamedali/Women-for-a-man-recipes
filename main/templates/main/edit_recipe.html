@@ -11,39 +11,65 @@
 <div class="form-page-container">
   <div class="form-card">
     <div class="form-header">
-      <h2>✏️ Edit Recipe</h2>
-      <p>Update your recipe details.</p>
+      <h2> Edit Recipe</h2>
+      <p>Update the details of <strong>{{ recipe.title }}</strong></p>
     </div>
 
     <form method="post" enctype="multipart/form-data" class="recipe-form">
       {% csrf_token %}
-      
-      <!-- Loop through form fields to render them with our custom styles -->
-      {% for field in form %}
-        <div class="form-group">
-          <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-          
-          {% if field.name == 'image' and recipe.image %}
-            <div class="current-image-preview">
-              <p>Current image:</p>
-              <img src="{{ recipe.image.url }}" alt="Current image" width="150" style="border-radius: 8px; margin-bottom: 10px;">
-            </div>
-          {% endif %}
 
-          {{ field }}
-          
-          {% if field.help_text %}
-            <small class="form-help-text">{{ field.help_text }}</small>
-          {% endif %}
-          {% for error in field.errors %}
-            <div class="form-error">{{ error }}</div>
-          {% endfor %}
+      {% for field in form %}
+      {% if field.name == 'image' %}
+      <!-- ── Custom Image Field ── -->
+      <div class="form-group">
+        <label class="form-label">{{ field.label }}</label>
+
+        {% if recipe.image %}
+        <!-- Current image preview -->
+        <div class="current-image-preview">
+          <img src="{{ recipe.image.url }}" alt="Current image for {{ recipe.title }}">
+          <div class="image-info">
+            <p>📷 Current Image</p>
+            <span>{{ recipe.image.name|slice:"8:" }}</span>
+          </div>
         </div>
+        {% endif %}
+
+        <!-- New file input -->
+        <input type="file" name="{{ field.html_name }}" id="{{ field.auto_id }}" class="form-file-input"
+          accept="image/*">
+
+        <!-- Clear option BELOW the input, small and inline -->
+        {% if recipe.image %}
+        <label class="clear-image-label">
+          <input type="checkbox" name="{{ field.html_name }}-clear" id="{{ field.auto_id }}-clear_id">
+          Remove current image
+        </label>
+        {% endif %}
+
+        {% for error in field.errors %}
+        <div class="form-error">⚠ {{ error }}</div>
+        {% endfor %}
+      </div>
+
+      {% else %}
+      <!-- ── All Other Fields ── -->
+      <div class="form-group">
+        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}
+        <small class="form-help-text">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+        <div class="form-error">⚠ {{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
       {% endfor %}
 
       <div class="form-actions">
         <a href="{% url 'profile' %}" class="btn-secondary">Cancel</a>
-        <button type="submit" class="btn-primary">Save Changes</button>
+        <button type="submit" class="btn-primary"> Save Changes</button>
       </div>
     </form>
   </div>

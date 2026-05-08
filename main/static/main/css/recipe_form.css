@@ -1,29 +1,31 @@
 /* recipe_form.css */
 
+/* ── Page Container ──────────────────────── */
 .form-page-container {
     max-width: 800px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 0 20px 60px;
 }
 
 .form-card {
     background: white;
     border-radius: 28px;
-    padding: 40px;
-    box-shadow: 0 8px 30px rgba(61, 43, 31, 0.08);
+    padding: 48px 52px;
+    box-shadow: 0 8px 40px rgba(61, 43, 31, 0.09);
     border: 1px solid var(--linen);
 }
 
+/* ── Header ──────────────────────────────── */
 .form-header {
     text-align: center;
     margin-bottom: 40px;
-    padding-bottom: 20px;
+    padding-bottom: 24px;
     border-bottom: 2px solid var(--linen);
 }
 
 .form-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 36px;
+    font-size: clamp(24px, 4vw, 36px);
     color: var(--walnut);
     margin: 0 0 10px;
 }
@@ -34,10 +36,11 @@
     margin: 0;
 }
 
+/* ── Form Layout ─────────────────────────── */
 .recipe-form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 24px;
 }
 
 .form-group {
@@ -50,87 +53,186 @@
     font-weight: 600;
     color: var(--walnut);
     font-size: 15px;
+    letter-spacing: 0.02em;
 }
 
+/* ── Text / Select Inputs ────────────────── */
 .form-input {
+    width: 100%;
     padding: 14px 18px;
     border: 2px solid var(--linen);
     border-radius: 12px;
-    font-size: 16px;
+    font-size: 15px;
     font-family: 'Inter', sans-serif;
     color: var(--walnut);
     background: var(--parchment);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    box-sizing: border-box;
 }
 
 .form-input:focus {
     outline: none;
     border-color: var(--clay);
-    box-shadow: 0 0 0 3px rgba(176, 125, 85, 0.2);
+    box-shadow: 0 0 0 3px rgba(176, 125, 85, 0.18);
     background: white;
 }
 
 textarea.form-input {
     resize: vertical;
-    line-height: 1.5;
+    line-height: 1.6;
+    min-height: 120px;
 }
 
-.form-file-input {
-    padding: 10px;
-    border: 2px dashed var(--clay);
-    border-radius: 12px;
-    background: rgba(176, 125, 85, 0.05);
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b07d55' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 44px;
     cursor: pointer;
 }
 
+/* ── File Input ──────────────────────────── */
+.form-file-input {
+    display: block;
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px dashed var(--clay);
+    border-radius: 12px;
+    background: rgba(176, 125, 85, 0.04);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--walnut);
+    box-sizing: border-box;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.form-file-input:hover {
+    background: rgba(176, 125, 85, 0.09);
+    border-color: var(--walnut);
+}
+
+/* ── Current Image Preview ───────────────── */
+.current-image-preview {
+    background: var(--parchment);
+    border: 1px solid var(--linen);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.current-image-preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--linen);
+    flex-shrink: 0;
+}
+
+.current-image-preview .image-info {
+    flex: 1;
+    min-width: 140px;
+}
+
+.current-image-preview .image-info p {
+    margin: 0 0 4px;
+    font-size: 13px;
+    color: var(--sand);
+    font-weight: 500;
+}
+
+.current-image-preview .image-info span {
+    font-size: 12px;
+    color: var(--sand);
+    word-break: break-all;
+    opacity: 0.75;
+}
+
+/* ── Clear Image Checkbox ────────────────── */
+.clear-image-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sand);
+    cursor: pointer;
+    margin-top: 2px;
+    user-select: none;
+}
+
+.clear-image-label input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--clay);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* ── Help Text & Errors ──────────────────── */
 .form-help-text {
     font-size: 13px;
     color: var(--sand);
+    line-height: 1.4;
 }
 
 .form-error {
-    color: #e74c3c;
-    font-size: 14px;
+    color: #c0392b;
+    font-size: 13px;
     font-weight: 500;
-    margin-top: 4px;
+    background: rgba(192, 57, 43, 0.07);
+    border-radius: 8px;
+    padding: 8px 12px;
 }
 
+/* ── Actions Bar ─────────────────────────── */
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 15px;
-    margin-top: 20px;
-    padding-top: 25px;
+    align-items: center;
+    gap: 14px;
+    margin-top: 16px;
+    padding-top: 28px;
     border-top: 2px solid var(--linen);
 }
 
 .btn-primary {
     background: var(--clay);
     color: white;
-    padding: 12px 28px;
+    padding: 13px 32px;
     border-radius: 24px;
     font-size: 16px;
     font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.25s ease, transform 0.15s ease;
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
     background: var(--walnut);
+    transform: translateY(-1px);
 }
 
 .btn-secondary {
     background: var(--linen);
     color: var(--walnut);
-    padding: 12px 28px;
+    padding: 13px 32px;
     border-radius: 24px;
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    transition: background 0.3s ease;
+    justify-content: center;
+    transition: background 0.25s ease, color 0.25s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .btn-secondary:hover {
@@ -138,16 +240,56 @@ textarea.form-input {
     color: white;
 }
 
-@media (max-width: 600px) {
+/* ── Responsive: Tablet ──────────────────── */
+@media (max-width: 768px) {
     .form-card {
-        padding: 25px;
+        padding: 32px 28px;
+        border-radius: 20px;
     }
+
+    .form-page-container {
+        padding: 0 16px 40px;
+        margin: 24px auto;
+    }
+}
+
+/* ── Responsive: Mobile ──────────────────── */
+@media (max-width: 480px) {
+    .form-card {
+        padding: 24px 16px;
+        border-radius: 16px;
+    }
+
+    .form-page-container {
+        padding: 0 10px 30px;
+        margin: 16px auto;
+    }
+
+    .form-header h2 {
+        font-size: 22px;
+    }
+
     .form-actions {
-        flex-direction: column;
+        flex-direction: column-reverse;
+        gap: 10px;
     }
-    .btn-primary, .btn-secondary {
+
+    .btn-primary,
+    .btn-secondary {
         width: 100%;
-        text-align: center;
+        display: flex;
         justify-content: center;
+        text-align: center;
+    }
+
+    .current-image-preview {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .current-image-preview img {
+        width: 100%;
+        height: 180px;
+        border-radius: 10px;
     }
 }
