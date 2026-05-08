@@ -1,0 +1,532 @@
+/* root.css - Color Palette and UI Elements mapping */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+:root {
+    /* --- Colors --- */
+
+    /* Backgrounds */
+    --parchment: #F7F1E8;
+    --linen: #E8DDD0;
+
+    /* Typography & Foreground */
+    --walnut: #3D2B1F;
+    /* Dark dark brown */
+    --clay: #B07D55;
+    /* Warm light brown / orange */
+    --sand: #C4A882;
+    /* Beige / light tan */
+    --sage: #8FA68E;
+    /* Muted green */
+
+    /* --- Font Sizes --- */
+    --h2-size: 36px;
+    --h3-size: 22px;
+    --p-size: 16px;
+    /* 15-16px */
+    --tag-size: 12px;
+    /* 11-12px */
+    --button-size: 14px;
+    --footer-size: 13px;
+    /* 12-13px */
+
+    /* --- Profile Page --- */
+    --profile-gradient: linear-gradient(135deg, #3D2B1F 0%, #B07D55 60%, #C4A882 100%);
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.55);
+    --glass-shadow: 0 8px 40px rgba(61, 43, 31, 0.13);
+    --card-radius: 28px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   Base & Content Sections 
+   ========================================= */
+
+body {
+    background-color: var(--parchment);
+    color: var(--walnut);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 58px;
+    /* Space for the fixed header */
+}
+
+/* Alternating sections background between Parchment and Linen for full-width <div> section */
+section:nth-of-type(even),
+.bg-linen {
+    background-color: var(--linen);
+}
+
+section:nth-of-type(odd),
+.bg-parchment {
+    background-color: var(--parchment);
+}
+
+/* =========================================
+   Typography 
+   ========================================= */
+
+/* Section Headings ("Latest Recipes", "Categories") */
+h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--walnut);
+    font-size: var(--h2-size);
+    margin-bottom: 15px;
+}
+
+/* Recipe card titles - Sub-section names ("Lemon Herb Chicken") */
+h3 {
+    color: var(--clay);
+    font-size: var(--h3-size);
+    margin-bottom: 10px;
+}
+
+/* Body text - Recipe descriptions - Ingredients */
+p {
+    color: var(--sand);
+    font-size: var(--p-size);
+    line-height: 1.6;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--linen);
+    margin: 20px 0;
+}
+
+
+/* Category tags ("Vegetarian", "30 min", "Easy") */
+.tag,
+label {
+    background-color: rgba(196, 168, 130, 0.1);
+    color: white;
+    font-size: var(--tag-size);
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* =========================================
+   UI Elements 
+   ========================================= */
+
+/* CTA buttons - "View Recipe", "Browse All" */
+button {
+    background-color: var(--clay);
+    color: white;
+    /* "Soft but still clickable — no harsh contrast" */
+    font-size: var(--button-size);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    /* Pillow-shaped / round from design */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--walnut);
+}
+
+/* --- Modern Footer Styles --- */
+footer {
+    background: linear-gradient(135deg, var(--walnut) 0%, #2a1e15 100%);
+    color: var(--sand);
+    padding: 40px 10% 24px;
+    position: relative;
+    margin-top: 60px;
+}
+
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--clay), var(--sand), var(--clay), transparent);
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(196, 168, 130, 0.15);
+    margin-bottom: 24px;
+}
+
+.footer-col h4 {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--clay);
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 35px;
+    height: 1.5px;
+    background: var(--clay);
+    opacity: 0.6;
+    transition: width 0.4s ease-out;
+}
+
+.footer-col:hover h4::after {
+    width: 50px;
+    opacity: 1;
+}
+
+/* About Description */
+.about-description {
+    color: var(--sand);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin-bottom: 0;
+}
+
+.footer-col p {
+    color: var(--sand);
+    font-size: 0.9rem;
+    margin: 10px 0;
+    line-height: 1.6;
+    opacity: 0.8;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.footer-col p:hover {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.footer-col p i {
+    width: 28px;
+    display: inline-block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
+}
+
+.footer-col p:hover i {
+    opacity: 1;
+}
+
+
+.social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(196, 168, 130, 0.08);
+    color: var(--sand);
+    font-size: 1.1rem;
+    border-radius: 50%;
+    transition: all 0.25s ease-out;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    background: var(--clay);
+    color: var(--walnut);
+    transform: translateY(-3px);
+}
+
+
+.contact-pill-modern {
+    display: flex;
+    width: fit-content;
+    padding: 10px 28px;
+    background: transparent;
+    border: 1.5px solid var(--clay);
+    color: var(--clay);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.25s ease-out;
+    margin-bottom: 20px;
+}
+
+.contact-pill-modern:hover {
+    background: var(--clay);
+    color: var(--walnut);
+    transform: translateY(-2px);
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.75rem;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+}
+
+.copyright p {
+    margin: 0;
+    transition: opacity 0.25s ease;
+}
+
+.copyright p:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 50px 5% 30px;
+        margin-top: 60px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-col h4 {
+        display: inline-block;
+    }
+
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-col:hover h4::after {
+        width: 50px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .contact-pill-modern {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+    }
+
+    .footer-col p {
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer-col p:hover {
+        transform: translateX(0);
+    }
+
+    .about-description {
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        padding: 45px 6% 25px;
+    }
+
+    .footer-grid {
+        gap: 28px;
+    }
+
+    .contact-pill-modern {
+        font-size: 0.78rem;
+        padding: 9px 18px;
+    }
+
+    .social-links a {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    .copyright {
+        font-size: 0.7rem;
+    }
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-col {
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.footer-col:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.footer-col:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.footer-col:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* =========================================
+   Navbar (Header) Styles 
+   ========================================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--walnut);
+    z-index: 1000;
+    padding: 4px 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    color: var(--sand);
+    font-size: 28px;
+}
+
+#main-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#main-nav a,
+#main-nav span {
+    color: var(--sand);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+#main-nav a:hover,
+#main-nav span:hover {
+    color: var(--clay);
+}
+
+/* =========================================
+   Toast Notifications
+   ========================================= */
+
+#toast-container {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    min-width: 220px;
+    max-width: 320px;
+}
+
+.toast.toast-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-icon {
+    font-size: 16px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.toast-success {
+    background-color: var(--sage);
+}
+
+.toast-error {
+    background-color: #c0392b;
+}
+
+.toast-info {
+    background-color: var(--clay);
+}
+
+.toast-warning {
+    background-color: #d68910;
+}

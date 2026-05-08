@@ -1,0 +1,41 @@
+```html 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Recipes</title>
+
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+</head>
+
+<body>
+
+    <h1>Lunch Recipes</h1>
+
+    {% for recipe in recipes %}
+
+        <div>
+
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" width="200">
+            {% endif %}
+
+            <h2>{{ recipe.title }}</h2>
+
+            <p>{{ recipe.description }}</p>
+
+        </div>
+
+        <hr>
+
+    {% empty %}
+
+        <p>No recipes found.</p>
+
+    {% endfor %}
+
+</body>
+</html>
+```

@@ -1,0 +1,109 @@
+/* =========================================================
+   Recipe Cards CSS (assets/css/recipeCards.css)
+   =========================================================
+   This file is intended to style the recipe cards that 
+   appear on the homepage and category pages.
+   The cards are generated in assets/js/recipeUI.js.
+   Remove or reduce inline styles in JS to let these shine!
+   ========================================================= */
+/* The Recipe Card Container */
+div[id^="recipe-"] {
+    background-color: #ffffff;
+    border: none !important;
+    /* overriding inline border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#allRecipes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+div[id^="recipe-"]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Title */
+div[id^="recipe-"] h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+    transition: color 0.2s ease;
+    text-align: center;
+}
+
+div[id^="recipe-"] h2 a:hover {
+    color: #e67e22;
+    /* Add your theme's primary color here! */
+}
+
+/* Card Image */
+div[id^="recipe-"] img {
+    border-radius: 8px !important;
+    transition: opacity 0.3s ease;
+    margin-top: 8px;
+}
+
+div[id^="recipe-"]:hover img {
+    opacity: 0.95;
+}
+
+/* Card Rating */
+div[id^="recipe-"] h4 {
+    color: #f39c12;
+    /* Golden star color */
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Card Description */
+div[id^="recipe-"] p {
+    color: #666;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+/* Action Buttons Container */
+div[id^="recipe-"]>div:last-of-type {
+    margin-top: auto !important;
+    /* Push buttons to the bottom of the card */
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* The Buttons inside the Card */
+div[id^="recipe-"] button {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #444;
+    transition: all 0.2s ease;
+}
+
+/* "Full Recipe" Button */
+div[id^="recipe-"] a button:hover {
+    background-color: var(--clay);
+    color: #fff;
+    border-color: transparent;
+}
+
+/* "Favorite" Button */
+div[id^="recipe-"] button[onclick^="toggleFavorite"]:hover {
+    background-color: #fff0f0;
+    border-color: #ffcccc;
+    color: #d63031;
+}

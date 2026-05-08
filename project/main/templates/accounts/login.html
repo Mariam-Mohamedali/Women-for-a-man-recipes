@@ -1,0 +1,77 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Login — Women For A Man{% endblock %}
+{% block body_class %}login-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="login-hero">
+    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1400&q=80"
+         alt="Delicious food">
+    <div class="login-hero-text">
+        <h2>Welcome Back</h2>
+        <p>Sign in to access your saved recipes and favourites.</p>
+    </div>
+</div>
+
+<main>
+    <div class="login-card">
+        <h2 class="card-title">Sign In</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div style="color:#d9534f;margin-bottom:15px;font-weight:bold;padding:12px;background:#fff5f5;border-radius:6px;border-left:4px solid #d9534f;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            <div style="color:#d9534f;margin-bottom:15px;font-weight:bold;padding:12px;background:#fff5f5;border-radius:6px;border-left:4px solid #d9534f;">
+                {% for error in form.non_field_errors %}
+                    <p style="margin:0;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <div class="field">
+                <label for="id_username">Username</label>
+                <input id="id_username" type="text" name="username"
+                       placeholder="Enter your username" required autofocus
+                       value="{{ form.username.value|default:'' }}">
+                {% for error in form.username.errors %}
+                    <p style="color:red;font-size:.85rem;margin-top:4px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="field">
+                <label for="id_password">Password</label>
+                <input id="id_password" type="password" name="password"
+                       placeholder="Enter your password" required>
+            </div>
+
+            <div class="row-check">
+                <label class="check-label">
+                    <input id="remember" type="checkbox" name="remember">
+                    Remember me
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary">Sign In</button>
+            <button type="reset" class="btn-secondary">Clear</button>
+        </form>
+
+        <p class="register-hint">New here? <a href="{% url 'register' %}">Create a free account &rarr;</a></p>
+    </div>
+</main>
+
+{% endblock %}

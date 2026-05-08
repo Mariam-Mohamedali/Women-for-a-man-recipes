@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Dessert Recipes{% endblock %}
+
+{% block content %}
+<section class="category-section">
+  <h2>Dessert Recipes</h2>
+  <div class="recipe-grid">
+    {% for recipe in recipes %}
+    <div class="recipe-card">
+      <a href="{% url 'recipe_details' recipe.id %}">{{ recipe.title }}</a>
+      <p>{{ recipe.description }}</p>
+    </div>
+    {% empty %}
+    <p>No recipes found.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

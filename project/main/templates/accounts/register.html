@@ -1,0 +1,112 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Register — Women For A Man{% endblock %}
+{% block body_class %}register-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="register-hero">
+    <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?w=1400&q=80"
+         alt="Delicious food spread">
+    <div class="register-hero-text">
+        <h2>Join Our Community</h2>
+        <p>Create an account and start saving your favourite recipes.</p>
+    </div>
+</div>
+
+<main>
+    <div class="register-card">
+        <h2 class="card-title">Create Account</h2>
+        <p class="card-subtitle">Already have an account? <a href="{% url 'login' %}">Sign in here</a></p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div style="color:#d9534f;margin-bottom:15px;font-weight:bold;padding:12px;background:#fff5f5;border-radius:6px;border-left:4px solid #d9534f;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.errors %}
+        <div style="color:#d9534f;margin-bottom:15px;padding:12px;background:#fff5f5;border-radius:6px;border-left:4px solid #d9534f;">
+            <strong>Please fix these errors:</strong><br>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p style="margin:4px 0;">• {{ field.label }}: {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <p style="margin:4px 0;">• {{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+
+            <div class="field">
+                <label for="id_username">Username</label>
+                <input id="id_username" type="text" name="username"
+                       placeholder="Choose a username" required autofocus
+                       value="{{ form.username.value|default:'' }}">
+                {% for error in form.username.errors %}
+                    <p style="color:red;font-size:.85rem;margin-top:4px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="field">
+                <label for="id_email">E-mail Address</label>
+                <input id="id_email" type="email" name="email"
+                       placeholder="you@example.com" required
+                       value="{{ form.email.value|default:'' }}">
+                {% for error in form.email.errors %}
+                    <p style="color:red;font-size:.85rem;margin-top:4px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="field">
+                <label for="id_password1">Password</label>
+                <input id="id_password1" type="password" name="password1"
+                       placeholder="Enter your password" required>
+                {% for error in form.password1.errors %}
+                    <p style="color:red;font-size:.85rem;margin-top:4px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="field">
+                <label for="id_password2">Confirm Password</label>
+                <input id="id_password2" type="password" name="password2"
+                       placeholder="Confirm your password" required>
+                {% for error in form.password2.errors %}
+                    <p style="color:red;font-size:.85rem;margin-top:4px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="field">
+                <label>Account Type</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="is_admin" value="false" id="role_user"
+                               {% if form.is_admin.value != 'true' %}checked{% endif %}>
+                        Regular User
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="is_admin" value="true" id="role_admin"
+                               {% if form.is_admin.value == 'true' %}checked{% endif %}>
+                        Admin
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Create Account</button>
+            <button type="reset" class="btn-secondary">Clear</button>
+        </form>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Dessert Recipes — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/category.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Banner -->
+<section class="category-hero"
+style="background-image: url('https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1400&q=80');">
+
+    <div class="category-hero-overlay"></div>
+
+    <div class="category-hero-text">
+        <span class="category-tag">🍰 Category</span>
+        <h1>Dessert Recipes</h1>
+        <p>Sweet endings for every occasion — baked, chilled, or no-bake.</p>
+    </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <a href="{% url 'home' %}">Home</a>
+    <span>›</span>
+
+    <a href="{% url 'our_recipes' %}">Our Recipes</a>
+    <span>›</span>
+
+    <span>Dessert</span>
+</div>
+
+<!-- Recipes Grid -->
+<section class="category-section">
+
+    <div class="category-header">
+        <h2>All Dessert Recipes</h2>
+
+        <span class="recipe-count">
+            {{ recipes.count }} recipe{{ recipes.count|pluralize }}
+        </span>
+    </div>
+
+    {% if recipes %}
+    <div class="recipe-grid">
+
+        {% for recipe in recipes %}
+        <article class="recipe-card">
+
+            <div class="recipe-card-img-wrap">
+
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80"
+                         alt="{{ recipe.title }}">
+                {% endif %}
+
+                <span class="recipe-card-badge dessert-badge">
+                    Dessert
+                </span>
+
+            </div>
+
+            <div class="recipe-card-body">
+
+                <h3 class="recipe-card-title">
+                    {{ recipe.title }}
+                </h3>
+
+                <p class="recipe-card-desc">
+                    {{ recipe.description|truncatewords:18 }}
+                </p>
+
+                <div class="recipe-card-footer">
+
+                    <span class="recipe-card-author">
+                        {{ recipe.author.username }}
+                    </span>
+
+                    <a href="{% url 'recipe_details' recipe.id %}"
+                       class="recipe-card-btn">
+                        View Recipe →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <div class="empty-icon">🍰</div>
+
+        <h3>No Dessert Recipes Yet</h3>
+
+        <p>
+            Got a sweet recipe to share? Add it and inspire the community!
+        </p>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'add_recipe' %}" class="btn-primary">
+                + Add a Recipe
+            </a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn-primary">
+                Join & Share
+            </a>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
