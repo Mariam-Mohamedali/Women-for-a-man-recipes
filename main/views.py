@@ -161,6 +161,7 @@ def edit_recipe_view(request, recipe_id):
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
 
 
+<<<<<<< Updated upstream
 
 def recipe_detail_view(request, recipe_id):
     recipe = get_object_or_404(
@@ -178,10 +179,102 @@ def recipe_detail_view(request, recipe_id):
     })
 
 
+=======
+# ─────────────────────────────
+#  Recipe Detail
+# ─────────────────────────────
+def recipe_detail_view(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    is_favourite = False
+    if request.user.is_authenticated:
+        is_favourite = Favourite.objects.filter(
+            user=request.user, recipe=recipe
+        ).exists()
+    return render(request, 'main/recipe_detail.html', {
+        'recipe': recipe,
+        'is_favourite': is_favourite,
+    })
+
+
+# ─────────────────────────────
+#  Breakfast Category
+# ─────────────────────────────
+def breakfast_view(request):
+    from .models import Category
+    category = Category.objects.filter(name__iexact='breakfast').first()
+    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    return render(request, 'main/breakfast.html', {
+        'recipes': recipes,
+        'category': category,
+    })
+
+
+# ─────────────────────────────
+#  Lunch Category
+# ─────────────────────────────
+def lunch_view(request):
+    from .models import Category
+    category = Category.objects.filter(name__iexact='lunch').first()
+    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    return render(request, 'main/lunch.html', {
+        'recipes': recipes,
+        'category': category,
+    })
+
+
+# ─────────────────────────────
+#  Admin Dashboard
+# ─────────────────────────────
+@login_required
+def admin_dashboard_view(request):
+    if not request.user.is_staff:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+    recipes = Recipe.objects.all().select_related('author', 'category').order_by('-created_at')
+    return render(request, 'main/admin_dashboard.html', {'recipes': recipes})
+
+
+# ─────────────────────────────
+#  Delete Recipe
+# ─────────────────────────────
+@login_required
+def delete_recipe_view(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    if not request.user.is_staff and recipe.author != request.user:
+        messages.error(request, "Permission denied.")
+        return redirect('home')
+    if request.method == 'POST':
+        recipe.delete()
+        messages.success(request, 'Recipe deleted successfully.')
+        return redirect('admin_dashboard')
+    return redirect('admin_dashboard')
+
+
+# ─────────────────────────────
+#  Toggle Favourite
+# ─────────────────────────────
+@login_required
+def toggle_favourite_view(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    fav, created = Favourite.objects.get_or_create(user=request.user, recipe=recipe)
+    if not created:
+        fav.delete()
+        messages.info(request, f'Removed "{recipe.title}" from favourites.')
+    else:
+        messages.success(request, f'Added "{recipe.title}" to favourites!')
+    next_url = request.POST.get('next', request.META.get('HTTP_REFERER', 'home'))
+    return redirect(next_url)
+
+
+# ─────────────────────────────
+#  Favourites Page
+# ─────────────────────────────
+>>>>>>> Stashed changes
 @login_required
 def favourites_view(request):
     favourites = Favourite.objects.filter(
         user=request.user
+<<<<<<< Updated upstream
     ).select_related('recipe', 'recipe__author', 'recipe__category').order_by('-added_at')
 
     favourite_recipe_ids = list(favourites.values_list('recipe_id', flat=True))
@@ -256,3 +349,7 @@ def my_favourites(request):
     favs = Favourite.objects.filter(user=request.user).select_related('recipe')
     return render(request, 'main/favourites.html', {'favourites': favs})
 
+=======
+    ).select_related('recipe', 'recipe__category').order_by('-added_at')
+    return render(request, 'main/favourites.html', {'favourites': favourites})
+>>>>>>> Stashed changes
