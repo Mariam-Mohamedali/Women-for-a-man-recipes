@@ -161,7 +161,7 @@ def edit_recipe_view(request, recipe_id):
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
 
 
-<<<<<<< Updated upstream
+
 
 def recipe_detail_view(request, recipe_id):
     recipe = get_object_or_404(
@@ -179,7 +179,7 @@ def recipe_detail_view(request, recipe_id):
     })
 
 
-=======
+
 # ─────────────────────────────
 #  Recipe Detail
 # ─────────────────────────────
@@ -269,12 +269,12 @@ def toggle_favourite_view(request, recipe_id):
 # ─────────────────────────────
 #  Favourites Page
 # ─────────────────────────────
->>>>>>> Stashed changes
+
 @login_required
 def favourites_view(request):
     favourites = Favourite.objects.filter(
         user=request.user
-<<<<<<< Updated upstream
+
     ).select_related('recipe', 'recipe__author', 'recipe__category').order_by('-added_at')
 
     favourite_recipe_ids = list(favourites.values_list('recipe_id', flat=True))
@@ -346,10 +346,8 @@ def toggle_favourite(request, recipe_id):
 
 @login_required
 def my_favourites(request):
-    favs = Favourite.objects.filter(user=request.user).select_related('recipe')
-    return render(request, 'main/favourites.html', {'favourites': favs})
-
-=======
+    favs = Favourite.objects.filter(
+        user=request.user
     ).select_related('recipe', 'recipe__category').order_by('-added_at')
-    return render(request, 'main/favourites.html', {'favourites': favourites})
->>>>>>> Stashed changes
+
+    return render(request, 'main/favourites.html', {'favourites': favs})
