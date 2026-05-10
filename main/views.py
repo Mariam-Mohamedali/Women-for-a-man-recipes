@@ -1,25 +1,64 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Recipe, Favourite
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import RegisterForm, LoginForm, RecipeForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
+
+from .forms import ContactForm, LoginForm, RecipeForm, RegisterForm
+from .models import Favourite, Recipe
 
 
-# ─────────────────────────────
-#  Home
-# ─────────────────────────────
+
 def home(request):
-    recipes = Recipe.objects.all().order_by('-created_at')[:8]
-    context = {
+    recipes = Recipe.objects.select_related('author', 'category').all().order_by('-created_at')
+    favourite_recipe_ids = []
+
+    if request.user.is_authenticated:
+        favourite_recipe_ids = list(
+            Favourite.objects.filter(user=request.user).values_list('recipe_id', flat=True)
+        )
+
+    return render(request, 'main/home.html', {
         'recipes': recipes,
-    }
-    return render(request, 'main/home.html', context)
+        'favourite_recipe_ids': favourite_recipe_ids,
+    })
+
+
+def about_view(request):
+    return render(request, 'main/aboutUs.html')
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your message was sent successfully. Thank you for contacting us!')
+            return redirect('contact_success')
+        messages.error(request, 'Please fix the errors below.')
+    else:
+        form = ContactForm()
+
+    return render(request, 'main/contactUs.html', {'form': form})
+
+def contact_success_view(request):
+    return render(request, 'main/contact_success.html')
+
+
+
+# ─────────────────────────────
+#  All Recipes
+# ─────────────────────────────
+def recipes_view(request):
+    recipes = Recipe.objects.all().order_by('-created_at')
+    return render(request, 'main/recipes.html', {'recipes': recipes})
 
 
 # ─────────────────────────────
 #  Auth Views
 # ─────────────────────────────
+
 def register_view(request):
     if request.user.is_authenticated:
         return redirect('login')
@@ -30,8 +69,7 @@ def register_view(request):
             user = form.save()
             messages.success(request, f'Welcome {user.username}! 🎉')
             return redirect('login')
-        else:
-            messages.error(request, 'Please fix the errors below.')
+        messages.error(request, 'Please fix the errors below.')
     else:
         form = RegisterForm()
 
@@ -47,11 +85,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, f'Welcome back, {user.username}! ')
+            messages.success(request, f'Welcome back, {user.username}!')
             next_url = request.GET.get('next', 'home')
             return redirect(next_url)
-        else:
-            messages.error(request, 'Invalid username or password.')
+        messages.error(request, 'Invalid username or password.')
     else:
         form = LoginForm(request)
 
@@ -64,24 +101,23 @@ def logout_view(request):
     return redirect('login')
 
 
+
+
 # ─────────────────────────────
-#  Profile 
+#  Profile
 # ─────────────────────────────
+
 @login_required
 def profile_view(request):
     favourite_recipes = Favourite.objects.filter(
         user=request.user
-    ).select_related('recipe').order_by('-added_at')
+    ).select_related('recipe', 'recipe__author', 'recipe__category').order_by('-added_at')
 
-    context = {
+    return render(request, 'main/profile.html', {
         'favourite_recipes': favourite_recipes,
-    }
-    return render(request, 'main/profile.html', context)
+    })
 
 
-# ─────────────────────────────
-#  Add Recipe
-# ─────────────────────────────
 @login_required
 def add_recipe_view(request):
     if request.method == 'POST':
@@ -92,16 +128,17 @@ def add_recipe_view(request):
             recipe.save()
             messages.success(request, 'Recipe added successfully! 🎉')
             return redirect('home')
-        else:
-            messages.error(request, 'Please fix the errors below.')
+        messages.error(request, 'Please fix the errors below.')
     else:
         form = RecipeForm()
 
     return render(request, 'main/add_recipe.html', {'form': form})
 
 
+
+
 # ─────────────────────────────
-#  Edit Recipe 
+#  Edit Recipe
 # ─────────────────────────────
 @login_required
 def edit_recipe_view(request, recipe_id):
@@ -117,9 +154,105 @@ def edit_recipe_view(request, recipe_id):
             form.save()
             messages.success(request, 'Recipe updated successfully! ✅')
             return redirect('home')
-        else:
-            messages.error(request, 'Please fix the errors below.')
+        messages.error(request, 'Please fix the errors below.')
     else:
         form = RecipeForm(instance=recipe)
 
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
+
+
+
+def recipe_detail_view(request, recipe_id):
+    recipe = get_object_or_404(
+        Recipe.objects.select_related('author', 'category'),
+        id=recipe_id,
+    )
+    is_favourite = False
+
+    if request.user.is_authenticated:
+        is_favourite = Favourite.objects.filter(user=request.user, recipe=recipe).exists()
+
+    return render(request, 'main/recipe_detail.html', {
+        'recipe': recipe,
+        'favourite_recipe_ids': [recipe.id] if is_favourite else [],
+    })
+
+
+@login_required
+def favourites_view(request):
+    favourites = Favourite.objects.filter(
+        user=request.user
+    ).select_related('recipe', 'recipe__author', 'recipe__category').order_by('-added_at')
+
+    favourite_recipe_ids = list(favourites.values_list('recipe_id', flat=True))
+
+    return render(request, 'main/favourites.html', {
+        'favourites': favourites,
+        'favourite_recipe_ids': favourite_recipe_ids,
+    })
+
+
+@login_required
+@require_POST
+def toggle_favourite(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    favourite, created = Favourite.objects.get_or_create(user=request.user, recipe=recipe)
+
+    if created:
+        is_favourite = True
+    else:
+        favourite.delete()
+        is_favourite = False
+
+    return JsonResponse({
+        'success': True,
+        'is_favourite': is_favourite,
+        'count': Favourite.objects.filter(recipe=recipe).count(),
+    })
+
+# ─────────────────────────────
+#  About Us
+# ─────────────────────────────
+def about_us(request):
+    return render(request, 'main/about_us.html')
+
+
+# ─────────────────────────────
+#  Contact Us
+# ─────────────────────────────
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('contact_success')
+    else:
+        form = ContactForm()
+    return render(request, 'main/contact_us.html', {'form': form})
+
+
+def contact_success(request):
+    return render(request, 'main/contact_success.html')
+
+
+# ─────────────────────────────
+#  Favourites (AJAX)
+# ─────────────────────────────
+@login_required
+def toggle_favourite(request, recipe_id):
+    if request.method == 'POST':
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+        fav, created = Favourite.objects.get_or_create(
+            user=request.user, recipe=recipe
+        )
+        if not created:
+            fav.delete()
+            return JsonResponse({'status': 'removed'})
+        return JsonResponse({'status': 'added'})
+
+
+@login_required
+def my_favourites(request):
+    favs = Favourite.objects.filter(user=request.user).select_related('recipe')
+    return render(request, 'main/favourites.html', {'favourites': favs})
+

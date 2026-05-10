@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="contact-success-section">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+
+        <h1>Message Sent Successfully!</h1>
+
+        <p>
+            Thank you for contacting us. Your message has been received,
+            and we will get back to you as soon as possible.
+        </p>
+
+        <div class="success-actions">
+            <a href="{% url 'home' %}" class="success-btn primary">Back to Home</a>
+            <a href="{% url 'contact' %}" class="success-btn secondary">Send Another Message</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

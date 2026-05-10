@@ -11,7 +11,6 @@ class User(AbstractUser):
     )
     bio = models.TextField(blank=True, null=True)
 
-    # These two lines fix the clash
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='main_user_set',
@@ -25,6 +24,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
 
 # 2. Category Model
 class Category(models.Model):
@@ -66,7 +66,6 @@ class Recipe(models.Model):
 
 # 4. Favourite Model
 class Favourite(models.Model):
-        
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -80,19 +79,21 @@ class Favourite(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username}  {self.recipe.title}"
+        return f"{self.user.username} → {self.recipe.title}"
 
     class Meta:
-        #stop user from put the same recipe to fav twice
         unique_together = ('user', 'recipe')
-        
+
+
+# 5. Contact Message Model
 class ContactMessage(models.Model):
-    name = models.CharField(max_length=120)
-    email = models.EmailField()
-    subject = models.CharField(max_length=200)
+    name    = models.CharField(max_length=100)
+    email   = models.EmailField()
     message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
+    sent_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.subject}"
+        return f'{self.name} – {self.sent_at:%Y-%m-%d}'
+
+    class Meta:
+        ordering = ['-sent_at']

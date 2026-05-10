@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
+
 {% block title %}My Favourites — WFM{% endblock %}
 
 {% block extra_css %}
@@ -251,3 +252,36 @@
 </div>
 
 {% endblock %}
+
+{% block title %}My Favourites — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/recipe_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="recipes-page-heading">
+  <span>Saved recipes</span>
+  <h1>My Favourite Recipes</h1>
+  <p>Remove recipes instantly without reloading the page.</p>
+</section>
+
+<div class="recipes-container" id="favourites-container">
+  {% for favourite in favourites %}
+    {% with recipe=favourite.recipe %}
+      {% include 'main/partials/recipe_card.html' %}
+    {% endwith %}
+  {% empty %}
+    <div class="empty-state" id="favourites-empty">
+      <h2>No favourite recipes yet.</h2>
+      <p>Browse recipes and click “Add Favourite” to save them here.</p>
+      <a href="{% url 'recipes' %}" class="view-btn">Browse Recipes</a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/favourites.js' %}"></script>
+{% endblock %}
+

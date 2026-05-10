@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="contact-page">
+  <div class="contact-info-card">
+    <span class="contact-kicker">Get in touch</span>
+    <h1>Contact Us</h1>
+    <p>Have a question, suggestion, or recipe idea? Send us a message and we will save it in the database.</p>
+    <div class="contact-mini-list">
+      <span> contact@wfm.com</span>
+      <span> +1 234 567 890</span>
+      <span> Recipe community support</span>
+    </div>
+  </div>
+
+  <div class="contact-form-card">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% for field in form %}
+        <div class="contact-field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}
+            <small class="contact-error">{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="contact-submit">Send Message</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
