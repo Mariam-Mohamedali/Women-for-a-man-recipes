@@ -1,4 +1,5 @@
 from django.contrib import messages
+<<<<<<< Updated upstream
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -7,6 +8,10 @@ from django.views.decorators.http import require_POST
 
 from .forms import ContactForm, LoginForm, RecipeForm, RegisterForm
 from .models import Favourite, Recipe
+=======
+from .forms import RegisterForm, LoginForm, RecipeForm, ContactForm
+from django.http import JsonResponse
+>>>>>>> Stashed changes
 
 
 def home(request):
@@ -45,6 +50,20 @@ def contact_success_view(request):
     return render(request, 'main/contact_success.html')
 
 
+<<<<<<< Updated upstream
+=======
+# ─────────────────────────────
+#  All Recipes
+# ─────────────────────────────
+def recipes_view(request):
+    recipes = Recipe.objects.all().order_by('-created_at')
+    return render(request, 'main/recipes.html', {'recipes': recipes})
+
+
+# ─────────────────────────────
+#  Auth Views
+# ─────────────────────────────
+>>>>>>> Stashed changes
 def register_view(request):
     if request.user.is_authenticated:
         return redirect('login')
@@ -87,6 +106,12 @@ def logout_view(request):
     return redirect('login')
 
 
+<<<<<<< Updated upstream
+=======
+# ─────────────────────────────
+#  Profile
+# ─────────────────────────────
+>>>>>>> Stashed changes
 @login_required
 def profile_view(request):
     favourite_recipes = Favourite.objects.filter(
@@ -115,6 +140,12 @@ def add_recipe_view(request):
     return render(request, 'main/add_recipe.html', {'form': form})
 
 
+<<<<<<< Updated upstream
+=======
+# ─────────────────────────────
+#  Edit Recipe
+# ─────────────────────────────
+>>>>>>> Stashed changes
 @login_required
 def edit_recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
@@ -136,6 +167,7 @@ def edit_recipe_view(request, recipe_id):
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
 
 
+<<<<<<< Updated upstream
 def recipe_detail_view(request, recipe_id):
     recipe = get_object_or_404(
         Recipe.objects.select_related('author', 'category'),
@@ -183,3 +215,50 @@ def toggle_favourite(request, recipe_id):
         'is_favourite': is_favourite,
         'count': Favourite.objects.filter(recipe=recipe).count(),
     })
+=======
+# ─────────────────────────────
+#  About Us
+# ─────────────────────────────
+def about_us(request):
+    return render(request, 'main/about_us.html')
+
+
+# ─────────────────────────────
+#  Contact Us
+# ─────────────────────────────
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('contact_success')
+    else:
+        form = ContactForm()
+    return render(request, 'main/contact_us.html', {'form': form})
+
+
+def contact_success(request):
+    return render(request, 'main/contact_success.html')
+
+
+# ─────────────────────────────
+#  Favourites (AJAX)
+# ─────────────────────────────
+@login_required
+def toggle_favourite(request, recipe_id):
+    if request.method == 'POST':
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+        fav, created = Favourite.objects.get_or_create(
+            user=request.user, recipe=recipe
+        )
+        if not created:
+            fav.delete()
+            return JsonResponse({'status': 'removed'})
+        return JsonResponse({'status': 'added'})
+
+
+@login_required
+def my_favourites(request):
+    favs = Favourite.objects.filter(user=request.user).select_related('recipe')
+    return render(request, 'main/favourites.html', {'favourites': favs})
+>>>>>>> Stashed changes
