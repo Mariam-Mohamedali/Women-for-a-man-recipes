@@ -5,10 +5,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from .forms import ContactForm, LoginForm, RecipeForm, RegisterForm, ContactForm
+from .forms import ContactForm, LoginForm, RecipeForm, RegisterForm
 from .models import Favourite, Recipe
-
-from django.http import JsonResponse
 
 
 
