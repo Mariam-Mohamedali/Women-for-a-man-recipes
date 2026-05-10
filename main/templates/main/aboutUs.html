@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}About Us — Women For A Man{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="main_about_section">
+  <div class="about_container">
+
+    <div class="aboutimg">
+      <div class="aboutimg_border">
+        <img src="{% static 'main/static/images/about.jpg' %}" alt="About Women For A Man" class="about_img">
+      </div>
+    </div>
+
+    <div class="about_text">
+      <span class="about-sub-tag">About Women For A Man</span>
+
+      <h2>Recipes made simple, warm, and worth sharing.</h2>
+
+      <p>
+        Women For A Man is a community recipe website where people can discover,
+        save, and share delicious dishes for everyday meals and special moments.
+      </p>
+
+      <div class="vision-highlight">
+        <h4>Our Mission</h4>
+        <p>
+          We make cooking easier by collecting clear recipes, helpful ingredients,
+          and simple instructions in one friendly place.
+        </p>
+      </div>
+
+      <p>
+        Browse recipes, create an account, add your own recipes, and save your
+        favourites so you can come back to them anytime.
+      </p>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

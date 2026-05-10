@@ -85,3 +85,20 @@ class Favourite(models.Model):
     class Meta:
         #stop user from put the same recipe to fav twice
         unique_together = ('user', 'recipe')
+
+
+
+# 5. Contact Message Model
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
+
+    class Meta:
+        ordering = ['-created_at']

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Recipe
+from .models import User, Recipe, ContactMessage
 
 # ─────────────────────────────
 #  Auth Forms 
@@ -85,4 +85,33 @@ class RecipeForm(forms.ModelForm):
             'instructions': 'Instructions',
             'category': 'Category',
             'image': 'Recipe Image',
+        }
+
+
+
+# ─────────────────────────────
+#  Contact Form
+# ─────────────────────────────
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['name', 'email', 'subject', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'contact-input',
+                'placeholder': 'Your name',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'contact-input',
+                'placeholder': 'you@example.com',
+            }),
+            'subject': forms.TextInput(attrs={
+                'class': 'contact-input',
+                'placeholder': 'Message subject',
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'contact-input contact-textarea',
+                'rows': 6,
+                'placeholder': 'Write your message here...',
+            }),
         }
