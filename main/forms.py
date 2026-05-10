@@ -1,4 +1,4 @@
-﻿from django import forms
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User, Recipe, ContactMessage
 
@@ -96,53 +96,27 @@ class RecipeForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ["name", "email", "message"]
+        fields = ["name", "email", "subject", "message"]
         widgets = {
             "name": forms.TextInput(attrs={
-                "class": "form-input",
+                "class": "contact-input",
                 "placeholder": "Your name",
             }),
             "email": forms.EmailInput(attrs={
-                "class": "form-input",
-                "placeholder": "your@email.com",
+                "class": "contact-input",
+                "placeholder": "you@example.com",
+            }),
+            "subject": forms.TextInput(attrs={
+                "class": "contact-input",
+                "placeholder": "Message subject",
             }),
             "message": forms.Textarea(attrs={
-                "class": "form-input",
-                "rows": 5,
+                "class": "contact-input contact-textarea",
+                "rows": 6,
                 "placeholder": "Write your message here...",
             }),
         }
-        labels = {
-            "name": "Full Name",
-            "email": "Email Address",
-            "message": "Message",
-        }
 
 
 
-# ─────────────────────────────
-#  Contact Form
-# ─────────────────────────────
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = ContactMessage
-        fields = ['name', 'email', 'subject', 'message']
-        widgets = {
-            'name': forms.TextInput(attrs={
-                'class': 'contact-input',
-                'placeholder': 'Your name',
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': 'contact-input',
-                'placeholder': 'you@example.com',
-            }),
-            'subject': forms.TextInput(attrs={
-                'class': 'contact-input',
-                'placeholder': 'Message subject',
-            }),
-            'message': forms.Textarea(attrs={
-                'class': 'contact-input contact-textarea',
-                'rows': 6,
-                'placeholder': 'Write your message here...',
-            }),
-        }
+
