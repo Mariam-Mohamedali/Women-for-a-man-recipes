@@ -4,10 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from .forms import ContactForm, LoginForm, RecipeForm, RegisterForm
 from .models import Favourite, Recipe
-
 
 
 def home(request):
@@ -44,7 +45,6 @@ def contact_view(request):
 
 def contact_success_view(request):
     return render(request, 'main/contact_success.html')
-
 
 
 # ─────────────────────────────
@@ -101,8 +101,6 @@ def logout_view(request):
     return redirect('login')
 
 
-
-
 # ─────────────────────────────
 #  Profile
 # ─────────────────────────────
@@ -135,8 +133,6 @@ def add_recipe_view(request):
     return render(request, 'main/add_recipe.html', {'form': form})
 
 
-
-
 # ─────────────────────────────
 #  Edit Recipe
 # ─────────────────────────────
@@ -161,25 +157,6 @@ def edit_recipe_view(request, recipe_id):
     return render(request, 'main/edit_recipe.html', {'form': form, 'recipe': recipe})
 
 
-
-
-def recipe_detail_view(request, recipe_id):
-    recipe = get_object_or_404(
-        Recipe.objects.select_related('author', 'category'),
-        id=recipe_id,
-    )
-    is_favourite = False
-
-    if request.user.is_authenticated:
-        is_favourite = Favourite.objects.filter(user=request.user, recipe=recipe).exists()
-
-    return render(request, 'main/recipe_detail.html', {
-        'recipe': recipe,
-        'favourite_recipe_ids': [recipe.id] if is_favourite else [],
-    })
-
-
-
 # ─────────────────────────────
 #  Recipe Detail
 # ─────────────────────────────
@@ -193,6 +170,7 @@ def recipe_detail_view(request, recipe_id):
     return render(request, 'main/recipe_detail.html', {
         'recipe': recipe,
         'is_favourite': is_favourite,
+        'favourite_recipe_ids': [recipe.id] if is_favourite else [],
     })
 
 
@@ -221,7 +199,175 @@ def lunch_view(request):
         'category': category,
     })
 
+# ─────────────────────────────
+#  Dinner Category
+# ─────────────────────────────
+def dinner_view(request):
+    from .models import Category
+    category = Category.objects.filter(name__iexact='dinner').first()
+    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    return render(request, 'main/dinner.html', {
+        'recipes': recipes,
+        'category': category,
+    })
 
+# ─────────────────────────────
+#  Desserts Category
+# ─────────────────────────────
+def dessert_view(request):
+    from .models import Category
+    category = Category.objects.filter(name__iexact='dessert').first()
+    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    return render(request, 'main/dessert.html', {
+        'recipes': recipes,
+        'category': category,
+    })
+
+# ─────────────────────────────
+#  Our Recipes (User's Own Recipes)
+# ─────────────────────────────
+@login_required
+def our_recipes_view(request):
+    recipes = Recipe.objects.filter(author=request.user).order_by('-created_at')
+    return render(request, 'main/recipes.html', {'recipes': recipes})
+    
+# ─────────────────────────────
+#  Search
+# ─────────────────────────────
+def search_view(request):
+    query = request.GET.get('q', '')
+    recipes = Recipe.objects.filter(
+        title__icontains=query
+    ).select_related('author', 'category').order_by('-created_at') if query else Recipe.objects.none()
+    return render(request, 'main/search_results.html', {
+        'recipes': recipes,
+        'query': query,
+    })
+
+# ─────────────────────────────
+#  Admin
+# ─────────────────────────────
+def admin_recipes_view(request):
+    if not request.user.is_staff:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+    recipes = Recipe.objects.all().select_related('author', 'category').order_by('-created_at')
+    return render(request, 'main/admin_recipes.html', {'recipes': recipes})
+
+def admin_add_recipe_view(request):
+    if not request.user.is_staff:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
+            messages.success(request, 'Recipe added successfully! 🎉')
+            return redirect('admin_recipes')
+        messages.error(request, 'Please fix the errors below.')
+    else:
+        form = RecipeForm()
+
+    return render(request, 'main/admin_add_recipe.html', {'form': form})
+
+def admin_edit_recipe_view(request, recipe_id):
+    if not request.user.is_staff:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Recipe updated successfully! ✅')
+            return redirect('admin_recipes')
+        messages.error(request, 'Please fix the errors below.')
+    else:
+        form = RecipeForm(instance=recipe)
+
+    return render(request, 'main/admin_edit_recipe.html', {'form': form, 'recipe': recipe})
+
+def admin_delete_recipe_view(request, recipe_id):
+    if not request.user.is_staff:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+    if request.method == 'POST':
+        recipe.delete()
+        messages.success(request, 'Recipe deleted successfully.')
+        return redirect('admin_recipes')
+
+    return redirect('admin_recipes')
+
+
+
+# ─────────────────────────────
+#  Users List (Admin Only)
+# ─────────────────────────────
+@login_required
+def users_list(request):
+    if not request.user.is_staff:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+
+    User = get_user_model()
+
+    users = User.objects.all().order_by('-date_joined')
+
+    return render(request, 'main/users_list.html', {
+        'users': users
+    })
+
+
+@staff_member_required
+def delete_user_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    # prevent deleting yourself
+    if user == request.user:
+        messages.error(request, "You cannot delete your own account.")
+        return redirect('users_list')
+
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, f'User "{user.username}" deleted successfully.')
+
+    return redirect('users_list')
+
+@login_required
+def make_admin_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    user.is_staff = True
+    user.save()
+
+    return redirect('users_list')
+
+
+@staff_member_required
+def remove_admin_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    # prevent removing yourself
+    if user == request.user:
+        messages.error(request, "You cannot remove your own admin access.")
+        return redirect('users_list')
+
+    if request.method == 'POST':
+        user.is_staff = False
+        user.save()
+
+        messages.success(request, f'Admin removed from {user.username}.')
+
+    return redirect('users_list')
+    
 # ─────────────────────────────
 #  Admin Dashboard
 # ─────────────────────────────
@@ -251,7 +397,7 @@ def delete_recipe_view(request, recipe_id):
 
 
 # ─────────────────────────────
-#  Toggle Favourite
+#  Toggle Favourite (form-based)
 # ─────────────────────────────
 @login_required
 def toggle_favourite_view(request, recipe_id):
@@ -274,7 +420,6 @@ def toggle_favourite_view(request, recipe_id):
 def favourites_view(request):
     favourites = Favourite.objects.filter(
         user=request.user
-
     ).select_related('recipe', 'recipe__author', 'recipe__category').order_by('-added_at')
 
     favourite_recipe_ids = list(favourites.values_list('recipe_id', flat=True))
@@ -285,6 +430,9 @@ def favourites_view(request):
     })
 
 
+# ─────────────────────────────
+#  Toggle Favourite (AJAX)
+# ─────────────────────────────
 @login_required
 @require_POST
 def toggle_favourite(request, recipe_id):
@@ -302,52 +450,3 @@ def toggle_favourite(request, recipe_id):
         'is_favourite': is_favourite,
         'count': Favourite.objects.filter(recipe=recipe).count(),
     })
-
-# ─────────────────────────────
-#  About Us
-# ─────────────────────────────
-def about_us(request):
-    return render(request, 'main/about_us.html')
-
-
-# ─────────────────────────────
-#  Contact Us
-# ─────────────────────────────
-def contact_us(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('contact_success')
-    else:
-        form = ContactForm()
-    return render(request, 'main/contact_us.html', {'form': form})
-
-
-def contact_success(request):
-    return render(request, 'main/contact_success.html')
-
-
-# ─────────────────────────────
-#  Favourites (AJAX)
-# ─────────────────────────────
-@login_required
-def toggle_favourite(request, recipe_id):
-    if request.method == 'POST':
-        recipe = get_object_or_404(Recipe, id=recipe_id)
-        fav, created = Favourite.objects.get_or_create(
-            user=request.user, recipe=recipe
-        )
-        if not created:
-            fav.delete()
-            return JsonResponse({'status': 'removed'})
-        return JsonResponse({'status': 'added'})
-
-
-@login_required
-def my_favourites(request):
-    favs = Favourite.objects.filter(
-        user=request.user
-    ).select_related('recipe', 'recipe__category').order_by('-added_at')
-
-    return render(request, 'main/favourites.html', {'favourites': favs})
