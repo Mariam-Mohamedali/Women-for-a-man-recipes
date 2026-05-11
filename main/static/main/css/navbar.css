@@ -134,7 +134,7 @@
     }
     .nav-hamburger.open .nav-hamburger-line:nth-child(2) {
         opacity: 0 !important;
-        width: 0 !important;
+        transform: scaleX(0) !important;
     }
     .nav-hamburger.open .nav-hamburger-line:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg) !important;
@@ -156,9 +156,10 @@
         inset: 0 !important;
         background: rgba(0,0,0,0.55) !important;
         opacity: 0 !important;
-        transition: opacity 0.3s ease !important;
-        backdrop-filter: blur(2px) !important;
-        -webkit-backdrop-filter: blur(2px) !important;
+        visibility: hidden !important;
+        transition: opacity 0.3s ease, visibility 0.3s !important;
+        backdrop-filter: blur(4px) !important;
+        -webkit-backdrop-filter: blur(4px) !important;
     }
 
     .nav-mobile-panel {
@@ -184,6 +185,7 @@
 
     .nav-mobile-menu.open .nav-mobile-backdrop {
         opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .nav-mobile-menu.open .nav-mobile-panel {
