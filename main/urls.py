@@ -36,11 +36,9 @@ urlpatterns = [
          name='search'),
 
     # ───────────────── AUTH ─────────────────
-    path('login/',
-         views.login_view,
-         name='login'),
-
-<<<<<<< HEAD
+     path('register/',                    views.register_view,         name='register'),
+    path('login/',                       views.login_view,            name='login'),
+    path('logout/',                      views.logout_view,           name='logout'),
     path('recipe/<int:recipe_id>/',      views.recipe_detail_view,   name='recipe_detail'),
     path('recipes/breakfast/',           views.breakfast_view,        name='breakfast'),
     path('recipes/lunch/',               views.lunch_view,            name='lunch'),
@@ -48,16 +46,8 @@ urlpatterns = [
     path('delete-recipe/<int:recipe_id>/', views.delete_recipe_view, name='delete_recipe'),
     path('favourite/<int:recipe_id>/',   views.toggle_favourite_view, name='toggle_favourite'),
     path('favourites/',                  views.favourites_view,       name='favourites'),
-]
-=======
-    path('register/',
-         views.register_view,
-         name='register'),
->>>>>>> e3dbe52 (update)
-
-    path('logout/',
-         views.logout_view,
-         name='logout'),
+    path('contact/',                     views.contact_view,          name='contact'),
+    
 
     # ───────────────── USER ─────────────────
     path('profile/',
