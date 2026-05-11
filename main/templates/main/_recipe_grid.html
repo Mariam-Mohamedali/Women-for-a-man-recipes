@@ -1,0 +1,64 @@
+{% if recipes %}
+<div class="category-recipe-grid">
+
+  {% for recipe in recipes %}
+  <div class="category-recipe-card">
+
+    <div class="card-img-wrap">
+      {% if recipe.image %}
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+      {% else %}
+        <div class="card-no-img">🍽️</div>
+      {% endif %}
+
+      {% if recipe.category %}
+        <span class="card-category-badge">
+          {{ recipe.category.name }}
+        </span>
+      {% endif %}
+    </div>
+
+    <div class="card-body">
+      <h3>{{ recipe.title }}</h3>
+      <p>{{ recipe.description|truncatewords:20 }}</p>
+    </div>
+
+    <div class="card-footer-strip">
+      <span class="card-author">
+        By {{ recipe.author.username }}
+      </span>
+
+      <a class="card-view-link"
+         href="{% url 'recipe_detail' recipe.id %}">
+         View Recipe →
+      </a>
+    </div>
+
+  </div>
+  {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="cat-empty">
+  <span class="cat-empty-icon">🍽️</span>
+
+  <h3>No recipes found</h3>
+
+  <p>
+    {% if query %}
+      We couldn't find any recipes matching "{{ query }}".
+    {% else %}
+      No recipes are available in this section yet.
+    {% endif %}
+  </p>
+
+  {% if user.is_authenticated and not query %}
+    <a href="{% url 'add_recipe' %}">
+      + Add First Recipe
+    </a>
+  {% endif %}
+</div>
+
+{% endif %}

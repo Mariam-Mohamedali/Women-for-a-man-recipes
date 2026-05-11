@@ -238,8 +238,15 @@ def search_view(request):
     query = request.GET.get('q', '')
     recipes = Recipe.objects.filter(
         title__icontains=query
-    ).select_related('author', 'category').order_by('-created_at') if query else Recipe.objects.none()
-    return render(request, 'main/search_results.html', {
+    ).select_related('author', 'category').order_by('-created_at') if query else Recipe.objects.all().select_related('author', 'category').order_by('-created_at')
+    
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'main/_recipe_grid.html', {
+            'recipes': recipes,
+            'query': query,
+        })
+        
+    return render(request, 'main/recipes.html', {
         'recipes': recipes,
         'query': query,
     })

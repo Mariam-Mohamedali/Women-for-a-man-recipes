@@ -272,6 +272,14 @@
   <h2>🍽️ Explore All Recipes</h2>
   <p>Browse every recipe our community has shared</p>
 
+  <div class="search-container">
+    <div class="search-input-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="recipe-search" placeholder="Search recipes by name..." value="{{ query|default:'' }}" autocomplete="off">
+      <button id="clear-search" class="clear-btn" style="display: none;">&times;</button>
+    </div>
+  </div>
+
   <div class="category-links">
     <a href="{% url 'breakfast' %}">🍳 Breakfast</a>
     <a href="{% url 'lunch' %}">🥗 Lunch</a>
@@ -280,66 +288,114 @@
   </div>
 </div>
 
-{% if recipes %}
-<div class="category-recipe-grid">
-
-  {% for recipe in recipes %}
-  <div class="category-recipe-card">
-
-    <div class="card-img-wrap">
-      {% if recipe.image %}
-        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-      {% else %}
-        <div class="card-no-img">🍽️</div>
-      {% endif %}
-
-      {% if recipe.category %}
-        <span class="card-category-badge">
-          {{ recipe.category.name }}
-        </span>
-      {% endif %}
-    </div>
-
-    <div class="card-body">
-      <h3>{{ recipe.title }}</h3>
-      <p>{{ recipe.description|truncatewords:20 }}</p>
-    </div>
-
-    <div class="card-footer-strip">
-      <span class="card-author">
-        By {{ recipe.author.username }}
-      </span>
-
-      <a class="card-view-link"
-         href="{% url 'recipe_detail' recipe.id %}">
-         View Recipe →
-      </a>
-    </div>
-
-  </div>
-  {% endfor %}
-
+<div id="recipe-results">
+  {% include 'main/_recipe_grid.html' %}
 </div>
 
-{% else %}
+<style>
+  .search-container {
+    margin-top: 24px;
+    max-width: 600px;
+  }
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    left: 18px;
+    color: var(--sand);
+    opacity: 0.6;
+    font-size: 16px;
+  }
+  #recipe-search {
+    width: 100%;
+    padding: 14px 45px 14px 48px;
+    border-radius: 30px;
+    border: 1.5px solid rgba(196, 168, 130, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--linen);
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+  #recipe-search:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--clay);
+    box-shadow: 0 0 0 4px rgba(176, 125, 85, 0.15);
+  }
+  #recipe-search::placeholder {
+    color: var(--sand);
+    opacity: 0.5;
+  }
+  .clear-btn {
+    position: absolute;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--sand);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+  .clear-btn:hover {
+    color: var(--clay);
+  }
+</style>
 
-<div class="cat-empty">
-  <span class="cat-empty-icon">🍽️</span>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('recipe-search');
+    const clearBtn = document.getElementById('clear-search');
+    const resultsContainer = document.getElementById('recipe-results');
+    let debounceTimer;
 
-  <h3>No recipes yet</h3>
+    function performSearch(query) {
+      const url = `{% url 'search' %}?q=${encodeURIComponent(query)}`;
+      
+      fetch(url, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.text())
+      .then(html => {
+        resultsContainer.innerHTML = html;
+        // Re-initialize any components if needed
+      })
+      .catch(error => console.error('Error fetching search results:', error));
+    }
 
-  <p>
-    Be the first to share a delicious recipe
-    with the community.
-  </p>
+    searchInput.addEventListener('input', function() {
+      const query = this.value;
+      
+      // Show/hide clear button
+      clearBtn.style.display = query.length > 0 ? 'flex' : 'none';
 
-  {% if user.is_authenticated %}
-    <a href="{% url 'add_recipe' %}">
-      + Add First Recipe
-    </a>
-  {% endif %}
-</div>
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        performSearch(query);
+      }, 300); // 300ms debounce
+    });
 
-{% endif %}
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      this.style.display = 'none';
+      searchInput.focus();
+      performSearch('');
+    });
+    
+    // Initial clear button state
+    if (searchInput.value.length > 0) {
+      clearBtn.style.display = 'flex';
+    }
+  });
+</script>
 
 {% endblock %}

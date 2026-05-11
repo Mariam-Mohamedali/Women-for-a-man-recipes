@@ -2,304 +2,213 @@
 
 {% block title %}Manage Users{% endblock %}
 
+{% block extra_css %}
+<style>
+  .admin-header {
+    background: var(--walnut);
+    padding: 60px 72px 56px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .admin-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--clay), var(--sand), var(--clay), transparent);
+  }
+  .admin-header h2 {
+    color: var(--sand) !important;
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin: 0 0 10px;
+  }
+  .admin-header p {
+    color: rgba(196,168,130,0.75);
+    font-size: 17px;
+    margin: 0;
+  }
+  .admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 72px 80px;
+  }
+  .user-table-wrapper {
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid var(--linen);
+  }
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .user-table th {
+    background: var(--parchment);
+    color: var(--walnut);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    padding: 20px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--linen);
+  }
+  .user-table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--linen);
+    color: var(--sand);
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--linen);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--clay);
+  }
+  .badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .badge-superuser { background: #fff3cd; color: #856404; }
+  .badge-admin { background: #d1ecf1; color: #0c5460; }
+  .badge-member { background: #e2e3e5; color: #383d41; }
+  
+  .action-btns {
+    display: flex;
+    gap: 8px;
+  }
+  .btn-sm {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-delete { background: #fee2e2; color: #dc2626; }
+  .btn-delete:hover { background: #fecaca; }
+  .btn-promote { background: #dcfce7; color: #16a34a; }
+  .btn-promote:hover { background: #bbf7d0; }
+  .btn-demote { background: #fef9c3; color: #ca8a04; }
+  .btn-demote:hover { background: #fef08a; }
+  
+  @media (max-width: 960px) {
+    .admin-header { padding: 48px 36px 44px; }
+    .admin-container { padding: 0 36px 60px; }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div class="container" style="max-width:1000px;margin:2rem auto;padding:1rem;">
+<div class="admin-header">
+  <h2>👥 User Management</h2>
+  <p>Overview and control of all community members</p>
+</div>
 
-    <h2 style="margin-bottom:1.5rem;font-size:2rem;">
-        👥 User Management
-    </h2>
-
-    <!-- Messages -->
+<div class="admin-container">
     {% if messages %}
       {% for message in messages %}
-        <div
-          style="
-            padding:.9rem 1rem;
-            margin-bottom:1rem;
-            border-radius:8px;
-            background:#f5f5f5;
-            color:#333;
-            font-weight:500;
-          "
-        >
-          {{ message }}
+        <div class="toast toast-show toast-info" style="position:static; margin-bottom:20px; width:100%; max-width:none;">
+          <span class="toast-icon">ℹ️</span>
+          <span>{{ message }}</span>
         </div>
       {% endfor %}
     {% endif %}
 
-    <!-- Users Table -->
-    <div style="overflow-x:auto;">
-
-      <table
-        style="
-          width:100%;
-          border-collapse:collapse;
-          background:#fff;
-          border-radius:12px;
-          overflow:hidden;
-          box-shadow:0 4px 14px rgba(0,0,0,0.08);
-        "
-      >
-
+    <div class="user-table-wrapper">
+      <table class="user-table">
         <thead>
-          <tr style="background:#f7f7f7;">
-
-            <th
-              style="
-                padding:1rem;
-                text-align:left;
-                border-bottom:2px solid #ddd;
-              "
-            >
-              Username
-            </th>
-
-            <th
-              style="
-                padding:1rem;
-                text-align:left;
-                border-bottom:2px solid #ddd;
-              "
-            >
-              Email
-            </th>
-
-            <th
-              style="
-                padding:1rem;
-                text-align:left;
-                border-bottom:2px solid #ddd;
-              "
-            >
-              Role
-            </th>
-
-            <th
-              style="
-                padding:1rem;
-                text-align:center;
-                border-bottom:2px solid #ddd;
-              "
-            >
-              Management
-            </th>
-
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
           </tr>
         </thead>
-
         <tbody>
-
           {% for u in users %}
-
-          <tr style="border-bottom:1px solid #eee;">
-
-            <!-- Username -->
-            <td style="padding:1rem;font-weight:600;">
-              {{ u.username }}
-            </td>
-
-            <!-- Email -->
-            <td style="padding:1rem;">
-              {{ u.email }}
-            </td>
-
-            <!-- Role -->
-            <td style="padding:1rem;">
-
-              {% if u.is_superuser %}
-
-                <span
-                  style="
-                    background:#fff3cd;
-                    color:#856404;
-                    padding:.35rem .7rem;
-                    border-radius:20px;
-                    font-size:.85rem;
-                    font-weight:700;
-                  "
-                >
-                  👑 Superuser
-                </span>
-
-              {% elif u.is_staff %}
-
-                <span
-                  style="
-                    background:#d1ecf1;
-                    color:#0c5460;
-                    padding:.35rem .7rem;
-                    border-radius:20px;
-                    font-size:.85rem;
-                    font-weight:700;
-                  "
-                >
-                  🛠 Admin
-                </span>
-
-              {% else %}
-
-                <span
-                  style="
-                    background:#e2e3e5;
-                    color:#383d41;
-                    padding:.35rem .7rem;
-                    border-radius:20px;
-                    font-size:.85rem;
-                    font-weight:700;
-                  "
-                >
-                  👤 Member
-                </span>
-
-              {% endif %}
-
-            </td>
-
-            <!-- Actions -->
-            <td style="padding:1rem;text-align:center;">
-
-              {% if u.username != request.user.username %}
-
-                <div
-                  style="
-                    display:flex;
-                    gap:.5rem;
-                    justify-content:center;
-                    flex-wrap:wrap;
-                  "
-                >
-
-                  <!-- Delete -->
-                  <form
-                    method="post"
-                    action="{% url 'delete_user' u.id %}"
-                    onsubmit="return confirm('Delete {{ u.username }}?');"
-                    style="margin:0;"
-                  >
-
-                    {% csrf_token %}
-
-                    <button
-                      type="submit"
-                      style="
-                        background:#e74c3c;
-                        color:#fff;
-                        border:none;
-                        padding:.55rem 1rem;
-                        border-radius:6px;
-                        cursor:pointer;
-                        font-weight:600;
-                      "
-                    >
-                      🗑 Delete
-                    </button>
-
-                  </form>
-
-                  <!-- Make Admin -->
-                  {% if not u.is_staff %}
-
-                  <form
-                    method="post"
-                    action="{% url 'make_admin' u.id %}"
-                    style="margin:0;"
-                  >
-
-                    {% csrf_token %}
-
-                    <button
-                      type="submit"
-                      style="
-                        background:#27ae60;
-                        color:#fff;
-                        border:none;
-                        padding:.55rem 1rem;
-                        border-radius:6px;
-                        cursor:pointer;
-                        font-weight:600;
-                      "
-                    >
-                      ⬆ Make Admin
-                    </button>
-
-                  </form>
-
-                  {% endif %}
-
-                  <!-- Remove Admin -->
-                  {% if u.is_staff and not u.is_superuser %}
-
-                  <form
-                    method="post"
-                    action="{% url 'remove_admin' u.id %}"
-                    style="margin:0;"
-                  >
-
-                    {% csrf_token %}
-
-                    <button
-                      type="submit"
-                      style="
-                        background:#f39c12;
-                        color:#fff;
-                        border:none;
-                        padding:.55rem 1rem;
-                        border-radius:6px;
-                        cursor:pointer;
-                        font-weight:600;
-                      "
-                    >
-                      ⬇ Remove Admin
-                    </button>
-
-                  </form>
-
-                  {% endif %}
-
-                </div>
-
-              {% else %}
-
-                <span
-                  style="
-                    color:#888;
-                    font-size:.9rem;
-                    font-style:italic;
-                  "
-                >
-                  (You)
-                </span>
-
-              {% endif %}
-
-            </td>
-
-          </tr>
-
-          {% empty %}
-
           <tr>
-            <td
-              colspan="4"
-              style="
-                padding:2rem;
-                text-align:center;
-                color:#666;
-              "
-            >
-              No users found.
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">{{ u.username|first|upper }}</div>
+                <div style="font-weight: 600; color: var(--walnut);">{{ u.username }}</div>
+              </div>
+            </td>
+            <td>{{ u.email }}</td>
+            <td>
+              {% if u.is_superuser %}
+                <span class="badge badge-superuser">👑 Superuser</span>
+              {% elif u.is_staff %}
+                <span class="badge badge-admin">🛠 Admin</span>
+              {% else %}
+                <span class="badge badge-member">👤 Member</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="action-btns">
+                {% if u.username != request.user.username %}
+                  
+                  <form method="post" action="{% url 'delete_user' u.id %}" onsubmit="return confirm('Delete {{ u.username }}?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-sm btn-delete">
+                      <i class="fas fa-trash"></i> Delete
+                    </button>
+                  </form>
+
+                  {% if not u.is_staff %}
+                    <form method="post" action="{% url 'make_admin' u.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn-sm btn-promote">
+                        <i class="fas fa-arrow-up"></i> Promote
+                      </button>
+                    </form>
+                  {% endif %}
+
+                  {% if u.is_staff and not u.is_superuser %}
+                    <form method="post" action="{% url 'remove_admin' u.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn-sm btn-demote">
+                        <i class="fas fa-arrow-down"></i> Demote
+                      </button>
+                    </form>
+                  {% endif %}
+
+                {% else %}
+                  <span style="color: #94a3b8; font-style: italic;">(You)</span>
+                {% endif %}
+              </div>
             </td>
           </tr>
-
+          {% empty %}
+          <tr>
+            <td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;">No users found.</td>
+          </tr>
           {% endfor %}
-
         </tbody>
-
       </table>
-
     </div>
-
 </div>
 
 {% endblock %}

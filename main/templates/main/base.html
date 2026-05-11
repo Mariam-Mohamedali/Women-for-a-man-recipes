@@ -56,10 +56,10 @@
             {% if user.is_authenticated %}
 
             <div class="nav-dropdown-header">
-              <strong>{{ user.username }}</strong>
-              <small>
+              <span class="nav-dropdown-username">{{ user.username }}</span>
+              <span class="nav-dropdown-role">
                 {% if user.is_staff %}Admin{% else %}Member{% endif %}
-              </small>
+              </span>
             </div>
 
             <div class="nav-dropdown-body">
