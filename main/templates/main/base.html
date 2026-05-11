@@ -127,6 +127,10 @@
       <a href="{% url 'register' %}">📝 Register</a>
       {% endif %}
 
+      {% if user.is_staff %}
+        <a href="{% url 'admin_recipes' %}">Manage Recipes</a>
+        <a href="{% url 'users_list' %}">User Management</a>
+      {% endif %}
     </div>
   </div>
 
