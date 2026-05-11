@@ -40,20 +40,9 @@ urlpatterns = [
          views.login_view,
          name='login'),
 
-<<<<<<< HEAD
-    path('recipe/<int:recipe_id>/',      views.recipe_detail_view,   name='recipe_detail'),
-    path('recipes/breakfast/',           views.breakfast_view,        name='breakfast'),
-    path('recipes/lunch/',               views.lunch_view,            name='lunch'),
-    path('admin-dashboard/',             views.admin_dashboard_view,  name='admin_dashboard'),
-    path('delete-recipe/<int:recipe_id>/', views.delete_recipe_view, name='delete_recipe'),
-    path('favourite/<int:recipe_id>/',   views.toggle_favourite_view, name='toggle_favourite'),
-    path('favourites/',                  views.favourites_view,       name='favourites'),
-]
-=======
     path('register/',
          views.register_view,
          name='register'),
->>>>>>> e3dbe52 (update)
 
     path('logout/',
          views.logout_view,
