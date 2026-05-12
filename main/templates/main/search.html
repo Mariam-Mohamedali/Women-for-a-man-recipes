@@ -4,7 +4,7 @@
   {% for recipe in recipes %}
   <div class="category-recipe-card">
 
-    <div class="card-img-wrap">
+    <div class="card-img-wrapper">
       {% if recipe.image %}
         <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
       {% else %}
@@ -12,7 +12,7 @@
       {% endif %}
 
       {% if recipe.category %}
-        <span class="card-category-badge">
+        <span class="card-category-tag">
           {{ recipe.category.name }}
         </span>
       {% endif %}
@@ -30,7 +30,7 @@
 
       <a class="card-view-link"
          href="{% url 'recipe_detail' recipe.id %}">
-         View Recipe →
+         View Recipe
       </a>
     </div>
 
