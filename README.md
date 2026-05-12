@@ -160,7 +160,13 @@ We love contributions!
 
 <div align="center">
 
-**Mariam Mohamedali** (Lead) &nbsp; | &nbsp; **Saged Amr** &nbsp; | &nbsp; **Shaza Mosad** &nbsp; | &nbsp; **Angham Maher** &nbsp; | &nbsp; **Dima Adel** &nbsp; | &nbsp; **Esraa Hosni**
+- **Mariam Mohamedali** (Lead)
+- **Saged Amr**
+- **Shaza Mosad**
+- **Angham Maher**
+- **Dima Adel**
+- **Esraa Hosni**
+
 
 <br>
 
