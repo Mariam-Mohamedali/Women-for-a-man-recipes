@@ -65,11 +65,6 @@
             <div class="nav-dropdown-body">
               <a href="{% url 'profile' %}">👤 My Profile</a>
 
-              {% if user.is_staff %}
-              <a href="{% url 'admin_dashboard' %}">⚙️ Manage Recipes</a>
-              <a href="{% url 'users_list' %}">👥 User Management</a>
-              {% endif %}
-
               <form method="post" action="{% url 'logout' %}" style="margin-top:10px;">
                 {% csrf_token %}
                 <button type="submit" class="nav-dropdown-logout">🚪 Logout</button>
@@ -173,7 +168,8 @@
 
         <div class="footer-col">
           <h4>ABOUT</h4>
-          <p class="about-description">A curated space for those who value quality, authenticity, and meaningful connection.</p>
+          <p class="about-description">A curated space for those who value quality, authenticity, and meaningful
+            connection.</p>
         </div>
 
         <div class="footer-col">
