@@ -242,10 +242,17 @@ main {
       margin: 28px auto;
     }
 
-    .dash-table-card th:nth-child(1),
-    .dash-table-card td:nth-child(1),
-    .dash-table-card th:nth-child(4),
-    .dash-table-card td:nth-child(4) {
+    /* Recipe Table Default */
+    .dash-table-card table:not(.dash-user-table) th:nth-child(1),
+    .dash-table-card table:not(.dash-user-table) td:nth-child(1),
+    .dash-table-card table:not(.dash-user-table) th:nth-child(4),
+    .dash-table-card table:not(.dash-user-table) td:nth-child(4) {
+      display: none;
+    }
+
+    /* User Table Specific */
+    .dash-user-table th:nth-child(2),
+    .dash-user-table td:nth-child(2) {
       display: none;
     }
 
@@ -259,9 +266,25 @@ main {
       flex-direction: column;
     }
 
-    .dash-table-card th:nth-child(3),
-    .dash-table-card td:nth-child(3) {
+    /* Recipe Table Default */
+    .dash-table-card table:not(.dash-user-table) th:nth-child(3),
+    .dash-table-card table:not(.dash-user-table) td:nth-child(3) {
       display: none;
+    }
+
+    /* User Table Specific */
+    .dash-user-table th:nth-child(3),
+    .dash-user-table td:nth-child(3) {
+      display: none;
+    }
+
+    .dash-actions {
+      flex-wrap: wrap;
+    }
+
+    .dash-btn-edit, .dash-btn-delete {
+      padding: 6px 12px;
+      font-size: 12px;
     }
 }
 h2 {
