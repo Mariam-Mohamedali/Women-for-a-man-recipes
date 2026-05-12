@@ -11,6 +11,7 @@
     margin: 44px auto;
     padding: 0 24px 80px;
   }
+
   .dash-topbar {
     display: flex;
     justify-content: space-between;
@@ -19,6 +20,7 @@
     flex-wrap: wrap;
     gap: 14px;
   }
+
   .dash-topbar h2 {
     font-family: 'Playfair Display', serif;
     font-size: 32px;
@@ -26,11 +28,13 @@
     margin: 0 0 4px;
     text-align: left;
   }
+
   .dash-topbar p {
     color: var(--sand);
     font-size: 14px;
     margin: 0;
   }
+
   .dash-add-btn {
     display: inline-flex;
     align-items: center;
@@ -46,16 +50,19 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
+
   .dash-add-btn:hover {
     background: var(--walnut);
     transform: translateY(-1px);
   }
+
   .dash-stats {
     display: flex;
     gap: 16px;
     margin-bottom: 32px;
     flex-wrap: wrap;
   }
+
   .dash-stat-card {
     background: #fff;
     border: 1px solid var(--linen);
@@ -64,8 +71,9 @@
     padding: 18px 26px;
     flex: 1;
     min-width: 140px;
-    box-shadow: 0 2px 10px rgba(61,43,31,0.05);
+    box-shadow: 0 2px 10px rgba(61, 43, 31, 0.05);
   }
+
   .dash-stat-num {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
@@ -75,6 +83,7 @@
     display: block;
     margin-bottom: 4px;
   }
+
   .dash-stat-lbl {
     font-size: 12px;
     font-weight: 600;
@@ -82,19 +91,25 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
+
   .dash-table-card {
     background: #fff;
     border-radius: 20px;
     border: 1px solid var(--linen);
-    box-shadow: 0 4px 18px rgba(61,43,31,0.06);
+    box-shadow: 0 4px 18px rgba(61, 43, 31, 0.06);
     overflow: hidden;
   }
+
   .dash-table-card table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 0;
   }
-  .dash-table-card thead tr { background: var(--walnut); }
+
+  .dash-table-card thead tr {
+    background: var(--walnut);
+  }
+
   .dash-table-card th {
     background: var(--walnut) !important;
     color: var(--sand);
@@ -106,6 +121,7 @@
     padding: 16px 18px;
     border-bottom: none;
   }
+
   .dash-table-card td {
     padding: 15px 18px;
     border-bottom: 1px solid var(--linen);
@@ -113,8 +129,15 @@
     color: var(--walnut);
     vertical-align: middle;
   }
-  .dash-table-card tbody tr:last-child td { border-bottom: none; }
-  .dash-table-card tbody tr:hover td { background-color: rgba(232,221,208,0.3); }
+
+  .dash-table-card tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .dash-table-card tbody tr:hover td {
+    background-color: rgba(232, 221, 208, 0.3);
+  }
+
   .recipe-title-link {
     font-weight: 600;
     color: var(--clay);
@@ -122,7 +145,11 @@
     font-size: 14px;
     transition: color 0.2s;
   }
-  .recipe-title-link:hover { color: var(--walnut); }
+
+  .recipe-title-link:hover {
+    color: var(--walnut);
+  }
+
   .dash-badge {
     background: var(--linen);
     color: var(--walnut);
@@ -132,9 +159,23 @@
     border-radius: 20px;
     display: inline-block;
   }
-  .dash-date { color: var(--sand); font-size: 13px; }
-  .dash-id   { color: var(--sand); font-size: 13px; }
-  .dash-actions { display: flex; gap: 8px; align-items: center; }
+
+  .dash-date {
+    color: var(--sand);
+    font-size: 13px;
+  }
+
+  .dash-id {
+    color: var(--sand);
+    font-size: 13px;
+  }
+
+  .dash-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
   .dash-btn-edit {
     display: inline-flex;
     align-items: center;
@@ -147,13 +188,18 @@
     text-decoration: none;
     transition: background 0.2s, color 0.2s;
   }
-  .dash-btn-edit:hover { background: var(--sand); color: #fff; }
+
+  .dash-btn-edit:hover {
+    background: var(--sand);
+    color: #fff;
+  }
+
   .dash-btn-delete {
     display: inline-flex;
     align-items: center;
-    background: rgba(192,57,43,0.09);
+    background: rgba(192, 57, 43, 0.09);
     color: #c0392b;
-    border: 1px solid rgba(192,57,43,0.25);
+    border: 1px solid rgba(192, 57, 43, 0.25);
     padding: 7px 16px;
     border-radius: 14px;
     font-size: 13px;
@@ -162,31 +208,59 @@
     font-family: 'Inter', sans-serif;
     transition: background 0.2s, color 0.2s;
   }
-  .dash-btn-delete:hover { background: #c0392b; color: #fff; border-color: #c0392b; }
+
+  .dash-btn-delete:hover {
+    background: #c0392b;
+    color: #fff;
+    border-color: #c0392b;
+  }
+
   .dash-empty {
     text-align: center;
     padding: 70px 40px;
     color: var(--sand);
   }
-  .dash-empty-icon { font-size: 3.5rem; display: block; margin-bottom: 16px; }
+
+  .dash-empty-icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
   .dash-empty h3 {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     color: var(--walnut);
     margin-bottom: 10px;
   }
+
   @media (max-width: 768px) {
-    .dash-main { padding: 0 16px 60px; margin: 28px auto; }
+    .dash-main {
+      padding: 0 16px 60px;
+      margin: 28px auto;
+    }
+
     .dash-table-card th:nth-child(1),
     .dash-table-card td:nth-child(1),
     .dash-table-card th:nth-child(4),
-    .dash-table-card td:nth-child(4) { display: none; }
-    .dash-stats { flex-direction: column; }
+    .dash-table-card td:nth-child(4) {
+      display: none;
+    }
+
+    .dash-stats {
+      flex-direction: column;
+    }
   }
+
   @media (max-width: 480px) {
-    .dash-topbar { flex-direction: column; }
+    .dash-topbar {
+      flex-direction: column;
+    }
+
     .dash-table-card th:nth-child(3),
-    .dash-table-card td:nth-child(3) { display: none; }
+    .dash-table-card td:nth-child(3) {
+      display: none;
+    }
   }
 </style>
 {% endblock %}
@@ -239,18 +313,18 @@
           </td>
           <td>
             {% if recipe.category %}
-              <span class="dash-badge">{{ recipe.category.name }}</span>
+            <span class="dash-badge">{{ recipe.category.name }}</span>
             {% else %}
-              <span style="color: var(--linen);">—</span>
+            <span style="color: var(--linen);">—</span>
             {% endif %}
           </td>
           <td style="color: var(--sand); font-size: 13px;">{{ recipe.author.username }}</td>
           <td class="dash-date">{{ recipe.created_at|date:"M d, Y" }}</td>
           <td>
             <div class="dash-actions">
-              <a class="dash-btn-edit" href="{% url 'edit_recipe' recipe.id %}">✏ Edit</a>
+              <a class="dash-btn-edit" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
               <form method="post" action="{% url 'delete_recipe' recipe.id %}"
-                    onsubmit="return confirm('Delete \'{{ recipe.title|escapejs }}\'? This cannot be undone.')">
+                onsubmit="return confirm('Delete \'{{ recipe.title|escapejs }}\'? This cannot be undone.')">
                 {% csrf_token %}
                 <button type="submit" class="dash-btn-delete">🗑 Delete</button>
               </form>
@@ -263,14 +337,14 @@
   </div>
 
   {% else %}
-    <div class="dash-table-card">
-      <div class="dash-empty">
-        <span class="dash-empty-icon">📋</span>
-        <h3>No recipes yet</h3>
-        <p style="margin-bottom: 20px;">Start by adding your first recipe to the platform.</p>
-        <a class="dash-add-btn" href="{% url 'add_recipe' %}">+ Add First Recipe</a>
-      </div>
+  <div class="dash-table-card">
+    <div class="dash-empty">
+      <span class="dash-empty-icon">📋</span>
+      <h3>No recipes yet</h3>
+      <p style="margin-bottom: 20px;">Start by adding your first recipe to the platform.</p>
+      <a class="dash-add-btn" href="{% url 'add_recipe' %}">+ Add First Recipe</a>
     </div>
+  </div>
   {% endif %}
 
 </div>

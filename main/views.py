@@ -125,7 +125,7 @@ def add_recipe_view(request):
             recipe.author = request.user
             recipe.save()
             messages.success(request, 'Recipe added successfully! 🎉')
-            return redirect('home')
+            return redirect('recipes')
         messages.error(request, 'Please fix the errors below.')
     else:
         form = RecipeForm()
@@ -142,14 +142,14 @@ def edit_recipe_view(request, recipe_id):
 
     if recipe.author != request.user and not request.user.is_staff:
         messages.error(request, "You don't have permission to edit this recipe.")
-        return redirect('home')
+        return redirect('recipes')
 
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES, instance=recipe)
         if form.is_valid():
             form.save()
             messages.success(request, 'Recipe updated successfully! ✅')
-            return redirect('home')
+            return redirect('recipes')
         messages.error(request, 'Please fix the errors below.')
     else:
         form = RecipeForm(instance=recipe)
