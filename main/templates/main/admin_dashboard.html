@@ -66,10 +66,12 @@
           <td>
             <div class="dash-actions">
               <a class="dash-btn-edit" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
-              <form method="post" action="{% url 'delete_recipe' recipe.id %}"
-                onsubmit="return confirm('Delete \'{{ recipe.title|escapejs }}\'? This cannot be undone.')">
+              <form id="delete-form-{{ recipe.id }}" method="post" action="{% url 'delete_recipe' recipe.id %}">
                 {% csrf_token %}
-                <button type="submit" class="dash-btn-delete">🗑 Delete</button>
+                <button type="button" class="dash-btn-delete" 
+                  onclick="confirmDelete('{{ recipe.title|escapejs }}', '{{ recipe.id }}')">
+                  🗑 Delete
+                </button>
               </form>
             </div>
           </td>
@@ -91,4 +93,18 @@
   {% endif %}
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function confirmDelete(title, recipeId) {
+    showConfirm(
+      "Delete Recipe?",
+      `Are you sure you want to delete "${title}"? This cannot be undone.`,
+      () => {
+        document.getElementById(`delete-form-${recipeId}`).submit();
+      }
+    );
+  }
+</script>
 {% endblock %}

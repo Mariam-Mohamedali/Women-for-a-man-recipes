@@ -138,15 +138,39 @@
     </div>
   </div>
 
-  <!-- MESSAGES -->
-  {% if messages %}
-  <div class="global-messages">
-    {% for message in messages %}
-    <div class="global-message {{ message.tags }}">
-      {{ message }}
+  <!-- MESSAGES (Toasts) -->
+  <div id="toast-container"></div>
+
+  <!-- CONFIRM MODAL -->
+  <div id="confirm-modal">
+    <div class="modal-backdrop" onclick="closeConfirmModal()"></div>
+    <div class="modal-card">
+      <div class="modal-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 id="confirm-modal-title">Are you sure?</h3>
+      <p id="confirm-modal-message">This action cannot be undone.</p>
+      <div class="modal-btns">
+        <button type="button" class="btn-modal-cancel" onclick="closeConfirmModal()">Cancel</button>
+        <button type="button" class="btn-modal-confirm" id="confirm-modal-btn">Confirm</button>
+      </div>
     </div>
+  </div>
+
+  {% if messages %}
+  <div id="django-messages" style="display: none;">
+    {% for message in messages %}
+      <span class="django-message" data-type="{{ message.tags|escapejs }}">{{ message|escapejs }}</span>
     {% endfor %}
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const messages = document.querySelectorAll('.django-message');
+      messages.forEach(m => {
+        showToast(m.textContent, m.dataset.type);
+      });
+    });
+  </script>
   {% endif %}
 
   <!-- CONTENT -->
@@ -204,6 +228,88 @@
       menu.classList.toggle('open');
       hamburger.classList.toggle('open');
       document.body.classList.toggle('nav-menu-open');
+    }
+
+    /**
+     * showToast
+     * @param {string} message - Text to show
+     * @param {string} type - success, error, info, warning
+     */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+
+      // Mapping icons
+      let iconClass = 'fa-info-circle';
+      if (type.includes('success')) iconClass = 'fa-check-circle';
+      if (type.includes('error')) iconClass = 'fa-exclamation-circle';
+      if (type.includes('warning')) iconClass = 'fa-exclamation-triangle';
+
+      toast.innerHTML = `
+        <div class="toast-icon">
+          <i class="fas ${iconClass}"></i>
+        </div>
+        <div class="toast-content">
+          <div class="toast-message">${message}</div>
+        </div>
+      `;
+
+      container.appendChild(toast);
+
+      // Trigger animation
+      setTimeout(() => toast.classList.add('toast-show'), 100);
+
+      // Auto-remove
+      const timeout = setTimeout(() => {
+        hideToast(toast);
+      }, 5000);
+
+      // Close on click
+      toast.onclick = () => {
+        clearTimeout(timeout);
+        hideToast(toast);
+      };
+    }
+
+    function hideToast(toast) {
+      toast.classList.add('toast-hide');
+      toast.classList.remove('toast-show');
+      setTimeout(() => {
+        toast.remove();
+      }, 500);
+    }
+
+    /**
+     * showConfirm
+     * @param {string} title - Modal title
+     * @param {string} message - Modal body text
+     * @param {function} onConfirm - Callback if confirmed
+     */
+    let confirmCallback = null;
+
+    function showConfirm(title, message, onConfirm) {
+      document.getElementById('confirm-modal-title').textContent = title;
+      document.getElementById('confirm-modal-message').textContent = message;
+      confirmCallback = onConfirm;
+      
+      const modal = document.getElementById('confirm-modal');
+      modal.classList.add('modal-show');
+      
+      // Hook the confirm button
+      const btn = document.getElementById('confirm-modal-btn');
+      btn.onclick = () => {
+        if (confirmCallback) confirmCallback();
+        closeConfirmModal();
+      };
+    }
+
+    function closeConfirmModal() {
+      const modal = document.getElementById('confirm-modal');
+      modal.classList.remove('modal-show');
+      confirmCallback = null;
     }
   </script>
 

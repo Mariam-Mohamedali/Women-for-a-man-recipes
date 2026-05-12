@@ -174,10 +174,12 @@
                     icon.textContent  = '❤️';
                     label.textContent = 'Saved to Favourites';
                     btn.classList.add('fav-btn--active');
+                    showToast('Added to Favourites! ❤️', 'success');
                 } else {
                     icon.textContent  = '🤍';
                     label.textContent = 'Add to Favourites';
                     btn.classList.remove('fav-btn--active');
+                    showToast('Removed from Favourites.', 'info');
                 }
             }
         })

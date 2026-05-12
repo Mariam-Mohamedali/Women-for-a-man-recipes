@@ -16,14 +16,6 @@
 </div>
 
 <div class="admin-container">
-  {% if messages %}
-  {% for message in messages %}
-  <div class="toast toast-show toast-info" style="position:static; margin-bottom:20px; width:100%; max-width:none;">
-    <span class="toast-icon">ℹ️</span>
-    <span>{{ message }}</span>
-  </div>
-  {% endfor %}
-  {% endif %}
 
   <div class="user-table-wrapper">
     <table class="user-table">
@@ -56,10 +48,10 @@
             <div class="action-btns">
               {% if u.username != request.user.username %}
 
-              <form method="post" action="{% url 'delete_user' u.id %}"
-                onsubmit="return confirm('Delete {{ u.username }}?');">
+              <form id="delete-user-form-{{ u.id }}" method="post" action="{% url 'delete_user' u.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn-sm btn-delete">
+                <button type="button" class="btn-sm btn-delete" 
+                  onclick="confirmDeleteUser('{{ u.username|escapejs }}', '{{ u.id }}')">
                   <i class="fas fa-trash"></i> Delete
                 </button>
               </form>
@@ -98,4 +90,18 @@
   </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function confirmDeleteUser(username, userId) {
+    showConfirm(
+      "Delete User?",
+      `Are you sure you want to delete "${username}"? This will permanently remove their account.`,
+      () => {
+        document.getElementById(`delete-user-form-${userId}`).submit();
+      }
+    );
+  }
+</script>
 {% endblock %}
