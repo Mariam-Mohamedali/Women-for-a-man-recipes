@@ -67,7 +67,7 @@
                 type="button"
                 aria-label="Toggle favourite"
             >
-                <span class="fav-btn__icon">{% if is_favourite %}❤{% else %}🤍{% endif %}</span>
+                <span class="fav-btn__icon">{% if is_favourite %}❤️{% else %}🤍{% endif %}</span>
                 <span class="fav-btn__label">{% if is_favourite %}Saved to Favourites{% else %}Add to Favourites{% endif %}</span>
             </button>
             {% endif %}
@@ -77,7 +77,7 @@
             <div style="display:flex; gap:12px; flex-wrap:wrap;">
 
                 <a href="{% url 'edit_recipe' recipe.id %}">
-                    <button type="button">✏ Edit Recipe</button>
+                    <button type="button">Edit Recipe</button>
                 </a>
 
                 <form method="post" action="{% url 'delete_recipe' recipe.id %}"
@@ -137,7 +137,6 @@
 
     <!-- Footer -->
     <div class="bon-appetit">
-        Bon Appétit 🍽
     </div>
 
 </main>
@@ -172,7 +171,7 @@
         .then(data => {
             if (data.success) {
                 if (data.is_favourite) {
-                    icon.textContent  = '❤';
+                    icon.textContent  = '❤️';
                     label.textContent = 'Saved to Favourites';
                     btn.classList.add('fav-btn--active');
                 } else {
