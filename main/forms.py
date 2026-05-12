@@ -24,9 +24,20 @@ class RegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields.pop("usable_password", None)
+        
+        # Remove technical help text and strict validators for username
+        self.fields["username"].help_text = ""
+        self.fields["username"].validators = []
+        
         for name, field in self.fields.items():
             if not isinstance(field.widget, forms.RadioSelect):
                 field.widget.attrs["class"] = "form-control"
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError("A user with this email address already exists.")
+        return email
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -39,6 +50,8 @@ class RegisterForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
+    username = forms.CharField(label="Email or Username", widget=forms.TextInput(attrs={'autofocus': True}))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():

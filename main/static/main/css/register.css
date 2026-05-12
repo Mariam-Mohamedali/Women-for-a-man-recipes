@@ -195,15 +195,16 @@ main {
 }
 
 .field label {
-    font-size: .82rem;
+    font-size: .78rem;
     font-weight: 700;
-    letter-spacing: .8px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--walnut);
+    color: var(--clay);
     background: none;
     padding: 0;
     border-radius: 0;
     display: block;
+    margin-bottom: 4px;
 }
 
 .field input[type="text"],
@@ -258,10 +259,20 @@ main {
 
 /* ── Error Message ──────── */
 .error-msg {
-    color: var(--clay);
+    background: rgba(192, 57, 43, 0.1);
+    border-left: 4px solid #c0392b;
+    color: #c0392b;
+    padding: 12px 16px;
+    border-radius: 12px;
     font-size: .88rem;
-    margin-bottom: 16px;
-    min-height: 20px;
+    margin-bottom: 20px;
+}
+
+.error-msg p {
+    color: #c0392b;
+    margin: 4px 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 /* ── Buttons ───────*/

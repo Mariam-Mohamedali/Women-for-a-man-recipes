@@ -4,6 +4,14 @@ from django.contrib.auth.models import AbstractUser
 
 # 1. Custom User Model
 class User(AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        help_text='Required. 150 characters or fewer.',
+        error_messages={
+            'unique': "A user with that username already exists.",
+        },
+    )
     profile_picture = models.ImageField(
         upload_to='profiles/',
         blank=True,

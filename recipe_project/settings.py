@@ -134,5 +134,10 @@ LOGIN_URL = 'login'
 # Custom User Model
 AUTH_USER_MODEL = 'main.User'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'main.backends.EmailBackend',
+]
+
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
