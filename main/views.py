@@ -241,7 +241,7 @@ def search_view(request):
     ).select_related('author', 'category').order_by('-created_at') if query else Recipe.objects.all().select_related('author', 'category').order_by('-created_at')
     
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return render(request, 'main/_recipe_grid.html', {
+        return render(request, 'main/search.html', {
             'recipes': recipes,
             'query': query,
         })
