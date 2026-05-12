@@ -160,16 +160,16 @@ We love contributions!
 
 <div align="center">
 
-**👑 Mariam Mohamedali** <br>
-*(Lead Developer & Architect)*
+**✨ Mariam Mohamedali (Lead)**
 
 <br>
 
-✨ **Saged Amr** ✨ <br>
-✨ **Shaza Mosad** ✨ <br>
-✨ **Angham Maher** ✨ <br>
-✨ **Dima Adel** ✨ <br>
-✨ **Esraa Hosni** ✨ <br>
+Saged Amr <br>
+Shaza Mosad <br>
+Angham Maher <br>
+Dima Adel <br>
+Esraa Hosni <br>
+
 
 <br>
 
