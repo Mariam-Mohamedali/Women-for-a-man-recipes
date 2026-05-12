@@ -21,9 +21,9 @@
         <div>
 
             {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
             {% else %}
-                <div style="
+            <div style="
                     width: 100%;
                     height: 340px;
                     background: var(--linen);
@@ -34,8 +34,8 @@
                     color: gray;
                     font-size: 18px;
                 ">
-                    No Image Available
-                </div>
+                No Image Available
+            </div>
             {% endif %}
 
         </div>
@@ -44,7 +44,7 @@
         <div>
 
             {% if recipe.category %}
-                <h3>{{ recipe.category.name }}</h3>
+            <h3>{{ recipe.category.name }}</h3>
             {% endif %}
 
             <h1>{{ recipe.title }}</h1>
@@ -56,20 +56,20 @@
 
             <p>{{ recipe.description }}</p>
 
-            <!-- Favourite Button -->
+            <!-- Favourite Button (AJAX) -->
             {% if user.is_authenticated %}
-            <form method="post" action="{% url 'toggle_favourite' recipe.id %}">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-
-                <button type="submit">
-                    {% if is_favourite %}
-                        ❤ Remove from Favourites
-                    {% else %}
-                        🤍 Add to Favourites
-                    {% endif %}
-                </button>
-            </form>
+            <button
+                id="fav-btn"
+                class="fav-btn {% if is_favourite %}fav-btn--active{% endif %}"
+                data-recipe-id="{{ recipe.id }}"
+                data-url="{% url 'toggle_favourite' recipe.id %}"
+                data-csrf="{{ csrf_token }}"
+                type="button"
+                aria-label="Toggle favourite"
+            >
+                <span class="fav-btn__icon">{% if is_favourite %}❤{% else %}🤍{% endif %}</span>
+                <span class="fav-btn__label">{% if is_favourite %}Saved to Favourites{% else %}Add to Favourites{% endif %}</span>
+            </button>
             {% endif %}
 
             <!-- Edit / Delete -->
@@ -80,9 +80,8 @@
                     <button type="button">✏ Edit Recipe</button>
                 </a>
 
-                <form method="post"
-                      action="{% url 'delete_recipe' recipe.id %}"
-                      onsubmit="return confirm('Are you sure you want to delete this recipe?')">
+                <form method="post" action="{% url 'delete_recipe' recipe.id %}"
+                    onsubmit="return confirm('Are you sure you want to delete this recipe?')">
 
                     {% csrf_token %}
 
@@ -111,9 +110,9 @@
 
             <ul>
                 {% for line in recipe.ingredients.splitlines %}
-                    {% if line.strip %}
-                        <li>{{ line }}</li>
-                    {% endif %}
+                {% if line.strip %}
+                <li>{{ line }}</li>
+                {% endif %}
                 {% endfor %}
             </ul>
 
@@ -126,9 +125,9 @@
 
             <ol>
                 {% for step in recipe.instructions.splitlines %}
-                    {% if step.strip %}
-                        <li>{{ step }}</li>
-                    {% endif %}
+                {% if step.strip %}
+                <li>{{ step }}</li>
+                {% endif %}
                 {% endfor %}
             </ol>
 
@@ -143,4 +142,54 @@
 
 </main>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    const btn = document.getElementById('fav-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+        const url    = btn.dataset.url;
+        const csrf   = btn.dataset.csrf;
+        const icon   = btn.querySelector('.fav-btn__icon');
+        const label  = btn.querySelector('.fav-btn__label');
+
+        // optimistic UI while waiting
+        btn.disabled = true;
+        btn.classList.add('fav-btn--loading');
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrf,
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (data.is_favourite) {
+                    icon.textContent  = '❤';
+                    label.textContent = 'Saved to Favourites';
+                    btn.classList.add('fav-btn--active');
+                } else {
+                    icon.textContent  = '🤍';
+                    label.textContent = 'Add to Favourites';
+                    btn.classList.remove('fav-btn--active');
+                }
+            }
+        })
+        .catch(() => {
+            // silent fail – button stays as-is
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.classList.remove('fav-btn--loading');
+        });
+    });
+})();
+</script>
 {% endblock %}

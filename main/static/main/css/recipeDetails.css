@@ -169,6 +169,42 @@
     box-shadow: 0 6px 16px rgba(176, 125, 85, 0.3);
 }
 
+/* ── Favourite Button (AJAX) ─────────────────────────────── */
+.fav-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.fav-btn__icon {
+    font-size: 20px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.fav-btn--active {
+    background-color: var(--clay) !important;
+    border-color: var(--clay) !important;
+    color: #fff !important;
+}
+
+.fav-btn--active .fav-btn__icon {
+    animation: heartPulse 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fav-btn--loading {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: wait;
+}
+
+@keyframes heartPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
 /* ── Rating Stars Section ────────────────────────────────── */
 div[id^="ratingSection-"] {
     background: var(--parchment) !important;
