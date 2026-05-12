@@ -154,31 +154,17 @@ We love contributions!
 
 ## 👩‍💻 The Dream Team
 
-<p align="center">
-  <i>"Behind every great recipe is a story of friendship and passion."</i>
-</p>
+> *"Behind every great recipe is a story of friendship and passion."*
 
-<div align="center">
+- **✨ Mariam Mohamedali** (Project Lead) — [![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=flat-square&logo=github)](https://github.com/Mariam-Mohamedali)
+- Saged Amr
+- Shaza Mosad
+- Angham Maher
+- Dima Adel
+- Esraa Hosni
 
-**✨ Mariam Mohamedali (Lead)**
+---
 
-<br>
-
-Saged Amr <br>
-Shaza Mosad <br>
-Angham Maher <br>
-Dima Adel <br>
-Esraa Hosni <br>
-
-
-<br>
-
-[![GitHub](https://img.shields.io/badge/Connect_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Mariam-Mohamedali)
-
-<br>
-
-*"Alone we can do so little; together we can do so much."* ❤️
-</div>
 
 
 
