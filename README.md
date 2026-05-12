@@ -152,14 +152,25 @@ We love contributions!
 
 ---
 
-## 👩‍💻 The Team
+## 👩‍💻 The Dream Team
 
-- **Mariam Mohamedali** — Lead Developer & Architect
-- **Saged Amr**
-- **Shaza Mosad**
-- **Angham Maher**
-- **Dima Adel**
-- **Esraa Hosni**
+<p align="center">
+  <b>This project is a labor of love, brought to life by a group of wonderful friends working together.</b>
+</p>
+
+<div align="center">
+
+**Mariam Mohamedali** (Lead) &nbsp; | &nbsp; **Saged Amr** &nbsp; | &nbsp; **Shaza Mosad** &nbsp; | &nbsp; **Angham Maher** &nbsp; | &nbsp; **Dima Adel** &nbsp; | &nbsp; **Esraa Hosni**
+
+<br>
+
+[![GitHub](https://img.shields.io/badge/Connect_with_Mariam-181717?style=for-the-badge&logo=github)](https://github.com/Mariam-Mohamedali)
+
+<br>
+<i>"Alone we can do so little; together we can do so much."</i> ❤️
+</div>
+
+
 
 ---
 
