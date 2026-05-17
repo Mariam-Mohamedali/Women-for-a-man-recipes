@@ -95,6 +95,7 @@ def login_view(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
+@require_POST
 def logout_view(request):
     logout(request)
     messages.info(request, 'You have been logged out.')
@@ -349,7 +350,6 @@ def delete_user_view(request, user_id):
     return redirect('users_list')
 
 @login_required
-@require_POST
 def make_admin_view(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -360,7 +360,6 @@ def make_admin_view(request, user_id):
 
 
 @staff_member_required
-@require_POST
 def remove_admin_view(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -369,9 +368,11 @@ def remove_admin_view(request, user_id):
         messages.error(request, "You cannot remove your own admin access.")
         return redirect('users_list')
 
-    user.is_staff = False
-    user.save()
-    messages.success(request, f'Admin removed from {user.username}.')
+    if request.method == 'POST':
+        user.is_staff = False
+        user.save()
+
+        messages.success(request, f'Admin removed from {user.username}.')
 
     return redirect('users_list')
     
