@@ -349,6 +349,7 @@ def delete_user_view(request, user_id):
     return redirect('users_list')
 
 @login_required
+@require_POST
 def make_admin_view(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -359,6 +360,7 @@ def make_admin_view(request, user_id):
 
 
 @staff_member_required
+@require_POST
 def remove_admin_view(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -367,11 +369,9 @@ def remove_admin_view(request, user_id):
         messages.error(request, "You cannot remove your own admin access.")
         return redirect('users_list')
 
-    if request.method == 'POST':
-        user.is_staff = False
-        user.save()
-
-        messages.success(request, f'Admin removed from {user.username}.')
+    user.is_staff = False
+    user.save()
+    messages.success(request, f'Admin removed from {user.username}.')
 
     return redirect('users_list')
     
