@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/Glassmorphism-A020F0?style=for-the-badge&logo=css3&logoColor=white" />
 </p>
 
-**🌍 Live Demo:** [https://mariammohamed.pythonanywhere.com/](https://mariammohamed.pythonanywhere.com/)
+**🌍 Live Demo:** [https://mariammohamed.pythonanywhere.com/](https://women-for-man-recipes.up.railway.app)
 
 ---
 
