@@ -152,3 +152,14 @@ AUTHENTICATION_BACKENDS = [
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Performance: Cache sessions in memory
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+# Performance: Cache templates
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
