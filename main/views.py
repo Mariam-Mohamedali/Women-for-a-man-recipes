@@ -51,7 +51,7 @@ def contact_success_view(request):
 #  All Recipes
 # ─────────────────────────────
 def recipes_view(request):
-    recipes = Recipe.objects.all().order_by('-created_at')
+    recipes = Recipe.objects.select_related('author', 'category').all().order_by('-created_at')
     return render(request, 'main/recipes.html', {'recipes': recipes})
 
 
@@ -181,7 +181,7 @@ def recipe_detail_view(request, recipe_id):
 def breakfast_view(request):
     from .models import Category
     category = Category.objects.filter(name__iexact='breakfast').first()
-    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    recipes = Recipe.objects.filter(category=category).select_related('author', 'category').order_by('-created_at') if category else Recipe.objects.none()
     return render(request, 'main/breakfast.html', {
         'recipes': recipes,
         'category': category,
@@ -194,7 +194,7 @@ def breakfast_view(request):
 def lunch_view(request):
     from .models import Category
     category = Category.objects.filter(name__iexact='lunch').first()
-    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    recipes = Recipe.objects.filter(category=category).select_related('author', 'category').order_by('-created_at') if category else Recipe.objects.none()
     return render(request, 'main/lunch.html', {
         'recipes': recipes,
         'category': category,
@@ -206,7 +206,7 @@ def lunch_view(request):
 def dinner_view(request):
     from .models import Category
     category = Category.objects.filter(name__iexact='dinner').first()
-    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    recipes = Recipe.objects.filter(category=category).select_related('author', 'category').order_by('-created_at') if category else Recipe.objects.none()
     return render(request, 'main/dinner.html', {
         'recipes': recipes,
         'category': category,
@@ -218,7 +218,7 @@ def dinner_view(request):
 def dessert_view(request):
     from .models import Category
     category = Category.objects.filter(name__iexact='dessert').first()
-    recipes = Recipe.objects.filter(category=category).order_by('-created_at') if category else Recipe.objects.none()
+    recipes = Recipe.objects.filter(category=category).select_related('author', 'category').order_by('-created_at') if category else Recipe.objects.none()
     return render(request, 'main/dessert.html', {
         'recipes': recipes,
         'category': category,
@@ -229,7 +229,7 @@ def dessert_view(request):
 # ─────────────────────────────
 @login_required
 def our_recipes_view(request):
-    recipes = Recipe.objects.filter(author=request.user).order_by('-created_at')
+    recipes = Recipe.objects.filter(author=request.user).select_related('author', 'category').order_by('-created_at')
     return render(request, 'main/recipes.html', {'recipes': recipes})
     
 # ─────────────────────────────
